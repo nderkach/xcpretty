@@ -220,6 +220,32 @@ module XCPretty
       WILL_NOT_BE_CODE_SIGNED_MATCHER = /^(.* will not be code signed because .*)$/
     end
 
+    module Runtime
+      # $1 = reason
+      THREAD_SANITIZER_HEADER_MATCHER = /^.*WARNING: ThreadSanitizer: (.*)$/
+
+      # $1 = reason
+      ADDRESS_SANITIZER_HEADER_MATCHER = /^[\d=]*ERROR: AddressSanitizer: (.*)$/
+
+      # $1 = file
+      # $2 = reason
+      UNDEFINED_BEHAVIOR_SANITIZER_HEADER_MATCHER = /^(?:\/.+\/(.*:.*:.*)): runtime error:\s(.*)$/
+
+      # $1 = reason
+      THREAD_SANITIZER_SUMMARY_MATCHER = /^.*SUMMARY: ThreadSanitizer: (.*)$/
+
+      # $1 = reason
+      ADDRESS_SANITIZER_SUMMARY_MATCHER = /^.*SUMMARY: AddressSanitizer: (.*)$/
+
+      UNDEFINED_BEHAVIOR_SANITIZER_SUMMARY_MATCHER = UNDEFINED_BEHAVIOR_SANITIZER_HEADER_MATCHER
+
+      THREAD_SANITIZER_FOOTER_MATCHER = /^.*SUMMARY: ThreadSanitizer: (.*)$/
+
+      ADDRESS_SANITIZER_FOOTER_MATCHER = /^[\d=]*ABORTING$/
+
+      UNDEFINED_BEHAVIOR_SANITIZER_FOOTER_MATCHER = UNDEFINED_BEHAVIOR_SANITIZER_HEADER_MATCHER
+    end
+
     module Errors
       # @regex Captured groups
       # $1 = whole error
@@ -296,6 +322,7 @@ module XCPretty
     include Matchers
     include Matchers::Errors
     include Matchers::Warnings
+    include Matchers::Runtime
 
     attr_reader :formatter
 
@@ -307,11 +334,14 @@ module XCPretty
       update_test_state(text)
       update_error_state(text)
       update_linker_failure_state(text)
+      update_runtime_error_state(text)
 
       return format_compile_error if should_format_error?
       return format_compile_warning if should_format_warning?
       return format_undefined_symbols if should_format_undefined_symbols?
       return format_duplicate_symbols if should_format_duplicate_symbols?
+      return format_runtime_error if should_format_runtime_error?
+
 
       case text
       when ANALYZE_MATCHER
@@ -446,6 +476,12 @@ module XCPretty
         store_failure(file: $1, test_suite: @test_suite, test_case: @test_case, reason: $2)
       when RESTARTING_TESTS_MATCHER
         store_failure(file: "n/a", test_suite: @test_suite, test_case: @test_case, reason: "Test crashed")
+      when THREAD_SANITIZER_SUMMARY_MATCHER
+        store_failure(file: "n/a", test_suite: guess_test_suite, test_case: guess_test_case, reason: "Thread Sanitizer: #{$1}")
+      when ADDRESS_SANITIZER_SUMMARY_MATCHER
+        store_failure(file: "n/a", test_suite: guess_test_suite, test_case: guess_test_case, reason: "Address Sanitizer: #{$1}")
+      when UNDEFINED_BEHAVIOR_SANITIZER_SUMMARY_MATCHER
+        store_failure(file: $1, test_suite: guess_test_suite, test_case: guess_test_case, reason: "Undefined Behavior Sanitizer: #{$2}")
       end
     end
 
@@ -488,6 +524,42 @@ module XCPretty
       end
     end
 
+    def update_runtime_error_state(text)
+      case text
+      when THREAD_SANITIZER_HEADER_MATCHER
+        @formatting_runtime_error = true
+        current_runtime_issue[:sanitizer] = "ThreadSanitizer"
+      when ADDRESS_SANITIZER_HEADER_MATCHER
+        @formatting_runtime_error = true
+        current_runtime_issue[:sanitizer] = "AddressSanitizer"
+      when UNDEFINED_BEHAVIOR_SANITIZER_HEADER_MATCHER
+        @formatting_runtime_error = true
+        current_runtime_issue[:sanitizer] = "UndefinedBehaviorSanitizer"
+      end
+
+      return unless @formatting_runtime_error
+
+      if text =~ THREAD_SANITIZER_SUMMARY_MATCHER
+        current_runtime_issue[:reason] = $1
+      elsif text =~ ADDRESS_SANITIZER_SUMMARY_MATCHER
+        current_runtime_issue[:reason] = $1
+      elsif text =~ UNDEFINED_BEHAVIOR_SANITIZER_SUMMARY_MATCHER
+        current_runtime_issue[:reason] = $2
+      end
+
+      case text
+      when THREAD_SANITIZER_FOOTER_MATCHER
+        current_runtime_issue[:complete] = true
+      when ADDRESS_SANITIZER_FOOTER_MATCHER
+        current_runtime_issue[:complete] = true
+      when UNDEFINED_BEHAVIOR_SANITIZER_FOOTER_MATCHER
+        current_runtime_issue[:info] << $1
+        current_runtime_issue[:complete] = true
+      else
+        current_runtime_issue[:info] << text
+      end
+    end
+
     # TODO: clean up the mess around all this
     def should_format_error?
       @formatting_error && error_or_warning_is_present
@@ -495,6 +567,14 @@ module XCPretty
 
     def should_format_warning?
       @formatting_warning && error_or_warning_is_present
+    end
+
+    def should_format_runtime_error?
+      @formatting_runtime_error && runtime_error_is_complete
+    end
+
+    def runtime_error_is_complete
+      current_runtime_issue[:complete]
     end
 
     def error_or_warning_is_present
@@ -517,6 +597,20 @@ module XCPretty
       @linker_failure ||= {files: []}
     end
 
+    def current_runtime_issue
+      @runtime_issue ||= {info: ""}
+    end
+
+    def guess_test_suite
+      return "Unknown" unless @test_suite
+      "#{@test_suite} (Guess)"
+    end
+
+    def guess_test_case
+      return "Unknown" unless @test_case
+      "#{@test_case} (Guess)"
+    end
+
     def format_compile_error
       error = current_issue.dup
       @current_issue = {}
@@ -537,6 +631,18 @@ module XCPretty
                                        warning[:reason],
                                        warning[:line],
                                        warning[:cursor])
+    end
+
+    def format_runtime_error
+      runtime_error = current_runtime_issue.dup
+      @runtime_issue = nil
+      @formatting_runtime_error = false
+      formatter.format_runtime_error(runtime_error[:sanitizer],
+                                     runtime_error[:reason], "")
+      formatter.format_failing_test(guess_test_suite,
+                                    guess_test_case,
+                                    "#{runtime_error[:sanitizer]} #{runtime_error[:reason]}",
+                                    runtime_error[:info])
     end
 
     def format_undefined_symbols
