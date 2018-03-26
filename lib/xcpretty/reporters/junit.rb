@@ -8,7 +8,6 @@ module XCPretty
         require 'fileutils'
         require 'pathname'
         require 'rexml/document'
-        require 'rexml/formatters/pretty'
         @@loaded = true
       end
     end
@@ -66,12 +65,9 @@ module XCPretty
     end
 
     def write_report
-      formatter = REXML::Formatters::Pretty.new(2)
-      formatter.compact = true
-      output_file = File.open(@filepath, 'w+')
-      result = formatter.write(@document, output_file)
-      output_file.close
-      result
+      File.open(@filepath, 'w+') do |file|
+        return @document.write(file)
+      end
     end
 
     private

@@ -148,7 +148,7 @@
                     <% end %>
                     <% if test[:snippet] %>
                       <section class="test-detail snippet"><%= test[:snippet] %></section>
-                      <section class="test-detail"><%= test[:file] %></section>
+                      <section class="test-detail"><%= test[:file].gsub("\n", "<br>") %></section>
                     <% end %>
                     <% if !test[:screenshots].empty? %>
                       <section class="test-detail">
