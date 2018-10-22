@@ -57,8 +57,7 @@ module XCPretty
     def format_error(message);                                 EMPTY; end
     def format_file_missing_error(error, file_path);           EMPTY; end
     def format_ld_warning(message);                            EMPTY; end
-    def format_undefined_symbols(message, symbol, reference);  EMPTY; end
-    def format_duplicate_symbols(message, file_paths);         EMPTY; end
+    def format_undefined_duplicate_symbols(message, body);     EMPTY; end
     def format_warning(message);                             message; end
     def format_runtime_error(sanitizer, reason, info);         EMPTY; end
 
@@ -147,15 +146,9 @@ module XCPretty
       "#{yellow(warning_symbol + ' ' + reason)}"
     end
 
-    def format_undefined_symbols(message, symbol, reference)
-      "\n#{red(error_symbol + " " + message)}\n" \
-        "> Symbol: #{symbol}\n" \
-        "> Referenced from: #{reference}\n\n"
-    end
-
-    def format_duplicate_symbols(message, file_paths)
-      "\n#{red(error_symbol + " " + message)}\n" \
-        "> #{file_paths.map { |path| path.split('/').last }.join("\n> ")}\n"
+    def format_undefined_duplicate_symbols(message, body)
+      formatted_body = body.map { |line| "> #{line}" }.join("\n")
+      "\n#{red(error_symbol + " " + message)}\n#{formatted_body}"
     end
 
     def format_will_not_be_code_signed(message)

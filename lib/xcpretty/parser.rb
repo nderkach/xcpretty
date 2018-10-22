@@ -293,15 +293,23 @@ module XCPretty
 
       # @regex Captured groups
       # $1 reason
-      LINKER_DUPLICATE_SYMBOLS_MATCHER = /^(duplicate symbol .*):$/
-
-      # @regex Captured groups
-      # $1 symbol location
-      LINKER_UNDEFINED_SYMBOL_LOCATION_MATCHER = /^(.* in .*\.o)$/
+      LINKER_DUPLICATE_SYMBOLS_HEADER_MATCHER = /^(duplicate symbol .*):$/
 
       # @regex Captured groups
       # $1 reason
-      LINKER_UNDEFINED_SYMBOLS_MATCHER = /^(Undefined symbols for architecture .*):$/
+      LINKER_DUPLICATE_SYMBOLS_FOOTER_MATCHER = /^(ld: .* duplicate symbols for architecture .*)/
+
+      # @regex Captured groups
+      # $1 symbol location
+      LINKER_UNDEFINED_SYMBOL_LOCATION_MATCHER = /^(.* in .*\.o.*)$/
+
+      # @regex Captured groups
+      # $1 reason
+      LINKER_UNDEFINED_SYMBOLS_HEADER_MATCHER = /^(Undefined symbols for architecture .*):$/
+
+      # @regex Captured groups
+      # $1 reason
+      LINKER_UNDEFINED_SYMBOLS_FOOTER_MATCHER = /^(ld: symbol\(s\) not found for architecture .*)/
 
       # @regex Captured groups
       # $1 reason
@@ -338,8 +346,7 @@ module XCPretty
 
       return format_compile_error if should_format_error?
       return format_compile_warning if should_format_warning?
-      return format_undefined_symbols if should_format_undefined_symbols?
-      return format_duplicate_symbols if should_format_duplicate_symbols?
+      return format_undefined_duplicate_symbols if should_format_undefined_duplicate_symbols?
       return format_runtime_error if should_format_runtime_error?
 
 
@@ -506,21 +513,31 @@ module XCPretty
     end
 
     def update_linker_failure_state(text)
-      if text =~ LINKER_UNDEFINED_SYMBOLS_MATCHER ||
-         text =~ LINKER_DUPLICATE_SYMBOLS_MATCHER
-
+      if text =~ LINKER_UNDEFINED_SYMBOLS_HEADER_MATCHER ||
+         text =~ LINKER_DUPLICATE_SYMBOLS_HEADER_MATCHER
         current_linker_failure[:message] = $1
         @formatting_linker_failure = true
+      end
+
+      if text =~ LINKER_DUPLICATE_SYMBOLS_HEADER_MATCHER
+        current_linker_failure[:message] = "Duplicate symbols found"
       end
       return unless @formatting_linker_failure
 
       case text
+      when LINKER_DUPLICATE_SYMBOLS_HEADER_MATCHER
+        current_linker_failure[:body] << $1.rstrip
       when SYMBOL_REFERENCED_FROM_MATCHER
-        current_linker_failure[:symbol] = $1
+        current_linker_failure[:body] << $1.rstrip
       when LINKER_UNDEFINED_SYMBOL_LOCATION_MATCHER
-        current_linker_failure[:reference] = text.strip
+        current_linker_failure[:body] << $1.rstrip
       when LINKER_DUPLICATE_SYMBOLS_LOCATION_MATCHER
-        current_linker_failure[:files] << $1
+        current_linker_failure[:body] << "    " + $1.rstrip.split("/").last
+      end
+
+      if text =~ LINKER_UNDEFINED_SYMBOLS_FOOTER_MATCHER ||
+         text =~ LINKER_DUPLICATE_SYMBOLS_FOOTER_MATCHER
+        current_linker_failure[:complete] = true
       end
     end
 
@@ -581,12 +598,8 @@ module XCPretty
       current_issue[:reason] && current_issue[:cursor] && current_issue[:line]
     end
 
-    def should_format_undefined_symbols?
-      current_linker_failure[:message] && current_linker_failure[:symbol] && current_linker_failure[:reference]
-    end
-
-    def should_format_duplicate_symbols?
-      current_linker_failure[:message] && current_linker_failure[:files].count > 1
+    def should_format_undefined_duplicate_symbols?
+      current_linker_failure[:complete]
     end
 
     def current_issue
@@ -594,7 +607,7 @@ module XCPretty
     end
 
     def current_linker_failure
-      @linker_failure ||= {files: []}
+      @linker_failure ||= {files: [], body: []}
     end
 
     def current_runtime_issue
@@ -645,20 +658,10 @@ module XCPretty
                                     runtime_error[:info])
     end
 
-    def format_undefined_symbols
-      result = formatter.format_undefined_symbols(
+    def format_undefined_duplicate_symbols
+      result = formatter.format_undefined_duplicate_symbols(
         current_linker_failure[:message],
-        current_linker_failure[:symbol],
-        current_linker_failure[:reference]
-      )
-      reset_linker_format_state
-      result
-    end
-
-    def format_duplicate_symbols
-      result = formatter.format_duplicate_symbols(
-        current_linker_failure[:message],
-        current_linker_failure[:files]
+        current_linker_failure[:body],
       )
       reset_linker_format_state
       result
