@@ -322,6 +322,14 @@ module XCPretty
       # @regex Captured groups
       # $1 = error reason
       MODULE_INCLUDES_ERROR_MATCHER = /^\<module-includes\>:.*?:.*?:\s(?:fatal\s)?(error:\s.*)$/
+
+      # @regex Captured groups
+      # $1 = whole error
+      CCACHE_ERROR_MATCHER = /^(ccache: error:.*)$/
+
+      # @regex Captured groups
+      # $1 = whole error
+      LLVM_ERROR_MATCHER = /^(LLVM ERROR:.*)$/
     end
   end
 
@@ -459,6 +467,10 @@ module XCPretty
         formatter.format_warning($1)
       when WILL_NOT_BE_CODE_SIGNED_MATCHER
         formatter.format_will_not_be_code_signed($1)
+      when CCACHE_ERROR_MATCHER
+        formatter.format_error($1)
+      when LLVM_ERROR_MATCHER
+        formatter.format_error($1)
       else
         formatter.format_other(text)
       end
