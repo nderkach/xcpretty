@@ -450,7 +450,9 @@ module XCPretty
       when TESTS_RUN_COMPLETION_MATCHER
         formatter.format_test_run_finished($1, $3)
       when TEST_SUITE_STARTED_MATCHER
-        formatter.format_test_run_started($1)
+        ignore = @ignore_test_suite_started_message
+        @ignore_test_suite_started_message = false
+        ignore ? formatter.format_other(text) : formatter.format_test_run_started($1)
       when TEST_SUITE_START_MATCHER
         formatter.format_test_suite_started($1)
       when TIFFUTIL_MATCHER
@@ -481,9 +483,11 @@ module XCPretty
     def update_test_state(text)
       case text
       when TEST_SUITE_STARTED_MATCHER
-        @tests_done = false
-        @formatted_summary = false
-        @failures = {}
+        unless @ignore_test_suite_started_message
+          @tests_done = false
+          @formatted_summary = false
+          @failures = {}
+        end
       when TEST_CASE_STARTED_MATCHER
         @test_suite = $1
         @test_case = $2
@@ -494,6 +498,8 @@ module XCPretty
       when UI_FAILING_TEST_MATCHER
         store_failure(file: $1, test_suite: @test_suite, test_case: @test_case, reason: $2)
       when RESTARTING_TESTS_MATCHER
+        # Because this is a restart of test suite that was already started, ignore the upcoming started message.
+        @ignore_test_suite_started_message = true
         store_failure(file: "n/a", test_suite: @test_suite, test_case: @test_case, reason: "Test crashed")
       when THREAD_SANITIZER_SUMMARY_MATCHER
         store_failure(file: "n/a", test_suite: guess_test_suite, test_case: guess_test_case, reason: "Thread Sanitizer: #{$1}")
