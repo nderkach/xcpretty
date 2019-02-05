@@ -196,6 +196,11 @@ TiffUtil eye_icon.tiff
     cd /Users/musalj/code/OSS/Alcatraz
     /usr/bin/tiffutil -cathidpicheck /Users/musalj/code/OSS/Alcatraz/Alcatraz/eye_icon@2x.png /Users/musalj/code/OSS/Alcatraz/Alcatraz/eye_icon.png -out /Users/musalj/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/Alcatraz.xcplugin/Contents/Resources/eye_icon.tiff
 )
+
+SAMPLE_CUSTOM_SCRIPT_BUILD_RULE = %Q(
+RuleScriptExecution My\\ Folder/File\\ Built\\ With\\ Custom\\ Script.jjj normal x86_64
+)
+
 SAMPLE_RUN_SCRIPT = %Q(
 PhaseScriptExecution Check\\ Pods\\ Manifest.lock /Users/musalj/Library/Developer/Xcode/DerivedData/ObjectiveSugar-ayzdhqmmwtqgysdpznmovjlupqjy/Build/Intermediates/ObjectiveSugar.build/Debug-iphonesimulator/ObjectiveSugar.build/Script-468DABF301EC4EC1A00CC4C2.sh
     cd /Users/musalj/code/OSS/ObjectiveSugar/Example

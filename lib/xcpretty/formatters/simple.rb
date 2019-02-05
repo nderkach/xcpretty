@@ -67,6 +67,10 @@ module XCPretty
       format("Copying", resource)
     end
 
+    def format_script_rule_execution(file_name, file_path)
+      format("Running script rule", "#{file_name}")
+    end
+
     def format_generate_dsym(dsym)
       format("Generating '#{dsym}'")
     end

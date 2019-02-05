@@ -128,6 +128,11 @@ module XCPretty
         "> Running script 'Check Pods Manifest.lock'"
       end
 
+      it "formats script rule execution" do
+        @formatter.format_script_rule_execution("Check Pods Manifest.lock", "folder/").should ==
+        "> Running script rule Check Pods Manifest.lock"
+      end
+
       it "formats precompiling output" do
         @formatter.format_process_pch("Pods-CocoaLumberjack-prefix.pch").should ==
         "> Precompiling Pods-CocoaLumberjack-prefix.pch"
