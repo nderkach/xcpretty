@@ -172,6 +172,11 @@ module XCPretty
     PROCESS_INFO_PLIST_MATCHER = /^ProcessInfoPlistFile\s.*\.plist\s(.*\/+(.*\.plist))/
 
     # @regex Captured groups
+    # $1 file_path
+    # $2 file_name
+    RULE_SCRIPT_EXECUTION_MATCHER = /^RuleScriptExecution\s((?:(?:(?:[^\\\s]+(?:\\\s)?)+?)\/)*((?:[^\\\s]+(?:\\\s)?)+))/
+
+    # @regex Captured groups
     # $1 = suite
     # $2 = time
     TESTS_RUN_COMPLETION_MATCHER = /^\s*Test Suite '(?:.*\/)?(.*[ox]ctest.*)' (finished|passed|failed) at (.*)/
@@ -447,6 +452,8 @@ module XCPretty
         formatter.format_preprocess($1)
       when PBXCP_MATCHER
         formatter.format_pbxcp($1)
+      when RULE_SCRIPT_EXECUTION_MATCHER
+        formatter.format_script_rule_execution(*unescaped($2, $1))
       when TESTS_RUN_COMPLETION_MATCHER
         formatter.format_test_run_finished($1, $3)
       when TEST_SUITE_STARTED_MATCHER
@@ -679,7 +686,7 @@ module XCPretty
     def format_undefined_duplicate_symbols
       result = formatter.format_undefined_duplicate_symbols(
         current_linker_failure[:message],
-        current_linker_failure[:body],
+        current_linker_failure[:body]
       )
       reset_linker_format_state
       result

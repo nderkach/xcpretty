@@ -243,6 +243,11 @@ module XCPretty
       @parser.parse(SAMPLE_RUN_SCRIPT)
     end
 
+    it "parses RuleScriptExecution" do
+      @formatter.should receive(:format_script_rule_execution).with('File Built With Custom Script.jjj', 'My Folder/File Built With Custom Script.jjj')
+      @parser.parse(SAMPLE_CUSTOM_SCRIPT_BUILD_RULE)
+    end
+
     it "parses process PCH" do
       @formatter.should receive(:format_process_pch).with("Pods-CocoaLumberjack-prefix.pch")
       @parser.parse(SAMPLE_PRECOMPILE)
