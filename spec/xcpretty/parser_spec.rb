@@ -244,7 +244,7 @@ module XCPretty
     end
 
     it "parses RuleScriptExecution" do
-      @formatter.should receive(:format_script_rule_execution).with('File Built With Custom Script.jjj', 'My Folder/File Built With Custom Script.jjj')
+      @formatter.should receive(:format_script_rule_execution).with('File Built With Custom Script.jjj', 'My Folder/a/File Built With Custom Script.jjj')
       @parser.parse(SAMPLE_CUSTOM_SCRIPT_BUILD_RULE)
     end
 
