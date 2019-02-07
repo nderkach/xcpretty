@@ -198,7 +198,7 @@ TiffUtil eye_icon.tiff
 )
 
 SAMPLE_CUSTOM_SCRIPT_BUILD_RULE = %Q(
-RuleScriptExecution My\\ Folder/File\\ Built\\ With\\ Custom\\ Script.jjj normal x86_64
+RuleScriptExecution My\\ Folder/a/File\\ Built\\ With\\ Custom\\ Script.jjj normal x86_64
 )
 
 SAMPLE_RUN_SCRIPT = %Q(

@@ -173,8 +173,7 @@ module XCPretty
 
     # @regex Captured groups
     # $1 file_path
-    # $2 file_name
-    RULE_SCRIPT_EXECUTION_MATCHER = /^RuleScriptExecution\s((?:(?:(?:[^\\\s]+(?:\\\s)?)+?)\/)*((?:[^\\\s]+(?:\\\s)?)+))/
+    RULE_SCRIPT_EXECUTION_MATCHER = /^RuleScriptExecution\s(.*?[^\\])\s/
 
     # @regex Captured groups
     # $1 = suite
@@ -453,7 +452,7 @@ module XCPretty
       when PBXCP_MATCHER
         formatter.format_pbxcp($1)
       when RULE_SCRIPT_EXECUTION_MATCHER
-        formatter.format_script_rule_execution(*unescaped($2, $1))
+        formatter.format_script_rule_execution(*unescaped(File.basename($1), $1))
       when TESTS_RUN_COMPLETION_MATCHER
         formatter.format_test_run_finished($1, $3)
       when TEST_SUITE_STARTED_MATCHER
