@@ -111,6 +111,11 @@ module XCPretty
       end
     end
 
+    it "parses compiling metal files" do
+      @formatter.should receive(:format_compile_metal).with("MYMetalFile.metal", "CocoaChip/metalSample/MYMetalFile.metal")
+      @parser.parse(SAMPLE_COMPILE_METAL)
+    end
+
     it "parses compiling XIBs" do
       @formatter.should receive(:format_compile_xib).with("MainMenu.xib", "CocoaChip/en.lproj/MainMenu.xib")
       @parser.parse(SAMPLE_COMPILE_XIB)
@@ -161,6 +166,16 @@ module XCPretty
     it "parses Ld with relative path" do
       @formatter.should receive(:format_linking).with('ObjectiveSugar', 'normal', 'i386')
       @parser.parse(SAMPLE_LD_RELATIVE)
+    end
+
+    it "parses MetalLink" do
+      @formatter.should receive(:format_linking_metal).with('default.metallib')
+      @parser.parse(SAMPLE_METALLINK)
+    end
+
+    it "parses MetalLink with relative path" do
+      @formatter.should receive(:format_linking_metal).with('default.metallib')
+      @parser.parse(SAMPLE_METALLINK_RELATIVE)
     end
 
     it "parses Libtool" do

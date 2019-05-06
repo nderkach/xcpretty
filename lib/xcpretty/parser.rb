@@ -64,6 +64,11 @@ module XCPretty
 
     # @regex Captured groups
     # $1 file_path
+    # $2 file_name (e.g. KWNull.metal)
+    COMPILE_METAL_MATCHER = /^CompileMetalFile\s((?:\\.|[^ ])+\/((?:\\.|[^ ])+\.(?:metal)))\s.*/
+
+    # @regex Captured groups
+    # $1 file_path
     # $2 file_name (e.g. MainMenu.xib)
     COMPILE_XIB_MATCHER = /^CompileXIB\s(.*\/(.*\.xib))/
 
@@ -123,11 +128,14 @@ module XCPretty
     LINKING_MATCHER = /^Ld \/?.*\/(.*?) (.*) (.*)$/
 
     # @regex Captured groups
+    # $1 = target
+    LINKING_METAL_MATCHER = /^MetalLink \/?.*\/(.*?)$/
+
+    # @regex Captured groups
     # $1 = suite
     # $2 = test_case
     # $3 = time
     TEST_CASE_PASSED_MATCHER = /^\s*Test Case\s'-\[(.*)\s(.*)\]'\spassed\s\((\d*\.\d{3})\sseconds\)/
-
 
     # @regex Captured groups
     # $1 = suite
@@ -395,6 +403,8 @@ module XCPretty
         formatter.format_compile($2, $1)
       when COMPILE_COMMAND_MATCHER
         formatter.format_compile_command($1, $2)
+      when COMPILE_METAL_MATCHER
+        formatter.format_compile_metal($2, $1)
       when COMPILE_XIB_MATCHER
         formatter.format_compile_xib($2, $1)
       when COMPILE_STORYBOARD_MATCHER
@@ -427,6 +437,8 @@ module XCPretty
         formatter.format_libtool($1)
       when LINKING_MATCHER
         formatter.format_linking($1, $2, $3)
+      when LINKING_METAL_MATCHER
+        formatter.format_linking_metal($1)
       when MODULE_INCLUDES_ERROR_MATCHER
         formatter.format_error($1)
       when TEST_CASE_MEASURED_MATCHER

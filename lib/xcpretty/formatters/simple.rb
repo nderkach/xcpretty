@@ -43,6 +43,10 @@ module XCPretty
       format("Compiling", file_name)
     end
 
+    def format_compile_metal(file_name, file_path)
+      format("Compiling", file_name)
+    end
+
     def format_compile_xib(file_name, file_path)
       format("Compiling", file_name)
     end
@@ -80,6 +84,10 @@ module XCPretty
     end
 
     def format_linking(target, build_variants, arch)
+      format("Linking", target)
+    end
+
+    def format_linking_metal(target)
       format("Linking", target)
     end
 

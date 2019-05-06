@@ -19,6 +19,7 @@ module XCPretty
     def format_clean_remove;                                   EMPTY; end
     def format_compile(file_name, file_path);                  EMPTY; end
     def format_compile_command(compiler_command, file_path);   EMPTY; end
+    def format_compile_metal(file_name, file_path);            EMPTY; end
     def format_compile_storyboard(file_name, file_path);       EMPTY; end
     def format_compile_xib(file_name, file_path);              EMPTY; end
     def format_copy_header_file(source, target);               EMPTY; end
@@ -27,6 +28,7 @@ module XCPretty
     def format_cpresource(file);                               EMPTY; end
     def format_generate_dsym(dsym);                            EMPTY; end
     def format_linking(file, build_variant, arch);             EMPTY; end
+    def format_linking_metal(file);                            EMPTY; end
     def format_libtool(library);                               EMPTY; end
     def format_passing_test(suite, test, time);                EMPTY; end
     def format_pending_test(suite, test);                      EMPTY; end
