@@ -95,6 +95,11 @@ module XCPretty
         "> Linking ObjectiveSugar"
       end
 
+      it "formats metal Linking" do
+        @formatter.format_linking_metal("default.metallib").should ==
+        "> Linking default.metallib"
+      end
+
       it "formats Libtool" do
         @formatter.format_libtool("libPods-ObjectiveSugarTests-Kiwi.a").should ==
         "> Building library libPods-ObjectiveSugarTests-Kiwi.a"

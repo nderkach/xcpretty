@@ -87,6 +87,10 @@ module XCPretty
       format("Linking", target)
     end
 
+    def format_linking_metal(target)
+      format("Linking", target)
+    end
+
     def format_failing_test(suite, test_case, reason, file)
       INDENT + format_test("#{test_case}, #{reason}", :fail)
     end

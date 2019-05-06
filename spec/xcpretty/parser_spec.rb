@@ -168,6 +168,16 @@ module XCPretty
       @parser.parse(SAMPLE_LD_RELATIVE)
     end
 
+    it "parses MetalLink" do
+      @formatter.should receive(:format_linking_metal).with('default.metallib')
+      @parser.parse(SAMPLE_METALLINK)
+    end
+
+    it "parses MetalLink with relative path" do
+      @formatter.should receive(:format_linking_metal).with('default.metallib')
+      @parser.parse(SAMPLE_METALLINK_RELATIVE)
+    end
+
     it "parses Libtool" do
       @formatter.should receive(:format_libtool).with('libPods-ObjectiveSugarTests-Kiwi.a')
       @parser.parse(SAMPLE_LIBTOOL)

@@ -173,6 +173,18 @@ Ld ../Build/Products/Debug-iphonesimulator/ObjectiveSugar.app/ObjectiveSugar nor
     setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/musalj/code/go/bin:/Users/musalj/.rbenv/shims:/Users/musalj/.rbenv/bin:/usr/local/share/npm/bin:/usr/local/bin:/Library/Python/2.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
     /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -arch i386 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk -L/Users/musalj/Library/Developer/Xcode/DerivedData/ObjectiveSugar-ayzdhqmmwtqgysdpznmovjlupqjy/Build/Products/Debug-iphonesimulator -F/Users/musalj/Library/Developer/Xcode/DerivedData/ObjectiveSugar-ayzdhqmmwtqgysdpznmovjlupqjy/Build/Products/Debug-iphonesimulator -filelist /Users/musalj/Library/Developer/Xcode/DerivedData/ObjectiveSugar-ayzdhqmmwtqgysdpznmovjlupqjy/Build/Intermediates/ObjectiveSugar.build/Debug-iphonesimulator/ObjectiveSugar.build/Objects-normal/i386/ObjectiveSugar.LinkFileList -Xlinker -objc_abi_version -Xlinker 2 -ObjC -fobjc-arc -fobjc-link-runtime -Xlinker -no_implicit_dylibs -mios-simulator-version-min=4.3 -framework UIKit -framework Foundation -framework CoreGraphics -lPods -Xlinker -dependency_info -Xlinker /Users/musalj/Library/Developer/Xcode/DerivedData/ObjectiveSugar-ayzdhqmmwtqgysdpznmovjlupqjy/Build/Intermediates/ObjectiveSugar.build/Debug-iphonesimulator/ObjectiveSugar.build/Objects-normal/i386/ObjectiveSugar_dependency_info.dat -o /Users/musalj/Library/Developer/Xcode/DerivedData/ObjectiveSugar-ayzdhqmmwtqgysdpznmovjlupqjy/Build/Products/Debug-iphonesimulator/ObjectiveSugar.app/ObjectiveSugar
 ).freeze
+SAMPLE_METALLINK = %Q(
+MetalLink /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/MyTarget.bundle/default.metallib
+    cd "/Users/jenkins/.jenkins/workspace/temp/Repo/MyTarget"
+    setenv IPHONEOS_DEPLOYMENT_TARGET 4.3
+    /Applications/Xcode-10.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/metallib -o /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/MyTarget.bundle/default.metallib
+)
+SAMPLE_METALLINK_RELATIVE = %Q(
+MetalLink ../temp/Repo/test_package/Debug-iphoneos/MyTarget.bundle/default.metallib
+        cd "/Users/jenkins/.jenkins/workspace/temp/Repo/MyTarget"
+        setenv IPHONEOS_DEPLOYMENT_TARGET 4.3
+        /Applications/Xcode-10.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/metallib -o /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/MyTarget.bundle/default.metallib
+    )
 SAMPLE_DSYM = %Q(
 GenerateDSYMFile /Users/musalj/Library/Developer/Xcode/DerivedData/ObjectiveSugar-ayzdhqmmwtqgysdpznmovjlupqjy/Build/Products/Debug-iphonesimulator/ObjectiveSugarTests.octest.dSYM /Users/musalj/Library/Developer/Xcode/DerivedData/ObjectiveSugar-ayzdhqmmwtqgysdpznmovjlupqjy/Build/Products/Debug-iphonesimulator/ObjectiveSugarTests.octest/ObjectiveSugarTests
     cd /Users/musalj/code/OSS/ObjectiveSugar/Example

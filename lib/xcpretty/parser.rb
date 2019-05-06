@@ -128,6 +128,10 @@ module XCPretty
     LINKING_MATCHER = /^Ld \/?.*\/(.*?) (.*) (.*)$/
 
     # @regex Captured groups
+    # $1 = target
+    LINKING_METAL_MATCHER = /^MetalLink \/?.*\/(.*?)$/
+
+    # @regex Captured groups
     # $1 = suite
     # $2 = test_case
     # $3 = time
@@ -433,6 +437,8 @@ module XCPretty
         formatter.format_libtool($1)
       when LINKING_MATCHER
         formatter.format_linking($1, $2, $3)
+      when LINKING_METAL_MATCHER
+        formatter.format_linking_metal($1)
       when MODULE_INCLUDES_ERROR_MATCHER
         formatter.format_error($1)
       when TEST_CASE_MEASURED_MATCHER

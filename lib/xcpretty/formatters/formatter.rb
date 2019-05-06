@@ -28,6 +28,7 @@ module XCPretty
     def format_cpresource(file);                               EMPTY; end
     def format_generate_dsym(dsym);                            EMPTY; end
     def format_linking(file, build_variant, arch);             EMPTY; end
+    def format_linking_metal(file);                            EMPTY; end
     def format_libtool(library);                               EMPTY; end
     def format_passing_test(suite, test, time);                EMPTY; end
     def format_pending_test(suite, test);                      EMPTY; end
