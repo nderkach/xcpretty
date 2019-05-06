@@ -45,6 +45,11 @@ module XCPretty
         "> Compiling NSMutableArray+ObjectiveSugar.m"
       end
 
+      it "formats compiling metal output" do
+        @formatter.format_compile("MYMetalFile.metal", 'path/to/file').should ==
+        "> Compiling MYMetalFile.metal"
+      end
+
       it "formats compiling xib output" do
         @formatter.format_compile_xib("MainMenu.xib", 'path/to/file').should ==
         "> Compiling MainMenu.xib"

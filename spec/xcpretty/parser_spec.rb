@@ -111,6 +111,11 @@ module XCPretty
       end
     end
 
+    it "parses compiling metal files" do
+      @formatter.should receive(:format_compile_metal).with("MYMetalFile.metal", "CocoaChip/metalSample/MYMetalFile.metal")
+      @parser.parse(SAMPLE_COMPILE_METAL)
+    end
+
     it "parses compiling XIBs" do
       @formatter.should receive(:format_compile_xib).with("MainMenu.xib", "CocoaChip/en.lproj/MainMenu.xib")
       @parser.parse(SAMPLE_COMPILE_XIB)

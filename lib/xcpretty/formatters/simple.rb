@@ -43,6 +43,10 @@ module XCPretty
       format("Compiling", file_name)
     end
 
+    def format_compile_metal(file_name, file_path)
+      format("Compiling", file_name)
+    end
+
     def format_compile_xib(file_name, file_path)
       format("Compiling", file_name)
     end
