@@ -309,7 +309,7 @@ module XCPretty
 
       # @regex Captured groups
       # $1 reason
-      LINKER_DUPLICATE_SYMBOLS_FOOTER_MATCHER = /^(ld: .* duplicate symbols for architecture .*)/
+      LINKER_DUPLICATE_SYMBOLS_FOOTER_MATCHER = /^(ld: .* duplicate symbol(?:s)? for architecture .*)/
 
       # @regex Captured groups
       # $1 symbol location
@@ -575,6 +575,7 @@ module XCPretty
          text =~ LINKER_DUPLICATE_SYMBOLS_FOOTER_MATCHER
         current_linker_failure[:complete] = true
       end
+
     end
 
     def update_runtime_error_state(text)
