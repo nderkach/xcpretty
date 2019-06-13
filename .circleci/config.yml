@@ -1,0 +1,108 @@
+# Copyright (c) 2018 Lightricks. All rights reserved.
+#
+defaults: &defaults
+  docker:
+    - image: circleci/ruby:2.5.3
+
+version: 2
+jobs:
+  checkout_code:
+    <<: *defaults
+    steps:
+      - restore_cache:
+          keys:
+            - &git_cache_key v1-git-cache-{{ .Branch }}-{{ .Revision }}
+            - v1-git-cache-{{ .Branch }}-
+            - v1-git-cache-
+
+      - checkout
+      - run: git submodule sync --recursive
+      - run: git submodule update --init --recursive
+
+      - save_cache:
+          key: *git_cache_key
+          paths:
+            - ~/project
+            - ~/.gitconfig
+            - ~/.ssh
+
+  base_dependencies:
+    <<: *defaults
+
+    steps:
+      - restore_cache:
+          keys:
+            - *git_cache_key
+
+      - restore_cache:
+          keys:
+            - &xcpretty_bundle_dependencies_cache_key v1-danger-bundle-dependencies-cache-{{ checksum "~/project/Gemfile.lock" }}
+
+      - run: bundle install --gemfile=Gemfile --path vendor/bundle
+
+      - save_cache:
+          key: *xcpretty_bundle_dependencies_cache_key
+          paths:
+            - ~/project/vendor/bundle
+  rubocop:
+    <<: *defaults
+
+    steps:
+      - restore_cache:
+          keys:
+            - *git_cache_key
+      - restore_cache:
+          keys:
+            - *xcpretty_bundle_dependencies_cache_key
+
+      - run: bundle install --path vendor/bundle
+      - run: bundle exec rake lint
+
+  rspec:
+    <<: *defaults
+
+    steps:
+      - restore_cache:
+          keys:
+            - *git_cache_key
+      - restore_cache:
+          keys:
+            - *xcpretty_bundle_dependencies_cache_key
+
+      - run: bundle install --path vendor/bundle
+      - run: bundle exec rake spec
+
+  cucumber:
+    <<: *defaults
+
+    steps:
+      - restore_cache:
+          keys:
+            - *git_cache_key
+      - restore_cache:
+          keys:
+            - *xcpretty_bundle_dependencies_cache_key
+
+      - run: bundle install --path vendor/bundle
+      - run: bundle exec rake cucumber
+
+workflows:
+  version: 2
+  danger-workflow:
+    jobs:
+      - checkout_code
+      - base_dependencies:
+          requires:
+            - checkout_code
+      - rubocop:
+          requires:
+            - checkout_code
+            - base_dependencies
+      - rspec:
+          requires:
+            - checkout_code
+            - base_dependencies
+      - cucumber:
+          requires:
+            - checkout_code
+            - base_dependencies
