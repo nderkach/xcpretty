@@ -60,6 +60,11 @@ module XCPretty
         "> Compiling Main.storyboard"
       end
 
+      it "formats compiling asset catalog output" do
+        @formatter.format_compile_asset_catalog("sample/Assets.xcassets").should ==
+        "> Compiling asset catalog sample/Assets.xcassets"
+      end
+
       it 'formats copying header files' do
         @formatter.format_copy_header_file('Source.h',
                                            'dir/Destination.h').should == '> Copying Source.h'

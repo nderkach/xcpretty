@@ -55,7 +55,7 @@ module XCPretty
     # @regex Captured groups
     # $1 file_path
     # $2 file_name (e.g. KWNull.m)
-    COMPILE_MATCHER = /^Compile[\w]+\s.+?\s((?:\\.|[^ ])+\/((?:\\.|[^ ])+\.(?:m|mm|c|cc|cpp|cxx|swift)))\s.*/
+    COMPILE_MATCHER = /^Compile[\w]+\s.+?\s((?:\\ |[^ ])+\/((?:\\ |[^ ])+\.(?:m|mm|c|cc|cpp|cxx|swift)))\s.*/
 
     # @regex Captured groups
     # $1 compiler_command
@@ -65,7 +65,7 @@ module XCPretty
     # @regex Captured groups
     # $1 file_path
     # $2 file_name (e.g. KWNull.metal)
-    COMPILE_METAL_MATCHER = /^CompileMetalFile\s((?:\\.|[^ ])+\/((?:\\.|[^ ])+\.(?:metal)))\s.*/
+    COMPILE_METAL_MATCHER = /^CompileMetalFile\s((?:\\ |[^ ])+\/((?:\\ |[^ ])+\.(?:metal)))\s.*/
 
     # @regex Captured groups
     # $1 file_path
@@ -76,6 +76,10 @@ module XCPretty
     # $1 file_path
     # $2 file_name (e.g. Main.storyboard)
     COMPILE_STORYBOARD_MATCHER = /^CompileStoryboard\s(.*\/([^\/].*\.storyboard))/
+
+    # @regex Captured groups
+    # $1 file_path
+    COMPILE_ASSET_CATALOG_MATCHER = /^CompileAssetCatalog\s(?:\\ |[^ ])+\s((?:\\ |[^ ])+\.xcassets)/
 
     # @regex Captured groups
     # $1 source file
@@ -409,6 +413,8 @@ module XCPretty
         formatter.format_compile_xib($2, $1)
       when COMPILE_STORYBOARD_MATCHER
         formatter.format_compile_storyboard($2, $1)
+      when COMPILE_ASSET_CATALOG_MATCHER
+        formatter.format_compile_asset_catalog($1)
       when COPY_HEADER_MATCHER
         formatter.format_copy_header_file($1, $2)
       when COPY_PLIST_MATCHER

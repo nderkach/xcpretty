@@ -126,6 +126,11 @@ module XCPretty
       @parser.parse(SAMPLE_COMPILE_STORYBOARD)
     end
 
+    it "parses compiling asset catalogs" do
+      @formatter.should receive(:format_compile_asset_catalog).with("sample/Assets.xcassets")
+      @parser.parse(SAMPLE_COMPILE_ASSET_CATALOG)
+    end
+
     it 'parses CopyPlistFile' do
       @formatter.should receive(:format_copy_plist_file).with(
         '/path/to/Some.plist', '/some other/File.plist')

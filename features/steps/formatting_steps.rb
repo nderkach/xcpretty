@@ -15,6 +15,10 @@ Given(/^I have a storyboard to compile$/) do
   add_run_input SAMPLE_COMPILE_STORYBOARD
 end
 
+Given(/^I have an asset catalog to compile$/) do
+  add_run_input SAMPLE_COMPILE_ASSET_CATALOG
+end
+
 Given(/^I have a precompiled header$/) do
   add_run_input SAMPLE_PRECOMPILE
 end
@@ -382,4 +386,8 @@ end
 
 Then(/^I should see the no profile matching message$/) do
   run_output.should include("No profile matching 'TargetName' found:  Xcode couldn't find a profile matching 'TargetName'. Install the profile (by dragging and dropping it onto Xcode's dock item) or select a different one in the General tab of the target editor.")
+end
+
+Then(/^I should see the compiling asset catalog message$/) do
+  run_output.should start_with("▸ Compiling asset catalog")
 end
