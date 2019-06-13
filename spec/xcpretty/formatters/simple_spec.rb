@@ -190,4 +190,3 @@ module XCPretty
 
     end
 end
-

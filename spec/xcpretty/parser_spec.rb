@@ -658,4 +658,3 @@ module XCPretty
 
   end
 end
-

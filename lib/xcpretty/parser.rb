@@ -575,7 +575,6 @@ module XCPretty
          text =~ LINKER_DUPLICATE_SYMBOLS_FOOTER_MATCHER
         current_linker_failure[:complete] = true
       end
-
     end
 
     def update_runtime_error_state(text)
@@ -739,4 +738,3 @@ module XCPretty
 
   end
 end
-

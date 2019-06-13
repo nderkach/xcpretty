@@ -95,4 +95,3 @@ module XCPretty
     end
   end
 end
-
