@@ -151,7 +151,7 @@ module XCPretty
 
     def format_undefined_duplicate_symbols(message, body)
       formatted_body = body.map { |line| "> #{line}" }.join("\n")
-      "\n#{red(error_symbol + " " + message)}\n#{formatted_body}"
+      "\n#{red(error_symbol + " " + message)}\n#{formatted_body}\n"
     end
 
     def format_will_not_be_code_signed(message)
@@ -205,4 +205,3 @@ module XCPretty
     end
   end
 end
-

@@ -223,10 +223,6 @@ Style/StringLiteralsInInterpolation:
 Style/SymbolProc:
   Enabled: false
 
-Style/TrailingBlankLines:
-  Enabled: true
-  EnforcedStyle: final_blank_line
-
 Style/TrailingComma:
   Enabled: true
 
