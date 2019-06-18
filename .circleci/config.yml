@@ -36,7 +36,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - &xcpretty_bundle_dependencies_cache_key v1-danger-bundle-dependencies-cache-{{ checksum "~/project/Gemfile.lock" }}
+            - &xcpretty_bundle_dependencies_cache_key v1-xcpretty-bundle-dependencies-cache-{{ checksum "~/project/Gemfile.lock" }}
 
       - run: bundle install --gemfile=Gemfile --path vendor/bundle
 
@@ -88,7 +88,7 @@ jobs:
 
 workflows:
   version: 2
-  danger-workflow:
+  xcpretty-workflow:
     jobs:
       - checkout_code
       - base_dependencies:
