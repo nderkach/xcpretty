@@ -20,6 +20,11 @@ Feature: Showing build output in simple format
         When I pipe to xcpretty with "--simple"
         Then I should see a successful compilation message
 
+    Scenario: Compiling asset catalog
+        Given I have an asset catalog to compile
+        When I pipe to xcpretty with "--simple"
+        Then I should see the compiling asset catalog message
+
     Scenario: Showing precompilation
         Given I have a precompiled header
         When I pipe to xcpretty with "--simple --no-color"

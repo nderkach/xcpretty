@@ -583,6 +583,11 @@ CompileStoryboard sample/Main.storyboard
     export XCODE_DEVELOPER_USR_PATH=/Applications/Xcode.app/Contents/Developer/usr/bin/..
     /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --target-device iphone --target-device ipad --errors --warnings --notices --module sample --minimum-deployment-target 7.0 --output-partial-info-plist /Users/chipp/Library/Developer/Xcode/DerivedData/sample-etjztiverddwaddrudeteewjzfxw/Build/Intermediates/ArchiveIntermediates/sample/IntermediateBuildFilesPath/sample.build/Release-iphoneos/sample.build/SJMetroPickerStoryboard-SBPartialInfo.plist --auto-activate-custom-fonts --output-format human-readable-text --compilation-directory /Users/chipp/Library/Developer/Xcode/DerivedData/sample-etjztiverddwaddrudeteewjzfxw/Build/Intermediates/ArchiveIntermediates/sample/InstallationBuildProductsLocation/Applications/sample.app /Users/chipp/Developer/sample/sample/Main.storyboard
 )
+SAMPLE_COMPILE_ASSET_CATALOG = %Q(
+CompileAssetCatalog sample/sample.bundle sample/Assets.xcassets
+    cd /Users/dustin/Source/CocoaChip
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool --output-format human-readable-text --notices --warnings --export-dependency-info /Users/beny/Library/Developer/Xcode/DerivedData/Debug-iphonesimulator/TestHost.build/assetcatalog_dependencies --output-partial-info-plist /Users/beny/Library/Developer/Xcode/DerivedData/sample-etjztiverddwaddrudeteewjzfxw/Build/Intermediates.noindex/sample.build/Debug-iphonesimulator/sample.build/assetcatalog_generated_info.plist --app-icon AppIcon --compress-pngs --enable-on-demand-resources YES --filter-for-device-model iPhone11,8 --filter-for-device-os-version 12.2 --sticker-pack-identifier-prefix com.lightricks.sample.sticker-pack. --target-device iphone --target-device ipad --minimum-deployment-target 10.0 --platform iphonesimulator --product-type com.apple.product-type.application --compile /Users/beny/Library/Developer/Xcode/DerivedData/sample-etjztiverddwaddrudeteewjzfxw/Build/Products/Debug-iphonesimulator/sample.app /Users/beny/developer/video/Foundations/Sample/Sample/Assets.xcassets
+)
 SAMPLE_CODESIGN = %Q(
 CodeSign build/Release/CocoaChip.app
     cd /Users/dustin/Source/CocoaChip

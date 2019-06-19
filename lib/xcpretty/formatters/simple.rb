@@ -55,6 +55,10 @@ module XCPretty
       format("Compiling", file_name)
     end
 
+    def format_compile_asset_catalog(file_path)
+      format("Compiling asset catalog", file_path)
+    end
+
     def format_copy_header_file(source, target)
       format("Copying", File.basename(source))
     end
