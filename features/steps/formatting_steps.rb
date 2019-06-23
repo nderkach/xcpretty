@@ -20,6 +20,54 @@ Given(/^I have an asset catalog to compile$/) do
   add_run_input SAMPLE_COMPILE_ASSET_CATALOG
 end
 
+Given(/^I have a build directory to create$/) do
+  add_run_input SAMPLE_CREATE_BUILD_DIRECTORY
+end
+
+Given(/^I have a directory to create$/) do
+  add_run_input SAMPLE_MKDIR
+end
+
+Given(/^I have a product packaging to process$/) do
+  add_run_input SAMPLE_PROCESS_PRODUCT_PACKAGING
+end
+
+Given(/^I have a file ditto$/) do
+  add_run_input SAMPLE_DITTO
+end
+
+Given(/^I have a DTrace script to compile$/) do
+  add_run_input SAMPLE_COMPILE_DTRACE_SCRIPT
+end
+
+Given(/^I have a PNG file to copy$/) do
+  add_run_input SAMPLE_COPY_PNG_FILE
+end
+
+Given(/^I have a TIFF file to copy$/) do
+  add_run_input SAMPLE_COPY_TIFF_FILE
+end
+
+Given(/^I have storyboards to link$/) do
+  add_run_input SAMPLE_LINK_STORYBOARDS
+end
+
+Given(/^I have a note$/) do
+  add_run_input SAMPLE_NOTE
+end
+
+Given(/^I have an auxiliary file to write$/) do
+  add_run_input SAMPLE_WRITE_AUXILIARY_FILE
+end
+
+Given(/^I have a file to process$/) do
+  add_run_input SAMPLE_FILE_PROCESSING
+end
+
+Given(/^I have an identity to sign$/) do
+  add_run_input SAMPLE_SIGNING_IDENTITY
+end
+
 Given(/^I have a precompiled header$/) do
   add_run_input SAMPLE_PRECOMPILE
 end
@@ -391,4 +439,52 @@ end
 
 Then(/^I should see the compiling asset catalog message$/) do
   run_output.should start_with("[foo] ▸ Compiling asset catalog")
+end
+
+Then(/^I should see the creating build directory message$/) do
+  run_output.should start_with("[foo] ▸ Creating build directory")
+end
+
+Then(/^I should see the mkdir message$/) do
+  run_output.should start_with("[foo] ▸ Mkdir")
+end
+
+Then(/^I should see the process product packaging message$/) do
+  run_output.should start_with("[foo] ▸ Processing product packaging")
+end
+
+Then(/^I should see the ditto message$/) do
+  run_output.should start_with("[foo] ▸ Ditto")
+end
+
+Then(/^I should see the compile DTrace script message$/) do
+  run_output.should start_with("[foo] ▸ Compiling DTrace script")
+end
+
+Then(/^I should see the copy PNG file message$/) do
+  run_output.should start_with("[foo] ▸ Copying PNG file")
+end
+
+Then(/^I should see the copy TIFF file message$/) do
+  run_output.should start_with("[foo] ▸ Copying TIFF file")
+end
+
+Then(/^I should see the link storyboards message$/) do
+  run_output.should start_with("[foo] ▸ Linking storyboards")
+end
+
+Then(/^I should see the note message$/) do
+  run_output.should start_with("▸ Note:")
+end
+
+Then(/^I should see the write auxiliary file message$/) do
+  run_output.should start_with("[foo] ▸ Writing auxiliary file")
+end
+
+Then(/^I should see the process file message$/) do
+  run_output.should start_with("[foo] ▸ Processing")
+end
+
+Then(/^I should see the sign identity message$/) do
+  run_output.should start_with("▸ Signing identity")
 end

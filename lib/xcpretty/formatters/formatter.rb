@@ -21,13 +21,9 @@ module XCPretty
 
     def format_analyze(file_name, file_path, build_target);    EMPTY; end
     def format_compile(file_name, file_path, build_target);    EMPTY; end
-    def format_compile_command(compiler_command, file_path, build_target)
-      EMPTY
-    end
+    def format_compile_command(compiler_command, file_path, build_target); EMPTY; end
     def format_compile_metal(file_name, file_path, build_target); EMPTY; end
-    def format_compile_storyboard(file_name, file_path, build_target)
-      EMPTY
-    end
+    def format_compile_storyboard(file_name, file_path, build_target); EMPTY; end
     def format_compile_asset_catalog(file_path, build_target); EMPTY; end
     def format_compile_xib(file_name, file_path, build_target); EMPTY; end
     def format_copy_header_file(source, target, build_target); EMPTY; end
@@ -45,18 +41,12 @@ module XCPretty
     def format_process_pch(file, build_target);                EMPTY; end
     def format_process_pch_command(file_path, build_target);   EMPTY; end
     def format_phase_success(phase_name);                      EMPTY; end
-    def format_phase_script_execution(script_name, build_target)
-      EMPTY
-    end
-    def format_process_info_plist(file_name, file_path, build_target)
-      EMPTY
-    end
+    def format_phase_script_execution(script_name, build_target); EMPTY; end
+    def format_process_info_plist(file_name, file_path, build_target); EMPTY; end
     def format_codesign(file, build_target);                   EMPTY; end
     def format_preprocess(file, build_target);                 EMPTY; end
     def format_pbxcp(file, build_target);                      EMPTY; end
-    def format_script_rule_execution(file_name, file_path, build_target)
-      EMPTY
-    end
+    def format_script_rule_execution(file_name, file_path, build_target); EMPTY; end
     def format_shell_command(command, arguments);              EMPTY; end
     def format_test_run_started(name);                         EMPTY; end
     def format_test_run_finished(name, time);                  EMPTY; end
@@ -65,6 +55,18 @@ module XCPretty
     def format_touch(file_path, file_name, build_target);      EMPTY; end
     def format_tiffutil(file, build_target);                   EMPTY; end
     def format_write_file(file);                               EMPTY; end
+    def format_create_build_directory(directory_path, target, build_target); EMPTY; end
+    def format_mkdir(directory_name, target, build_target);    EMPTY; end
+    def format_process_product_packaging(entitlements, package_name, build_target); EMPTY; end
+    def format_ditto(source_file, target_file, build_target);  EMPTY; end
+    def format_compile_dtrace_script(file_name, build_target); EMPTY; end
+    def format_copy_png_file(source_file, target_file, build_target); EMPTY; end
+    def format_copy_tiff_file(source_file, target_file, build_target); EMPTY; end
+    def format_link_storyboards(target, build_target);         EMPTY; end
+    def format_note(content, build_target);                    EMPTY; end
+    def format_write_auxiliary_file(file_name, target_name, build_target); EMPTY; end
+    def format_processing_file(file_path, build_target);       EMPTY; end
+    def format_signing_identity(identity, build_target);       EMPTY; end
     def format_other(text)                                     EMPTY; end
 
     # COMPILER / LINKER ERRORS AND WARNINGS

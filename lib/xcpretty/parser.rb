@@ -4,7 +4,7 @@ module XCPretty
 
   module Matchers
     # $1 build_target
-    IN_TARGET_MATCHER = /\s\(in target:\s(.*)\)/.freeze
+    IN_TARGET_MATCHER = /\s\(in target:\s(.*)\)$/.freeze
 
     # @regex Captured groups
     # $1 file_path
@@ -52,7 +52,7 @@ module XCPretty
 
     # @regex Captured groups
     # $1 = file
-    CODESIGN_FRAMEWORK_MATCHER = /^CodeSign\s((?:\\ |[^ ])*.framework)\/Versions/.freeze
+    CODESIGN_FRAMEWORK_MATCHER = /^CodeSign\s(.*\.framework)\/Versions/.freeze
 
     # @regex Captured groups
     # $1 file_path
@@ -220,6 +220,57 @@ module XCPretty
 
     # @regex Captured groups
     WRITE_AUXILIARY_FILES = /^Write auxiliary files/.freeze
+
+    # @regex Captured groups
+    # $1 = directory name
+    CREATE_BUILD_DIRECTORY_MATCHER = /^CreateBuildDirectory\s(?:.*\/)?(.+)$/.freeze
+
+    # @regex Captured groups
+    # $1 = directory name
+    MKDIR_MATCHER = /^MkDir\s(?:.*\/)?(.+)$/.freeze
+
+    # @regex Captured groups
+    # $1 = entitlements
+    # $2 = package name
+    PROCESS_PRODUCT_PACKAGING_MATCHER = /^ProcessProductPackaging\s"((?:\\"|[^"])*)"\s.+\/(.+)$/.freeze
+
+    # @regex Captured groups
+    # $1 source file
+    # $2 target file
+    DITTO_MATCHER = /^Ditto\s((?:\\ |[^ ])+)\s((?:\\ |[^ ])+?)$/.freeze
+
+    # @regex Captured groups
+    # $1 file_name
+    COMPILE_DTRACE_SCRIPT_MATCHER = /^CompileDTraceScript\s.*\/(.+)$/.freeze
+
+    # @regex Captured groups
+    # $1 source file
+    # $2 target file
+    COPY_PNG_FILE_MATCHER = /^CopyPNGFile\s((?:\\ |[^ ])+)\s((?:\\ |[^ ])+)$/.freeze
+
+    # @regex Captured groups
+    # $1 source file
+    # $2 target file
+    COPY_TIFF_FILE_MATCHER = /^CopyTiffFile\s((?:\\ |[^ ])+)\s((?:\\ |[^ ])+)$/.freeze
+
+    # @regex Captured groups
+    LINK_STORYBOARDS_MATCHER = /^LinkStoryboards/.freeze
+
+    # @regex Captured groups
+    # $1 note content
+    NOTE_MATCHER = /^note: (.*)$/.freeze
+
+    # @regex Captured groups
+    # $1 auxiliary file name
+    WRITE_AUXILIARY_FILE_MATCHER = /^WriteAuxiliaryFile\s.*\/(.+)$/.freeze
+
+    # @regex Captured groups
+    # $1 file path
+    PROCESSING_FILE_MATCHER = /^Processing\s(.+)$/.freeze
+
+    # @regex Captured groups
+    # $1 identity
+    SIGNING_IDENTITY_MATCHER = /^Signing Identity:\s*"(.*)"$/.freeze
 
     module Warnings
       # $1 = file_path
@@ -495,6 +546,30 @@ module XCPretty
         formatter.format_write_file($1)
       when WRITE_AUXILIARY_FILES
         formatter.format_write_auxiliary_files
+      when CREATE_BUILD_DIRECTORY_MATCHER
+        formatter.format_create_build_directory($1, build_target)
+      when MKDIR_MATCHER
+        formatter.format_mkdir($1, build_target)
+      when PROCESS_PRODUCT_PACKAGING_MATCHER
+        formatter.format_process_product_packaging($1, $2, build_target)
+      when DITTO_MATCHER
+        formatter.format_ditto($1, $2, build_target)
+      when COMPILE_DTRACE_SCRIPT_MATCHER
+        formatter.format_compile_dtrace_script($1, build_target)
+      when COPY_PNG_FILE_MATCHER
+        formatter.format_copy_png_file($1, $2, build_target)
+      when COPY_TIFF_FILE_MATCHER
+        formatter.format_copy_tiff_file($1, $2, build_target)
+      when LINK_STORYBOARDS_MATCHER
+        formatter.format_link_storyboards(build_target)
+      when NOTE_MATCHER
+        formatter.format_note($1)
+      when WRITE_AUXILIARY_FILE_MATCHER
+        formatter.format_write_auxiliary_file($1, build_target)
+      when PROCESSING_FILE_MATCHER
+        formatter.format_processing_file($1, build_target)
+      when SIGNING_IDENTITY_MATCHER
+        formatter.format_signing_identity($1)
       when SHELL_COMMAND_MATCHER
         formatter.format_shell_command($1, $2)
       when GENERIC_WARNING_MATCHER

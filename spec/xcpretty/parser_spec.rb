@@ -145,9 +145,10 @@ module XCPretty
 
     it "parses CpHeader" do
       @formatter.should receive(:format_copy_header_file).with(
-        '/path/to/Header.h', '/some other/path/Header.h', nil
-)
-      @parser.parse('CpHeader /path/to/Header.h /some other/path/Header.h')
+        'ReactiveObjC/UISegmentedControl+RACSignalSupport.h', '/Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphonesimulator/ReactiveObjC.framework/Headers/UISegmentedControl+RACSignalSupport.h',
+        'foo'
+      )
+      @parser.parse(SAMPLE_CP_HEADER)
     end
 
     it "parses CpResource" do
@@ -323,6 +324,90 @@ module XCPretty
     it "parses write auxiliary files" do
       @formatter.should receive(:format_write_auxiliary_files)
       @parser.parse(SAMPLE_WRITE_AUXILIARY_FILES)
+    end
+
+    it "parses create build directory" do
+      @formatter.should receive(:format_create_build_directory).with("build", "foo")
+      @parser.parse(SAMPLE_CREATE_BUILD_DIRECTORY)
+    end
+
+    it "parses mkdir" do
+      @formatter.should receive(:format_mkdir).with("OnePasswordExtension.framework", "foo")
+      @parser.parse(SAMPLE_MKDIR)
+    end
+
+    it "parses process product packaging" do
+      @formatter.should receive(:format_process_product_packaging).with(
+        "Foo.entitlements",
+        "MobileApp.app.xcent",
+        "foo"
+      )
+      @parser.parse(SAMPLE_PROCESS_PRODUCT_PACKAGING)
+    end
+
+    it "parses ditto" do
+      @formatter.should receive(:format_ditto).with(
+        "/Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.build/Debug-iphoneos/Masonry\\ iOS.build/module.modulemap",
+        "/Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.framework/Modules/module.modulemap",
+        "foo"
+      )
+      @parser.parse(SAMPLE_DITTO)
+    end
+
+    it "parses compile DTrace script" do
+      @formatter.should receive(:format_compile_dtrace_script).with(
+        "RACCompoundDisposableProvider.d",
+        "foo"
+      )
+      @parser.parse(SAMPLE_COMPILE_DTRACE_SCRIPT)
+    end
+
+    it "parses copy PNG file" do
+      @formatter.should receive(:format_copy_png_file).with(
+        "/Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/MyTarget.bundle/IMAGE.PNG",
+        "FooBundle/IMAGE.PNG",
+        "foo"
+      )
+      @parser.parse(SAMPLE_COPY_PNG_FILE)
+    end
+
+    it "parses copy TIFF file" do
+      @formatter.should receive(:format_copy_tiff_file).with(
+        "/Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphonesimulator/MobileApp.app/PlugIns/MobileAppTests.xctest/ImageCompressorInput.tiff",
+        "MobileAppTests/Resources/ImageCompressorInput.tiff",
+        "foo"
+      )
+      @parser.parse(SAMPLE_COPY_TIFF_FILE)
+    end
+
+    it "parses link storyboasrds" do
+      @formatter.should receive(:format_link_storyboards).with("foo")
+      @parser.parse(SAMPLE_LINK_STORYBOARDS)
+    end
+
+    it "parses note" do
+      @formatter.should receive(:format_note).with(
+        "detected encoding of input file as Unicode (UTF-8)"
+      )
+      @parser.parse(SAMPLE_NOTE)
+    end
+
+    it "parses write auxiliary file" do
+      @formatter.should receive(:format_write_auxiliary_file).with("Specta.hmap", "foo")
+      @parser.parse(SAMPLE_WRITE_AUXILIARY_FILE)
+    end
+
+    it "parses processing" do
+      @formatter.should receive(:format_processing_file).with(
+        "/Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/test_packageBundle/de.lproj/Localizable.strings",
+        "foo"
+      )
+      @parser.parse(SAMPLE_FILE_PROCESSING)
+    end
+
+    it "parses signing identity" do
+      @formatter.should receive(:format_signing_identity).with("-")
+      @parser.parse(SAMPLE_SIGNING_IDENTITY)
     end
 
     it "parses TiffUtil" do
@@ -578,9 +663,9 @@ module XCPretty
     end
 
     context "warnings" do
-      it 'parses compiler warnings' do
-        @formatter.should receive(:format_warning).with("TEST 123")
-        @parser.parse("warning: TEST 123")
+      it 'parses generic warnings' do
+        @formatter.should receive(:format_warning).with("Mapping architecture arm64 to x86_64. Ensure that this target's Architectures and Valid Architectures build settings are configured correctly for the iOS Simulator platform. (in target 'Foo-StaticLib')")
+        @parser.parse(SAMPLE_GENERIC_WARNING)
       end
 
       it "parses compiling warnings" do
