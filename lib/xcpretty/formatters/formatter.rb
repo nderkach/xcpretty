@@ -1,4 +1,5 @@
-# encoding: utf-8
+# frozen_string_literal: true
+
 require 'xcpretty/ansi'
 require 'xcpretty/parser'
 
@@ -7,7 +8,7 @@ module XCPretty
   # Making a new formatter is easy.
   # Just make a subclass of Formatter, and override any of these methods.
   module FormatMethods
-    EMPTY = ''.freeze
+    EMPTY = ''
 
     def format_analyze(file_name, file_path);                  EMPTY; end
     def format_build_target(target, project, configuration);   EMPTY; end
@@ -57,7 +58,8 @@ module XCPretty
 
     # COMPILER / LINKER ERRORS AND WARNINGS
     def format_compile_error(file_name, file_path, reason,
-                             line, cursor);                    EMPTY; end
+                             line, cursor);                    EMPTY
+  end
     def format_error(message);                                 EMPTY; end
     def format_file_missing_error(error, file_path);           EMPTY; end
     def format_ld_warning(message);                            EMPTY; end
@@ -84,8 +86,7 @@ module XCPretty
       @parser = Parser.new(self)
     end
 
-    def finish
-    end
+    def finish; end
 
     # Override if you want to catch something specific with your regex
     def pretty_format(text)
@@ -104,11 +105,11 @@ module XCPretty
     # Will be printed by default. Override with '' if you don't want summary
     def format_test_summary(executed_message, failures_per_suite)
       failures = format_failures(failures_per_suite)
-      if failures.empty?
-        final_message = green(executed_message)
-      else
-        final_message = red(executed_message)
-      end
+      final_message = if failures.empty?
+                        green(executed_message)
+                      else
+                        red(executed_message)
+                      end
 
       text = [failures, final_message].join("\n\n\n").strip
       "\n\n#{text}"
@@ -147,7 +148,7 @@ module XCPretty
     end
 
     def format_ld_warning(reason)
-      "#{yellow(warning_symbol + ' ' + reason)}"
+      yellow(warning_symbol + ' ' + reason).to_s
     end
 
     def format_undefined_duplicate_symbols(message, body)
@@ -156,7 +157,7 @@ module XCPretty
     end
 
     def format_will_not_be_code_signed(message)
-      "#{yellow(warning_symbol + " " + message)}"
+      yellow(warning_symbol + " " + message).to_s
     end
 
     def format_other(text)
@@ -176,19 +177,14 @@ module XCPretty
       end.join("\n")
     end
 
-    def format_failure(f)
-      snippet = Snippet.from_filepath(f[:file_path])
-      output = "  #{f[:test_case]}, #{red(f[:reason])}"
-      output += "\n  #{cyan(f[:file_path])}"
+    def format_failure(failure)
+      snippet = Snippet.from_filepath(failure[:file_path])
+      output = "  #{failure[:test_case]}, #{red(failure[:reason])}"
+      output += "\n  #{cyan(failure[:file_path])}"
       return output if snippet.contents.empty?
 
       output += "\n  ```\n"
-      if @colorize
-        output += Syntax.highlight(snippet)
-      else
-        output += snippet.contents
-      end
-
+      output += @colorize ? Syntax.highlight(snippet) : snippet.contents
       output += "  ```"
       output
     end

@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 require 'xcpretty'
 require 'fixtures/constants'
@@ -53,9 +53,8 @@ module XCPretty
       reason = "format specifies type 'id' but the argument has type 'int' [-Wformat]"
 
       @formatter.format_compile_warning("file", "path/to/file", reason,
-%Q(    NSLog(@"alsdkflsakdj %@", 1);),
-%Q(                         ~~   ^)).should ==
-
+                                        %Q(    NSLog(@"alsdkflsakdj %@", 1);),
+                                        %Q(                         ~~   ^)).should ==
 %Q(
 #{@formatter.yellow('⚠️  ')}path/to/file: #{@formatter.yellow(reason)}
 
@@ -67,7 +66,7 @@ module XCPretty
 
     it "formats linker warnings" do
       @formatter.format_ld_warning("ld: embedded dylibs/frameworks only run on iOS 8 or later").should ==
-      "#{@formatter.yellow("⚠️  ld: embedded dylibs/frameworks only run on iOS 8 or later")}"
+      @formatter.yellow("⚠️  ld: embedded dylibs/frameworks only run on iOS 8 or later").to_s
     end
 
     it "formats linker undefined symbols by default" do
@@ -99,7 +98,7 @@ module XCPretty
     end
 
     it "formats will not be code signed warnings" do
-      @formatter.format_will_not_be_code_signed(SAMPLE_WILL_NOT_BE_CODE_SIGNED).should == "#{@formatter.yellow("⚠️  FrameworkName will not be code signed because its settings don't specify a development team.")}"
+      @formatter.format_will_not_be_code_signed(SAMPLE_WILL_NOT_BE_CODE_SIGNED).should == @formatter.yellow("⚠️  FrameworkName will not be code signed because its settings don't specify a development team.").to_s
     end
 
 

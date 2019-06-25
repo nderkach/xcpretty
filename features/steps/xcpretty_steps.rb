@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 When(/^I run xcpretty$/) do
-  @output = `bin/xcpretty 2>&1`
+  @run_output = `bin/xcpretty 2>&1`
 end
 
 When(/^I run xcpretty with (.*)$/) do |flags|
-  @output = `bin/xcpretty #{flags}`
+  @run_output = `bin/xcpretty #{flags}`
 end
 
 When(/^I run xcpretty over a big file$/) do
   start_time = Time.now
-  @output = `cat features/fixtures/xcodebuild.log | bin/xcpretty -c`
+  @run_output = `cat features/fixtures/xcodebuild.log | bin/xcpretty -c`
   @xcpretty_run_time = Time.now - start_time
 end
 

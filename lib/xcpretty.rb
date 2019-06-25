@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'xcpretty/version'
 require 'xcpretty/printer'
 require 'xcpretty/syntax'
@@ -19,6 +21,7 @@ module XCPretty
     source = File.read(path)
     klass = eval(source, nil, path)
     raise unless klass.is_a?(Class)
+
     klass
   end
 
@@ -30,7 +33,7 @@ module XCPretty
   end
 
   def self.exit_with_error(message)
-    $stderr.puts "[!] #{message}"
+    warn "[!] #{message}"
     exit 1
   end
 

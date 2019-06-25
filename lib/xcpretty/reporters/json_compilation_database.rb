@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module XCPretty
   class JSONCompilationDatabase < Reporter
 
@@ -30,7 +32,7 @@ module XCPretty
     end
 
     def format_compile_command(compiler_command, file_path)
-      directory = file_path.gsub("#{@current_path}", '').gsub(/\/$/, '')
+      directory = file_path.gsub(@current_path.to_s, '').gsub(/\/$/, '')
       directory = '/' if directory.empty?
 
       cmd = compiler_command

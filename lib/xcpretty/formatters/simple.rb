@@ -1,4 +1,5 @@
-# encoding: utf-8
+# frozen_string_literal: true
+
 require 'shellwords'
 
 module XCPretty
@@ -76,7 +77,7 @@ module XCPretty
     end
 
     def format_script_rule_execution(file_name, file_path)
-      format("Running script rule", "#{file_name}")
+      format("Running script rule", file_name.to_s)
     end
 
     def format_generate_dsym(dsym)

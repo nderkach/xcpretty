@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Then(/^I should see a failed test node in my report$/) do
   junit_report_root.elements.to_a.detect do |node|
     element = node.elements.to_a.first

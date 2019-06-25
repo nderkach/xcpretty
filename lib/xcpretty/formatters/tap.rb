@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module XCPretty
 
   class TestAnything < Knock
@@ -26,7 +28,7 @@ module XCPretty
     end
 
     def format_test_summary(executed_message, failures_per_suite)
-      counter > 0 ? "1..#{counter}" : ''
+      counter.positive? ? "1..#{counter}" : ''
     end
 
     private

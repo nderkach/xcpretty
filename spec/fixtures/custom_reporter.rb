@@ -1,4 +1,5 @@
-# encoding: utf-8
+# frozen_string_literal: true
+
 class DogeReporter < XCPretty::Reporter
 
   def format_failing_test(suite, test_case, reason, file)

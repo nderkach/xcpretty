@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 module XCPretty
   module ANSI
 
     attr_accessor :colorize
 
-    FORMATTED_MATCHER = %r{\e\[(\d+)[;]?(\d+)?m(.*)\e\[0m}
+    FORMATTED_MATCHER = %r{\e\[(\d+)[;]?(\d+)?m(.*)\e\[0m}.freeze
 
     EFFECT = {
       reset: '0',
       bold: '1',
       underline: '4'
-    }
+    }.freeze
 
     COLORS = {
       black: '30',
@@ -20,7 +22,7 @@ module XCPretty
       cyan: '36',
       white: '37',
       plain: '39'
-    }
+    }.freeze
 
     def colorize?
       !!@colorize
@@ -63,6 +65,7 @@ module XCPretty
 
     def ansi_parse(text, color, effect=nil)
       return text unless colorize?
+
       colors_code = COLORS[color] || ''
       effect_code = EFFECT[effect] ? ';' + EFFECT[effect] : ''
       "\e[#{colors_code}#{effect_code}m#{text}\e[#{EFFECT[:reset]}m"

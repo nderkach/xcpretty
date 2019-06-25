@@ -1,4 +1,5 @@
-# encoding: utf-8
+# frozen_string_literal: true
+
 class EmojiFormatter < XCPretty::Formatter
 
   def format_compile(file_name, file_path)

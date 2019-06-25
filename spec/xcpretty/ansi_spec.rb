@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "xcpretty/ansi"
 
 module XCPretty
@@ -39,7 +41,7 @@ module XCPretty
       end
 
       it "can list known applied effects" do
-        applied_effects("\e[33;1m#{@text}\e[0m").should == [:yellow, :bold]
+        applied_effects("\e[33;1m#{@text}\e[0m").should == %i[yellow bold]
       end
     end
   end

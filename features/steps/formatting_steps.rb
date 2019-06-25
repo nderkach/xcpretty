@@ -1,4 +1,5 @@
-# encoding: utf-8
+# frozen_string_literal: true
+
 Given(/^I have a file to compile$/) do
   add_run_input SAMPLE_COMPILE
 end
@@ -189,7 +190,7 @@ When(/^I pipe to xcpretty with "(.*?)"$/) do |flags|
 end
 
 When(/^I pipe to xcpretty with a custom formatter$/) do
-  formatter_path = File.expand_path('../../../spec/fixtures/custom_formatter.rb', __FILE__)
+  formatter_path = File.expand_path('../../spec/fixtures/custom_formatter.rb', __dir__)
   run_xcpretty("-f #{formatter_path}")
 end
 
@@ -361,11 +362,11 @@ Then(/^I should see the name of a measuring test$/) do
 end
 
 Then(/^I should see the test time in yellow$/) do
-  run_output.should include("#{yellow("0.026")}")
+  run_output.should include(yellow("0.026").to_s)
 end
 
 Then(/^I should see the test time in red$/) do
-  run_output.should include("#{red("0.101")}")
+  run_output.should include(red("0.101").to_s)
 end
 
 Then(/^I should see text matching "(.*?)"$/) do |text|

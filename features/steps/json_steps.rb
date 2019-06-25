@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Given(/^some big input$/) do
   add_run_input File.open('features/fixtures/xcodebuild.log', 'r').read
 end

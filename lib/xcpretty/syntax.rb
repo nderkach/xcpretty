@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 begin
   require 'rouge'
 rescue LoadError
-  # rubocop:disable Style/ConstantName
+  # rubocop:disable Naming/ConstantName
   Rouge = nil
-  # rubocop:enable Style/ConstantName
+  # rubocop:enable Naming/ConstantName
 end
 
 require 'xcpretty/snippet'
@@ -12,20 +14,22 @@ module XCPretty
   module Syntax
     def self.highlight(snippet)
       return snippet.contents unless Rouge
+
       highlight_with_formatter(snippet, Rouge::Formatters::Terminal256.new)
     end
 
     def self.highlight_html(snippet)
       return snippet.contents unless Rouge
+
       highlight_with_formatter(snippet, Rouge::Formatters::HTML.new)
     end
 
     def self.highlight_with_formatter(snippet, formatter)
-      if snippet.file_path.include?(':')
-        filename = snippet.file_path.rpartition(':').first
-      else
-        filename = snippet.file_path
-      end
+      filename = if snippet.file_path.include?(':')
+                   snippet.file_path.rpartition(':').first
+                 else
+                   snippet.file_path
+                 end
 
       lexer = find_lexer(filename, snippet.contents)
       if lexer
