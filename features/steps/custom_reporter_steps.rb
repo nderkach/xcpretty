@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Then(/^I should see a passing test in my custom report$/) do
   custom_report.should include("WOW such PASS.")
 end

@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 require 'xcpretty'
 require 'xcpretty/parser'
@@ -133,7 +133,8 @@ module XCPretty
 
     it 'parses CopyPlistFile' do
       @formatter.should receive(:format_copy_plist_file).with(
-        '/path/to/Some.plist', '/some other/File.plist')
+        '/path/to/Some.plist', '/some other/File.plist'
+)
       @parser.parse('CopyPlistFile /path/to/Some.plist /some other/File.plist')
     end
 
@@ -144,7 +145,8 @@ module XCPretty
 
     it "parses CpHeader" do
       @formatter.should receive(:format_copy_header_file).with(
-        '/path/to/Header.h', '/some other/path/Header.h')
+        '/path/to/Header.h', '/some other/path/Header.h'
+)
       @parser.parse('CpHeader /path/to/Header.h /some other/path/Header.h')
     end
 
@@ -297,20 +299,23 @@ module XCPretty
 
     it 'parses any indented command' do
       @formatter.should receive(:format_shell_command).with(
-        '/bin/rm', '-rf /bin /usr /Users')
+        '/bin/rm', '-rf /bin /usr /Users'
+)
       @parser.parse('    /bin/rm -rf /bin /usr /Users')
     end
 
     it "parses Touch" do
       @formatter.should receive(:format_touch).with(
         '/Users/musalj/Library/Developer/Xcode/DerivedData/Alcatraz-aobuxcinaqyzjugrnxjjhfzgwaou/Build/Products/Debug/Alcatraz Tests.octest',
-        'Alcatraz Tests.octest')
+        'Alcatraz Tests.octest'
+)
       @parser.parse(SAMPLE_TOUCH)
     end
 
     it "parses write file" do
       @formatter.should receive(:format_write_file).with(
-        '/Users/me/myproject/Build/Intermediates/Pods.build/Debug-iphonesimulator/Pods-AFNetworking.build/Objects-normal/x86_64/Pods-AFNetworking.LinkFileList')
+        '/Users/me/myproject/Build/Intermediates/Pods.build/Debug-iphonesimulator/Pods-AFNetworking.build/Objects-normal/x86_64/Pods-AFNetworking.LinkFileList'
+)
       @parser.parse(SAMPLE_WRITE_FILE)
     end
 
@@ -415,7 +420,8 @@ module XCPretty
           "/Users/musalj/code/OSS/SampleApp/SampleTest.m:12:59",
           "expected identifier",
           "                [[thread.lastMessage should] equal:thread.];",
-          "                                                          ^")
+          "                                                          ^"
+)
         SAMPLE_COMPILE_ERROR.each_line do |line|
           @parser.parse(line)
         end
@@ -428,11 +434,11 @@ module XCPretty
           "'SomeRandomHeader.h' file not found",
           '#import "SomeRandomHeader.h"',
           '        ^'
-        # For now, it's probably not worth to provide the import stack
-        # It'd require more state, and not sure if it'd be any useful
-        # %Q(In file included from /Users/musalj/code/OSS/SampleApp/Pods/SuperCoolPod/SuperAwesomeClass.m:12:
-        # In file included from /Users/musalj/code/OSS/SampleApp/Pods/../LessCoolPod/LessCoolClass.h:9:
-        # In file included from /Users/musalj/code/OSS/SampleApp/Pods/../LessCoolPod/EvenLessCoolClass.h:10:)
+          # For now, it's probably not worth to provide the import stack
+          # It'd require more state, and not sure if it'd be any useful
+          # %Q(In file included from /Users/musalj/code/OSS/SampleApp/Pods/SuperCoolPod/SuperAwesomeClass.m:12:
+          # In file included from /Users/musalj/code/OSS/SampleApp/Pods/../LessCoolPod/LessCoolClass.h:9:
+          # In file included from /Users/musalj/code/OSS/SampleApp/Pods/../LessCoolPod/EvenLessCoolClass.h:10:)
         )
         SAMPLE_FATAL_COMPILE_ERROR.each_line do |line|
           @parser.parse(line)
@@ -469,7 +475,8 @@ module XCPretty
           '/Users/musalj/code/OSS/ObjectiveSugar/Example/ObjectiveSugarTests/NSSetTests.m:93:16',
           "no visible @interface for 'NSArray' declares the selector 'shoulds'",
           '            }] shoulds] equal:@[ @"F458 Italia", @"Testarossa" ]];',
-          '            ~~ ^~~~~~~')
+          '            ~~ ^~~~~~~'
+)
         SAMPLE_COMPILE_ERROR_WITH_TILDES.each_line do |line|
           @parser.parse(line)
         end
@@ -581,7 +588,8 @@ module XCPretty
           "/Users/supermarin/code/oss/ObjectiveSugar/Example/ObjectiveSugar/AppDelegate.m:19:31",
           "format specifies type 'id' but the argument has type 'int' [-Wformat]",
           "    NSLog(@\"I HAZ %@ CATS\", 1);",
-          "                         ~~   ^")
+          "                         ~~   ^"
+)
         SAMPLE_FORMAT_WARNING.each_line do |line|
           @parser.parse(line)
         end

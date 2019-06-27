@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rspec' unless Object.const_defined? :RSpec
 
 RSpec::Matchers.define :be_colored do |expected|
 
   def effects_string(actual)
     effects = applied_effects(actual).join(' and ')
-    effects.length > 0 ? effects : "unformatted"
+    !effects.empty? ? effects : "unformatted"
   end
 
   match do |actual|

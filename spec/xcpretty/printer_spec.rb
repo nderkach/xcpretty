@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "xcpretty/printer"
 require 'xcpretty/formatters/formatter'
 require 'xcpretty/formatters/simple'

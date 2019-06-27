@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'xcpretty/syntax'
 
 module XCPretty

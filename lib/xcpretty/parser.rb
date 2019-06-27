@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 module XCPretty
 
@@ -7,257 +7,257 @@ module XCPretty
     # @regex Captured groups
     # $1 file_path
     # $2 file_name
-    ANALYZE_MATCHER = /^Analyze(?:Shallow)?\s(.*\/(.*\.(?:m|mm|cc|cpp|c|cxx)))\s*/
+    ANALYZE_MATCHER = /^Analyze(?:Shallow)?\s(.*\/(.*\.(?:m|mm|cc|cpp|c|cxx)))\s*/.freeze
 
     # @regex Captured groups
     # $1 target
     # $2 project
     # $3 configuration
-    BUILD_TARGET_MATCHER = /^=== BUILD TARGET\s(.*)\sOF PROJECT\s(.*)\sWITH.*CONFIGURATION\s(.*)\s===/
+    BUILD_TARGET_MATCHER = /^=== BUILD TARGET\s(.*)\sOF PROJECT\s(.*)\sWITH.*CONFIGURATION\s(.*)\s===/.freeze
 
     # @regex Captured groups
     # $1 target
     # $2 project
     # $3 configuration
-    AGGREGATE_TARGET_MATCHER = /^=== BUILD AGGREGATE TARGET\s(.*)\sOF PROJECT\s(.*)\sWITH.*CONFIGURATION\s(.*)\s===/
+    AGGREGATE_TARGET_MATCHER = /^=== BUILD AGGREGATE TARGET\s(.*)\sOF PROJECT\s(.*)\sWITH.*CONFIGURATION\s(.*)\s===/.freeze
 
     # @regex Captured groups
     # $1 target
     # $2 project
     # $3 configuration
-    ANALYZE_TARGET_MATCHER = /^=== ANALYZE TARGET\s(.*)\sOF PROJECT\s(.*)\sWITH.*CONFIGURATION\s(.*)\s===/
+    ANALYZE_TARGET_MATCHER = /^=== ANALYZE TARGET\s(.*)\sOF PROJECT\s(.*)\sWITH.*CONFIGURATION\s(.*)\s===/.freeze
 
     # @regex Nothing returned here for now
-    CHECK_DEPENDENCIES_MATCHER = /^Check dependencies/
+    CHECK_DEPENDENCIES_MATCHER = /^Check dependencies/.freeze
 
     # @regex Captured groups
     # $1 command path
     # $2 arguments
-    SHELL_COMMAND_MATCHER = /^\s{4}(cd|setenv|(?:[\w\/:\\\s\-.]+?\/)?[\w\-]+)\s(.*)$/
+    SHELL_COMMAND_MATCHER = /^\s{4}(cd|setenv|(?:[\w\/:\\\s\-.]+?\/)?[\w\-]+)\s(.*)$/.freeze
 
     # @regex Nothing returned here for now
-    CLEAN_REMOVE_MATCHER = /^Clean.Remove/
+    CLEAN_REMOVE_MATCHER = /^Clean.Remove/.freeze
 
     # @regex Captured groups
     # $1 target
     # $2 project
     # $3 configuration
-    CLEAN_TARGET_MATCHER = /^=== CLEAN TARGET\s(.*)\sOF PROJECT\s(.*)\sWITH CONFIGURATION\s(.*)\s===/
+    CLEAN_TARGET_MATCHER = /^=== CLEAN TARGET\s(.*)\sOF PROJECT\s(.*)\sWITH CONFIGURATION\s(.*)\s===/.freeze
 
     # @regex Captured groups
     # $1 = file
-    CODESIGN_MATCHER = /^CodeSign\s((?:\\ |[^ ])*)$/
+    CODESIGN_MATCHER = /^CodeSign\s((?:\\ |[^ ])*)$/.freeze
 
     # @regex Captured groups
     # $1 = file
-    CODESIGN_FRAMEWORK_MATCHER = /^CodeSign\s((?:\\ |[^ ])*.framework)\/Versions/
+    CODESIGN_FRAMEWORK_MATCHER = /^CodeSign\s((?:\\ |[^ ])*.framework)\/Versions/.freeze
 
     # @regex Captured groups
     # $1 file_path
     # $2 file_name (e.g. KWNull.m)
-    COMPILE_MATCHER = /^Compile[\w]+\s.+?\s((?:\\ |[^ ])+\/((?:\\ |[^ ])+\.(?:m|mm|c|cc|cpp|cxx|swift)))\s.*/
+    COMPILE_MATCHER = /^Compile[\w]+\s.+?\s((?:\\ |[^ ])+\/((?:\\ |[^ ])+\.(?:m|mm|c|cc|cpp|cxx|swift)))\s.*/.freeze
 
     # @regex Captured groups
     # $1 compiler_command
     # $2 file_path
-    COMPILE_COMMAND_MATCHER = /^\s*(.*clang\s.*\s\-c\s(.*\.(?:m|mm|c|cc|cpp|cxx))\s.*\.o)$/
+    COMPILE_COMMAND_MATCHER = /^\s*(.*clang\s.*\s\-c\s(.*\.(?:m|mm|c|cc|cpp|cxx))\s.*\.o)$/.freeze
 
     # @regex Captured groups
     # $1 file_path
     # $2 file_name (e.g. KWNull.metal)
-    COMPILE_METAL_MATCHER = /^CompileMetalFile\s((?:\\ |[^ ])+\/((?:\\ |[^ ])+\.(?:metal)))\s.*/
+    COMPILE_METAL_MATCHER = /^CompileMetalFile\s((?:\\ |[^ ])+\/((?:\\ |[^ ])+\.(?:metal)))\s.*/.freeze
 
     # @regex Captured groups
     # $1 file_path
     # $2 file_name (e.g. MainMenu.xib)
-    COMPILE_XIB_MATCHER = /^CompileXIB\s(.*\/(.*\.xib))/
+    COMPILE_XIB_MATCHER = /^CompileXIB\s(.*\/(.*\.xib))/.freeze
 
     # @regex Captured groups
     # $1 file_path
     # $2 file_name (e.g. Main.storyboard)
-    COMPILE_STORYBOARD_MATCHER = /^CompileStoryboard\s(.*\/([^\/].*\.storyboard))/
+    COMPILE_STORYBOARD_MATCHER = /^CompileStoryboard\s(.*\/([^\/].*\.storyboard))/.freeze
 
     # @regex Captured groups
     # $1 file_path
-    COMPILE_ASSET_CATALOG_MATCHER = /^CompileAssetCatalog\s(?:\\ |[^ ])+\s((?:\\ |[^ ])+\.xcassets)/
+    COMPILE_ASSET_CATALOG_MATCHER = /^CompileAssetCatalog\s(?:\\ |[^ ])+\s((?:\\ |[^ ])+\.xcassets)/.freeze
 
     # @regex Captured groups
     # $1 source file
     # $2 target file
-    COPY_HEADER_MATCHER = /^CpHeader\s(.*\.h)\s(.*\.h)/
+    COPY_HEADER_MATCHER = /^CpHeader\s(.*\.h)\s(.*\.h)/.freeze
 
     # @regex Captured groups
     # $1 source file
     # $2 target file
-    COPY_PLIST_MATCHER = /^CopyPlistFile\s(.*\.plist)\s(.*\.plist)/
+    COPY_PLIST_MATCHER = /^CopyPlistFile\s(.*\.plist)\s(.*\.plist)/.freeze
 
     # $1 file
-    COPY_STRINGS_MATCHER = /^CopyStringsFile.*\/(.*.strings)/
+    COPY_STRINGS_MATCHER = /^CopyStringsFile.*\/(.*.strings)/.freeze
 
     # @regex Captured groups
     # $1 resource
-    CPRESOURCE_MATCHER = /^CpResource\s(.*)\s\//
+    CPRESOURCE_MATCHER = /^CpResource\s(.*)\s\//.freeze
 
     # @regex Captured groups
     #
-    EXECUTED_MATCHER = /^\s*Executed/
+    EXECUTED_MATCHER = /^\s*Executed/.freeze
 
     # @regex Captured groups
     # $1 = file
     # $2 = test_suite
     # $3 = test_case
     # $4 = reason
-    FAILING_TEST_MATCHER = /^\s*(.+:\d+):\serror:\s[\+\-]\[(.*)\s(.*)\]\s:(?:\s'.*'\s\[FAILED\],)?\s(.*)/
+    FAILING_TEST_MATCHER = /^\s*(.+:\d+):\serror:\s[\+\-]\[(.*)\s(.*)\]\s:(?:\s'.*'\s\[FAILED\],)?\s(.*)/.freeze
 
     # @regex Captured groups
     # $1 = file
     # $2 = reason
-    UI_FAILING_TEST_MATCHER = /^\s{4}t = \s+\d+\.\d+s\s+Assertion Failure: (.*:\d+): (.*)$/
+    UI_FAILING_TEST_MATCHER = /^\s{4}t = \s+\d+\.\d+s\s+Assertion Failure: (.*:\d+): (.*)$/.freeze
 
     # @regex Captured groups
-    RESTARTING_TESTS_MATCHER = /^Restarting after unexpected exit or crash in.+$/
+    RESTARTING_TESTS_MATCHER = /^Restarting after unexpected exit or crash in.+$/.freeze
 
     # @regex Captured groups
     # $1 = dsym
-    GENERATE_DSYM_MATCHER = /^GenerateDSYMFile \/.*\/(.*\.dSYM)/
+    GENERATE_DSYM_MATCHER = /^GenerateDSYMFile \/.*\/(.*\.dSYM)/.freeze
 
     # @regex Captured groups
     # $1 = library
-    LIBTOOL_MATCHER = /^Libtool.*\/(.*\.a)/
+    LIBTOOL_MATCHER = /^Libtool.*\/(.*\.a)/.freeze
 
     # @regex Captured groups
     # $1 = target
     # $2 = build_variants (normal, profile, debug)
     # $3 = architecture
-    LINKING_MATCHER = /^Ld \/?.*\/(.*?) (.*) (.*)$/
+    LINKING_MATCHER = /^Ld \/?.*\/(.*?) (.*) (.*)$/.freeze
 
     # @regex Captured groups
     # $1 = target
-    LINKING_METAL_MATCHER = /^MetalLink \/?.*\/(.*?)$/
+    LINKING_METAL_MATCHER = /^MetalLink \/?.*\/(.*?)$/.freeze
 
     # @regex Captured groups
     # $1 = suite
     # $2 = test_case
     # $3 = time
-    TEST_CASE_PASSED_MATCHER = /^\s*Test Case\s'-\[(.*)\s(.*)\]'\spassed\s\((\d*\.\d{3})\sseconds\)/
+    TEST_CASE_PASSED_MATCHER = /^\s*Test Case\s'-\[(.*)\s(.*)\]'\spassed\s\((\d*\.\d{3})\sseconds\)/.freeze
 
     # @regex Captured groups
     # $1 = suite
     # $2 = test_case
-    TEST_CASE_STARTED_MATCHER = /^Test Case '-\[(.*) (.*)\]' started.$/
+    TEST_CASE_STARTED_MATCHER = /^Test Case '-\[(.*) (.*)\]' started.$/.freeze
 
     # @regex Captured groups
     # $1 = suite
     # $2 = test_case
-    TEST_CASE_PENDING_MATCHER = /^Test Case\s'-\[(.*)\s(.*)PENDING\]'\spassed/
+    TEST_CASE_PENDING_MATCHER = /^Test Case\s'-\[(.*)\s(.*)PENDING\]'\spassed/.freeze
 
     # @regex Captured groups
     # $1 = suite
     # $2 = test_case
     # $3 = time
-    TEST_CASE_MEASURED_MATCHER = /^[^:]*:[^:]*:\sTest Case\s'-\[(.*)\s(.*)\]'\smeasured\s\[Time,\sseconds\]\saverage:\s(\d*\.\d{3}),/
+    TEST_CASE_MEASURED_MATCHER = /^[^:]*:[^:]*:\sTest Case\s'-\[(.*)\s(.*)\]'\smeasured\s\[Time,\sseconds\]\saverage:\s(\d*\.\d{3}),/.freeze
 
-    PHASE_SUCCESS_MATCHER = /^\*\*\s(.*)\sSUCCEEDED\s\*\*/
+    PHASE_SUCCESS_MATCHER = /^\*\*\s(.*)\sSUCCEEDED\s\*\*/.freeze
 
     # @regex Captured groups
     # $1 = script_name
-    PHASE_SCRIPT_EXECUTION_MATCHER = /^PhaseScriptExecution\s((\\\ |\S)*)\s/
+    PHASE_SCRIPT_EXECUTION_MATCHER = /^PhaseScriptExecution\s((\\\ |\S)*)\s/.freeze
 
     # @regex Captured groups
     # $1 = file
-    PROCESS_PCH_MATCHER = /^ProcessPCH\s.*\s(.*.pch)/
+    PROCESS_PCH_MATCHER = /^ProcessPCH\s.*\s(.*.pch)/.freeze
 
     # @regex Captured groups
     # $1 file_path
-    PROCESS_PCH_COMMAND_MATCHER = /^\s*.*\/usr\/bin\/clang\s.*\s\-c\s(.*)\s\-o\s.*/
+    PROCESS_PCH_COMMAND_MATCHER = /^\s*.*\/usr\/bin\/clang\s.*\s\-c\s(.*)\s\-o\s.*/.freeze
 
     # @regex Captured groups
     # $1 = file
-    PREPROCESS_MATCHER = /^Preprocess\s(?:(?:\\ |[^ ])*)\s((?:\\ |[^ ])*)$/
+    PREPROCESS_MATCHER = /^Preprocess\s(?:(?:\\ |[^ ])*)\s((?:\\ |[^ ])*)$/.freeze
 
     # @regex Captured groups
     # $1 = file
-    PBXCP_MATCHER = /^PBXCp\s((?:\\ |[^ ])*)/
+    PBXCP_MATCHER = /^PBXCp\s((?:\\ |[^ ])*)/.freeze
 
     # @regex Captured groups
     # $1 = file
-    PROCESS_INFO_PLIST_MATCHER = /^ProcessInfoPlistFile\s.*\.plist\s(.*\/+(.*\.plist))/
+    PROCESS_INFO_PLIST_MATCHER = /^ProcessInfoPlistFile\s.*\.plist\s(.*\/+(.*\.plist))/.freeze
 
     # @regex Captured groups
     # $1 file_path
-    RULE_SCRIPT_EXECUTION_MATCHER = /^RuleScriptExecution\s(.*?[^\\])\s/
+    RULE_SCRIPT_EXECUTION_MATCHER = /^RuleScriptExecution\s(.*?[^\\])\s/.freeze
 
     # @regex Captured groups
     # $1 = suite
     # $2 = time
-    TESTS_RUN_COMPLETION_MATCHER = /^\s*Test Suite '(?:.*\/)?(.*[ox]ctest.*)' (finished|passed|failed) at (.*)/
+    TESTS_RUN_COMPLETION_MATCHER = /^\s*Test Suite '(?:.*\/)?(.*[ox]ctest.*)' (finished|passed|failed) at (.*)/.freeze
 
     # @regex Captured groups
     # $1 = suite
     # $2 = time
-    TEST_SUITE_STARTED_MATCHER = /^\s*Test Suite '(?:.*\/)?(.*[ox]ctest.*)' started at(.*)/
+    TEST_SUITE_STARTED_MATCHER = /^\s*Test Suite '(?:.*\/)?(.*[ox]ctest.*)' started at(.*)/.freeze
 
     # @regex Captured groups
     # $1 test suite name
-    TEST_SUITE_START_MATCHER = /^\s*Test Suite '(.*)' started at/
+    TEST_SUITE_START_MATCHER = /^\s*Test Suite '(.*)' started at/.freeze
 
     # @regex Captured groups
     # $1 file_name
-    TIFFUTIL_MATCHER = /^TiffUtil\s(.*)/
+    TIFFUTIL_MATCHER = /^TiffUtil\s(.*)/.freeze
 
     # @regex Captured groups
     # $1 file_path
     # $2 file_name
-    TOUCH_MATCHER = /^Touch\s(.*\/(.+))/
+    TOUCH_MATCHER = /^Touch\s(.*\/(.+))/.freeze
 
     # @regex Captured groups
     # $1 file_path
-    WRITE_FILE_MATCHER = /^write-file\s(.*)/
+    WRITE_FILE_MATCHER = /^write-file\s(.*)/.freeze
 
     # @regex Captured groups
-    WRITE_AUXILIARY_FILES = /^Write auxiliary files/
+    WRITE_AUXILIARY_FILES = /^Write auxiliary files/.freeze
 
     module Warnings
       # $1 = file_path
       # $2 = file_name
       # $3 = reason
-      COMPILE_WARNING_MATCHER = /^(\/.+\/(.*):.*:.*):\swarning:\s(.*)$/
+      COMPILE_WARNING_MATCHER = /^(\/.+\/(.*):.*:.*):\swarning:\s(.*)$/.freeze
 
       # $1 = ld prefix
       # $2 = warning message
-      LD_WARNING_MATCHER = /^(ld: )warning: (.*)/
+      LD_WARNING_MATCHER = /^(ld: )warning: (.*)/.freeze
 
       # @regex Captured groups
       # $1 = whole warning
-      GENERIC_WARNING_MATCHER = /^warning:\s(.*)$/
+      GENERIC_WARNING_MATCHER = /^warning:\s(.*)$/.freeze
 
       # @regex Captured groups
       # $1 = whole warning
-      WILL_NOT_BE_CODE_SIGNED_MATCHER = /^(.* will not be code signed because .*)$/
+      WILL_NOT_BE_CODE_SIGNED_MATCHER = /^(.* will not be code signed because .*)$/.freeze
     end
 
     module Runtime
       # $1 = reason
-      THREAD_SANITIZER_HEADER_MATCHER = /^.*WARNING: ThreadSanitizer: (.*)$/
+      THREAD_SANITIZER_HEADER_MATCHER = /^.*WARNING: ThreadSanitizer: (.*)$/.freeze
 
       # $1 = reason
-      ADDRESS_SANITIZER_HEADER_MATCHER = /^[\d=]*ERROR: AddressSanitizer: (.*)$/
+      ADDRESS_SANITIZER_HEADER_MATCHER = /^[\d=]*ERROR: AddressSanitizer: (.*)$/.freeze
 
       # $1 = file
       # $2 = reason
-      UNDEFINED_BEHAVIOR_SANITIZER_HEADER_MATCHER = /^(?:\/.+\/(.*:.*:.*)): runtime error:\s(.*)$/
+      UNDEFINED_BEHAVIOR_SANITIZER_HEADER_MATCHER = /^(?:\/.+\/(.*:.*:.*)): runtime error:\s(.*)$/.freeze
 
       # $1 = reason
-      THREAD_SANITIZER_SUMMARY_MATCHER = /^.*SUMMARY: ThreadSanitizer: (.*)$/
+      THREAD_SANITIZER_SUMMARY_MATCHER = /^.*SUMMARY: ThreadSanitizer: (.*)$/.freeze
 
       # $1 = reason
-      ADDRESS_SANITIZER_SUMMARY_MATCHER = /^.*SUMMARY: AddressSanitizer: (.*)$/
+      ADDRESS_SANITIZER_SUMMARY_MATCHER = /^.*SUMMARY: AddressSanitizer: (.*)$/.freeze
 
       UNDEFINED_BEHAVIOR_SANITIZER_SUMMARY_MATCHER = UNDEFINED_BEHAVIOR_SANITIZER_HEADER_MATCHER
 
-      THREAD_SANITIZER_FOOTER_MATCHER = /^.*SUMMARY: ThreadSanitizer: (.*)$/
+      THREAD_SANITIZER_FOOTER_MATCHER = /^.*SUMMARY: ThreadSanitizer: (.*)$/.freeze
 
-      ADDRESS_SANITIZER_FOOTER_MATCHER = /^[\d=]*ABORTING$/
+      ADDRESS_SANITIZER_FOOTER_MATCHER = /^[\d=]*ABORTING$/.freeze
 
       UNDEFINED_BEHAVIOR_SANITIZER_FOOTER_MATCHER = UNDEFINED_BEHAVIOR_SANITIZER_HEADER_MATCHER
     end
@@ -265,87 +265,87 @@ module XCPretty
     module Errors
       # @regex Captured groups
       # $1 = whole error
-      CLANG_ERROR_MATCHER = /^(clang: error:.*)$/
+      CLANG_ERROR_MATCHER = /^(clang: error:.*)$/.freeze
 
       # @regex Captured groups
       # $1 = whole error
-      CHECK_DEPENDENCIES_ERRORS_MATCHER = /^(Code\s?Sign error:.*|Code signing is required for product type .* in SDK .*|No profile matching .* found:.*|Provisioning profile .* doesn't .*|Swift is unavailable on .*|.?Use Legacy Swift Language Version.*)$/
+      CHECK_DEPENDENCIES_ERRORS_MATCHER = /^(Code\s?Sign error:.*|Code signing is required for product type .* in SDK .*|No profile matching .* found:.*|Provisioning profile .* doesn't .*|Swift is unavailable on .*|.?Use Legacy Swift Language Version.*)$/.freeze
 
       # @regex Captured groups
       # $1 = whole error
-      PROVISIONING_PROFILE_REQUIRED_MATCHER = /^(.*requires a provisioning profile.*)$/
+      PROVISIONING_PROFILE_REQUIRED_MATCHER = /^(.*requires a provisioning profile.*)$/.freeze
 
       # @regex Captured groups
       # $1 = whole error
-      NO_CERTIFICATE_MATCHER = /^(No certificate matching.*)$/
+      NO_CERTIFICATE_MATCHER = /^(No certificate matching.*)$/.freeze
 
       # @regex Captured groups
       # $1 = file_path
       # $2 = file_name
       # $3 = reason
-      COMPILE_ERROR_MATCHER = /^(\/.+\/(.*):.*:.*):\s(?:fatal\s)?error:\s(.*)$/
+      COMPILE_ERROR_MATCHER = /^(\/.+\/(.*):.*:.*):\s(?:fatal\s)?error:\s(.*)$/.freeze
 
       # @regex Captured groups
       # $1 cursor (with whitespaces and tildes)
-      CURSOR_MATCHER = /^([\s~]*\^[\s~]*)$/
+      CURSOR_MATCHER = /^([\s~]*\^[\s~]*)$/.freeze
 
       # @regex Captured groups
       # $1 = whole error.
       # it varies a lot, not sure if it makes sense to catch everything separately
-      FATAL_ERROR_MATCHER = /^(fatal error:.*)$/
+      FATAL_ERROR_MATCHER = /^(fatal error:.*)$/.freeze
 
       # @regex Captured groups
       # $1 = whole error.
       # $2 = file path
-      FILE_MISSING_ERROR_MATCHER = /^<unknown>:0:\s(error:\s.*)\s'(\/.+\/.*\..*)'$/
+      FILE_MISSING_ERROR_MATCHER = /^<unknown>:0:\s(error:\s.*)\s'(\/.+\/.*\..*)'$/.freeze
 
       # @regex Captured groups
       # $1 = whole error
-      LD_ERROR_MATCHER = /^(ld:.*)/
+      LD_ERROR_MATCHER = /^(ld:.*)/.freeze
 
       # @regex Captured groups
       # $1 file path
-      LINKER_DUPLICATE_SYMBOLS_LOCATION_MATCHER = /^\s+(\/.*\.o[\)]?)$/
+      LINKER_DUPLICATE_SYMBOLS_LOCATION_MATCHER = /^\s+(\/.*\.o[\)]?)$/.freeze
 
       # @regex Captured groups
       # $1 reason
-      LINKER_DUPLICATE_SYMBOLS_HEADER_MATCHER = /^(duplicate symbol .*):$/
+      LINKER_DUPLICATE_SYMBOLS_HEADER_MATCHER = /^(duplicate symbol .*):$/.freeze
 
       # @regex Captured groups
       # $1 reason
-      LINKER_DUPLICATE_SYMBOLS_FOOTER_MATCHER = /^(ld: .* duplicate symbol(?:s)? for architecture .*)/
+      LINKER_DUPLICATE_SYMBOLS_FOOTER_MATCHER = /^(ld: .* duplicate symbol(?:s)? for architecture .*)/.freeze
 
       # @regex Captured groups
       # $1 symbol location
-      LINKER_UNDEFINED_SYMBOL_LOCATION_MATCHER = /^(.* in .*\.o.*)$/
+      LINKER_UNDEFINED_SYMBOL_LOCATION_MATCHER = /^(.* in .*\.o.*)$/.freeze
 
       # @regex Captured groups
       # $1 reason
-      LINKER_UNDEFINED_SYMBOLS_HEADER_MATCHER = /^(Undefined symbols for architecture .*):$/
+      LINKER_UNDEFINED_SYMBOLS_HEADER_MATCHER = /^(Undefined symbols for architecture .*):$/.freeze
 
       # @regex Captured groups
       # $1 reason
-      LINKER_UNDEFINED_SYMBOLS_FOOTER_MATCHER = /^(ld: symbol\(s\) not found for architecture .*)/
+      LINKER_UNDEFINED_SYMBOLS_FOOTER_MATCHER = /^(ld: symbol\(s\) not found for architecture .*)/.freeze
 
       # @regex Captured groups
       # $1 reason
-      PODS_ERROR_MATCHER = /^(error:\s.*)/
+      PODS_ERROR_MATCHER = /^(error:\s.*)/.freeze
 
       # @regex Captured groups
       # $1 = reference
-      SYMBOL_REFERENCED_FROM_MATCHER = /\s+"(.*)", referenced from:$/
+      SYMBOL_REFERENCED_FROM_MATCHER = /\s+"(.*)", referenced from:$/.freeze
 
       # @regex Captured groups
       # $1 = error reason
-      MODULE_INCLUDES_ERROR_MATCHER = /^\<module-includes\>:.*?:.*?:\s(?:fatal\s)?(error:\s.*)$/
+      MODULE_INCLUDES_ERROR_MATCHER = /^\<module-includes\>:.*?:.*?:\s(?:fatal\s)?(error:\s.*)$/.freeze
 
       # @regex Captured groups
       # $1 = whole error
-      CCACHE_ERROR_MATCHER = /^(ccache: error:.*)$/
+      CCACHE_ERROR_MATCHER = /^(ccache: error:.*)$/.freeze
 
       # @regex Captured groups
       # $1 = whole error
-      LLVM_ERROR_MATCHER = /^(LLVM ERROR:.*)$/
+      LLVM_ERROR_MATCHER = /^(LLVM ERROR:.*)$/.freeze
     end
   end
 
@@ -510,7 +510,7 @@ module XCPretty
         unless @ignore_test_suite_started_message
           @tests_done = false
           @formatted_summary = false
-          @failures = {}
+          @failures_per_suite = {}
         end
       when TEST_CASE_STARTED_MATCHER
         @test_suite = $1
@@ -649,20 +649,22 @@ module XCPretty
     end
 
     def current_linker_failure
-      @linker_failure ||= {files: [], body: []}
+      @current_linker_failure ||= {files: [], body: []}
     end
 
     def current_runtime_issue
-      @runtime_issue ||= {info: ""}
+      @current_runtime_issue ||= {info: ""}
     end
 
     def guess_test_suite
       return "Unknown" unless @test_suite
+
       "#{@test_suite} (Guess)"
     end
 
     def guess_test_case
       return "Unknown" unless @test_case
+
       "#{@test_case} (Guess)"
     end
 
@@ -690,7 +692,7 @@ module XCPretty
 
     def format_runtime_error
       runtime_error = current_runtime_issue.dup
-      @runtime_issue = nil
+      @current_runtime_issue = nil
       @formatting_runtime_error = false
       formatter.format_runtime_error(runtime_error[:sanitizer],
                                      runtime_error[:reason], "")
@@ -710,7 +712,7 @@ module XCPretty
     end
 
     def reset_linker_format_state
-      @linker_failure = nil
+      @current_linker_failure = nil
       @formatting_linker_failure = false
     end
 
@@ -724,7 +726,7 @@ module XCPretty
     end
 
     def failures_per_suite
-      @failures ||= {}
+      @failures_per_suite ||= {}
     end
 
     def format_summary_if_needed(executed_message)

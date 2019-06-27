@@ -1,11 +1,12 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 if RUBY_VERSION < '2.0.0'
   abort "error: XCPretty requires Ruby 2.0.0 or higher."
 end
 
 if $PROGRAM_NAME == __FILE__
-  $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+  $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 end
 require 'xcpretty'
 require 'optparse'
@@ -13,8 +14,8 @@ require 'optparse'
 report_options = []
 report_classes = []
 report_formats = {
-  "junit"                     => XCPretty::JUnit,
-  "html"                      => XCPretty::HTML,
+  "junit" => XCPretty::JUnit,
+  "html" => XCPretty::HTML,
   "json-compilation-database" => XCPretty::JSONCompilationDatabase
 }
 
@@ -49,11 +50,11 @@ OptionParser.new do |opts|
   end
   opts.on("-r", "--report FORMAT or PATH", "Run FORMAT or PATH reporter",
           "  Choices: #{report_formats.keys.join(', ')}") do |format|
-    if report_formats.key?(format)
-      report_classes << report_formats[format]
-    else
-      report_classes << XCPretty.load_custom_class(format)
-    end
+    report_classes << if report_formats.key?(format)
+                        report_formats[format]
+                      else
+                        XCPretty.load_custom_class(format)
+                      end
     report_options << {}
   end
   opts.on('-o', '--output PATH', 'Write report output to PATH') do |path|

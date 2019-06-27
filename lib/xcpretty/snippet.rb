@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module XCPretty
   class Snippet
     attr_reader :contents, :file_path
@@ -15,10 +17,9 @@ module XCPretty
 
       file.close
       new(text, filepath)
-    rescue
+    rescue StandardError
       new('', filepath)
     end
-
 
     def self.read_snippet(file, around_line)
       text = ''

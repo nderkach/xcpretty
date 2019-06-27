@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Given(/^I have tests in my suite from 2 classes$/) do
   add_run_input SAMPLE_OCUNIT_TEST
   add_run_input SAMPLE_KIWI_TEST
@@ -21,6 +23,6 @@ Then(/^I should have a test report in a custom path$/) do
 end
 
 When(/^I pipe to xcpretty with a custom reporter$/) do
-  reporter_path = File.expand_path('../../../spec/fixtures/custom_reporter.rb', __FILE__)
+  reporter_path = File.expand_path('../../spec/fixtures/custom_reporter.rb', __dir__)
   run_xcpretty("-r #{reporter_path}")
 end

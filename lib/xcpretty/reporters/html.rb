@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module XCPretty
   class HTML < Reporter
 
     FILEPATH = 'build/reports/tests.html'
-    TEMPLATE = File.expand_path('../../../../assets/report.html.erb', __FILE__)
+    TEMPLATE = File.expand_path('../../../assets/report.html.erb', __dir__)
     SCREENSHOT_DIR = 'build/reports'
 
     def load_dependencies

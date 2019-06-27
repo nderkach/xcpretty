@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 require "xcpretty"
 require "xcpretty/formatters/rspec"
@@ -36,13 +38,11 @@ module XCPretty
       before { @formatter.colorize = true }
 
       it "prints green for passing tests" do
-        @formatter.format_passing_test("sweez testz", "sample spec", "0.002"
-        ).should be_colored :green
+        @formatter.format_passing_test("sweez testz", "sample spec", "0.002").should be_colored :green
       end
 
       it "prints yellow for pending tests" do
-        @formatter.format_pending_test("sweez testz", "sample spec"
-        ).should be_colored :yellow
+        @formatter.format_pending_test("sweez testz", "sample spec").should be_colored :yellow
       end
 
       it "prints red for failing tests" do

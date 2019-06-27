@@ -1,5 +1,6 @@
-# coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+# frozen_string_literal: true
+
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'xcpretty/version'
 
@@ -8,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.version       = XCPretty::VERSION
   spec.authors       = ["Marin Usalj", "Delisa Mason"]
   spec.email         = ["marin2211@gmail.com", "iskanamagus@gmail.com"]
-  spec.required_ruby_version = '>= 2.0.0'
+  spec.required_ruby_version = '>= 2.3.0'
   spec.description =
     %q{
     Xcodebuild formatter designed to be piped with `xcodebuild`,
@@ -29,8 +30,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rouge', '~> 2.0.7'
 
   spec.add_development_dependency "bundler"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rubocop", "~> 0.34.0"
-  spec.add_development_dependency "rspec", "2.99.0"
   spec.add_development_dependency "cucumber", "~> 1.0"
+  spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec", "2.99.0"
+  spec.add_development_dependency "rubocop", "~> 0.72"
 end

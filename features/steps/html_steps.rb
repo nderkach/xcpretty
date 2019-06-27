@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Then(/^I should see a test suite section in HTML$/) do
   html_test_suites.first.should_not be_nil
 end

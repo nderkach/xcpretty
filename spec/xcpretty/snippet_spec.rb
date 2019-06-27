@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'xcpretty/snippet'
 
 module XCPretty
@@ -7,11 +9,11 @@ module XCPretty
     it "gets the snippet out of the file path" do
       path = File.expand_path('spec/fixtures/NSStringTests.m:36')
       Snippet.from_filepath(path).contents.should ==
-<<-EOS
+<<-HEREDOC
     it(@"-split: splits with delimiter string, not just a char", ^{
         [[[@"one / two / three" split:@" / "] should] equal:@[@"one", @"two", @"three"]];
     });
-EOS
+HEREDOC
     end
 
     it 'saves the file path' do
