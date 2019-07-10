@@ -107,7 +107,7 @@ module XCPretty
     # $2 = test_suite
     # $3 = test_case
     # $4 = reason
-    FAILING_TEST_MATCHER = /^\s*(.+:\d+):\serror:\s[\+\-]\[(.*)\s(.*)\]\s:(?:\s'.*'\s\[FAILED\],)?\s(.*)/.freeze
+    FAILING_TEST_MATCHER = /^\s*([^:]+:\d+):\serror:\s[\+\-]\[([^\s]*)\s([^\]]*)\]\s:(?:\s'.*'\s\[FAILED\],)?\s(.*)/.freeze
 
     # @regex Captured groups
     # $1 = file
@@ -221,7 +221,7 @@ module XCPretty
       # $1 = file_path
       # $2 = file_name
       # $3 = reason
-      COMPILE_WARNING_MATCHER = /^(\/.+\/(.*):.*:.*):\swarning:\s(.*)$/.freeze
+      COMPILE_WARNING_MATCHER = /^(\/[^:]*\/([^:]*):\d*:\d*):\swarning:\s(.*)$/.freeze
 
       # $1 = ld prefix
       # $2 = warning message
@@ -245,7 +245,7 @@ module XCPretty
 
       # $1 = file
       # $2 = reason
-      UNDEFINED_BEHAVIOR_SANITIZER_HEADER_MATCHER = /^(?:\/.+\/(.*:.*:.*)): runtime error:\s(.*)$/.freeze
+      UNDEFINED_BEHAVIOR_SANITIZER_HEADER_MATCHER = /^(?:\/.+\/([^:]*:\d*:\d*)): runtime error:\s(.*)$/.freeze
 
       # $1 = reason
       THREAD_SANITIZER_SUMMARY_MATCHER = /^.*SUMMARY: ThreadSanitizer: (.*)$/.freeze
@@ -283,7 +283,7 @@ module XCPretty
       # $1 = file_path
       # $2 = file_name
       # $3 = reason
-      COMPILE_ERROR_MATCHER = /^(\/.+\/(.*):.*:.*):\s(?:fatal\s)?error:\s(.*)$/.freeze
+      COMPILE_ERROR_MATCHER = /^(\/.+\/([^:]*):\d*:\d*):\s(?:fatal\s)?error:\s(.*)$/.freeze
 
       # @regex Captured groups
       # $1 cursor (with whitespaces and tildes)
