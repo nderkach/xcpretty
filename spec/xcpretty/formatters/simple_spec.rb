@@ -13,8 +13,8 @@ module XCPretty
       end
 
       it "formats analyzing" do
-        @formatter.format_analyze("CCChip8DisplayView.m", 'path/to/file').should ==
-        "> Analyzing CCChip8DisplayView.m"
+        @formatter.format_analyze("CCChip8DisplayView.m", 'path/to/file', "foo").should ==
+        "[foo] > Analyzing CCChip8DisplayView.m"
       end
 
       it "formats build target/project/configuration with target" do
@@ -43,73 +43,75 @@ module XCPretty
       end
 
       it "formats compiling output" do
-        @formatter.format_compile("NSMutableArray+ObjectiveSugar.m", 'path/to/file').should ==
-        "> Compiling NSMutableArray+ObjectiveSugar.m"
+        @formatter.format_compile("NSMutableArray+ObjectiveSugar.m", 'path/to/file', "foo").should ==
+        "[foo] > Compiling NSMutableArray+ObjectiveSugar.m"
       end
 
       it "formats compiling metal output" do
-        @formatter.format_compile("MYMetalFile.metal", 'path/to/file').should ==
-        "> Compiling MYMetalFile.metal"
+        @formatter.format_compile("MYMetalFile.metal", 'path/to/file', "foo").should ==
+        "[foo] > Compiling MYMetalFile.metal"
       end
 
       it "formats compiling xib output" do
-        @formatter.format_compile_xib("MainMenu.xib", 'path/to/file').should ==
-        "> Compiling MainMenu.xib"
+        @formatter.format_compile_xib("MainMenu.xib", 'path/to/file', "foo").should ==
+        "[foo] > Compiling MainMenu.xib"
       end
 
       it "formats compiling storyboard output" do
-        @formatter.format_compile_xib("Main.storyboard", 'path/to/file').should ==
-        "> Compiling Main.storyboard"
+        @formatter.format_compile_xib("Main.storyboard", 'path/to/file', "foo").should ==
+        "[foo] > Compiling Main.storyboard"
       end
 
       it "formats compiling asset catalog output" do
-        @formatter.format_compile_asset_catalog("sample/Assets.xcassets").should ==
-        "> Compiling asset catalog sample/Assets.xcassets"
+        @formatter.format_compile_asset_catalog("sample/Assets.xcassets", "foo").should ==
+        "[foo] > Compiling asset catalog sample/Assets.xcassets"
       end
 
       it 'formats copying header files' do
         @formatter.format_copy_header_file('Source.h',
-                                           'dir/Destination.h').should == '> Copying Source.h'
+                                           'dir/Destination.h',
+                                           'foo').should == '[foo] > Copying Source.h'
       end
 
       it 'formats copying plist files' do
         @formatter.format_copy_plist_file("Source.plist",
-                                          'dir/Destination.plist').should == '> Copying Source.plist'
+                                          'dir/Destination.plist',
+                                          'foo').should == '[foo] > Copying Source.plist'
       end
 
       it "formats copy resource" do
-        @formatter.format_cpresource("ObjectiveSugar/Default-568h@2x.png").should ==
-        "> Copying ObjectiveSugar/Default-568h@2x.png"
+        @formatter.format_cpresource("ObjectiveSugar/Default-568h@2x.png", "foo").should ==
+        "[foo] > Copying ObjectiveSugar/Default-568h@2x.png"
       end
 
       it "formats Copy strings file" do
-        @formatter.format_copy_strings_file("InfoPlist.strings").should ==
-        "> Copying InfoPlist.strings"
+        @formatter.format_copy_strings_file("InfoPlist.strings", "foo").should ==
+        "[foo] > Copying InfoPlist.strings"
       end
 
       it "formats GenerateDSYMFile" do
-        @formatter.format_generate_dsym("ObjectiveSugarTests.octest.dSYM").should ==
-        "> Generating 'ObjectiveSugarTests.octest.dSYM'"
+        @formatter.format_generate_dsym("ObjectiveSugarTests.octest.dSYM", "foo").should ==
+        "[foo] > Generating 'ObjectiveSugarTests.octest.dSYM'"
       end
 
       it "formats info.plist processing" do
-        @formatter.format_process_info_plist("The Spacer-Info.plist", "The Spacer/The Spacer-Info.plist").should ==
-        "> Processing The Spacer-Info.plist"
+        @formatter.format_process_info_plist("The Spacer-Info.plist", "The Spacer/The Spacer-Info.plist", "foo").should ==
+        "[foo] > Processing The Spacer-Info.plist"
       end
 
       it "formats Linking" do
-        @formatter.format_linking("ObjectiveSugar", 'normal', 'i386').should ==
-        "> Linking ObjectiveSugar"
+        @formatter.format_linking("ObjectiveSugar", 'normal', 'i386', "foo").should ==
+        "[foo] > Linking ObjectiveSugar"
       end
 
       it "formats metal Linking" do
-        @formatter.format_linking_metal("default.metallib").should ==
-        "> Linking default.metallib"
+        @formatter.format_linking_metal("default.metallib", "foo").should ==
+        "[foo] > Linking default.metallib"
       end
 
       it "formats Libtool" do
-        @formatter.format_libtool("libPods-ObjectiveSugarTests-Kiwi.a").should ==
-        "> Building library libPods-ObjectiveSugarTests-Kiwi.a"
+        @formatter.format_libtool("libPods-ObjectiveSugarTests-Kiwi.a", "foo").should ==
+        "[foo] > Building library libPods-ObjectiveSugarTests-Kiwi.a"
       end
 
       it "formats failing tests" do
@@ -141,33 +143,33 @@ module XCPretty
       end
 
       it "formats Phase Script Execution" do
-        @formatter.format_phase_script_execution("Check Pods Manifest.lock").should ==
-        "> Running script 'Check Pods Manifest.lock'"
+        @formatter.format_phase_script_execution("Check Pods Manifest.lock", "foo").should ==
+        "[foo] > Running script 'Check Pods Manifest.lock'"
       end
 
       it "formats script rule execution" do
-        @formatter.format_script_rule_execution("Check Pods Manifest.lock", "folder/").should ==
-        "> Running script rule Check Pods Manifest.lock"
+        @formatter.format_script_rule_execution("Check Pods Manifest.lock", "folder/", "foo").should ==
+        "[foo] > Running script rule Check Pods Manifest.lock"
       end
 
       it "formats precompiling output" do
-        @formatter.format_process_pch("Pods-CocoaLumberjack-prefix.pch").should ==
-        "> Precompiling Pods-CocoaLumberjack-prefix.pch"
+        @formatter.format_process_pch("Pods-CocoaLumberjack-prefix.pch", "foo").should ==
+        "[foo] > Precompiling Pods-CocoaLumberjack-prefix.pch"
       end
 
       it "formats code signing" do
-        @formatter.format_codesign("build/Release/CocoaChip.app").should ==
-        "> Signing build/Release/CocoaChip.app"
+        @formatter.format_codesign("build/Release/CocoaChip.app", "foo").should ==
+        "[foo] > Signing build/Release/CocoaChip.app"
       end
 
       it "formats preprocessing a file" do
-        @formatter.format_preprocess("CocoaChip/CocoaChip-Info.plist").should ==
-        "> Preprocessing CocoaChip/CocoaChip-Info.plist"
+        @formatter.format_preprocess("CocoaChip/CocoaChip-Info.plist", "foo").should ==
+        "[foo] > Preprocessing CocoaChip/CocoaChip-Info.plist"
       end
 
       it "formats PBXCp" do
-        @formatter.format_pbxcp("build/Release/CocoaChipCore.framework").should ==
-        "> Copying build/Release/CocoaChipCore.framework"
+        @formatter.format_pbxcp("build/Release/CocoaChipCore.framework", "foo").should ==
+        "[foo] > Copying build/Release/CocoaChipCore.framework"
       end
 
       it "formats test run start" do
@@ -181,13 +183,13 @@ module XCPretty
       end
 
       it "formats Touch" do
-        @formatter.format_touch("/path/to/SomeFile.txt", "SomeFile.txt").should ==
-        "> Touching SomeFile.txt"
+        @formatter.format_touch("/path/to/SomeFile.txt", "SomeFile.txt", "foo").should ==
+        "[foo] > Touching SomeFile.txt"
       end
 
       it "formats TiffUtil" do
-        @formatter.format_tiffutil("unbelievable.tiff").should ==
-        "> Validating unbelievable.tiff"
+        @formatter.format_tiffutil("unbelievable.tiff", "foo").should ==
+        "[foo] > Validating unbelievable.tiff"
       end
 
       it 'formats Check Dependencies' do

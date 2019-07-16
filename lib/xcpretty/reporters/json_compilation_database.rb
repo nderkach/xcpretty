@@ -22,16 +22,16 @@ module XCPretty
       @current_path = nil
     end
 
-    def format_process_pch_command(file_path)
+    def format_process_pch_command(file_path, build_target)
       @pch_path = file_path
     end
 
-    def format_compile(file_name, file_path)
+    def format_compile(file_name, file_path, build_target)
       @current_file = file_name
       @current_path = file_path
     end
 
-    def format_compile_command(compiler_command, file_path)
+    def format_compile_command(compiler_command, file_path, build_target)
       directory = file_path.gsub(@current_path.to_s, '').gsub(/\/$/, '')
       directory = '/' if directory.empty?
 

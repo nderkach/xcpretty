@@ -10,50 +10,61 @@ module XCPretty
   module FormatMethods
     EMPTY = ''
 
-    def format_analyze(file_name, file_path);                  EMPTY; end
+    # Old build system lines.
     def format_build_target(target, project, configuration);   EMPTY; end
-    def format_aggregate_target(target, project, configuration); EMPTY; end
     def format_analyze_target(target, project, configuration); EMPTY; end
-    def format_check_dependencies;                             EMPTY; end
-    def format_clean(project, target, configuration);          EMPTY; end
+    def format_aggregate_target(target, project, configuration); EMPTY; end
     def format_clean_target(target, project, configuration);   EMPTY; end
+    def format_check_dependencies;                             EMPTY; end
+    def format_write_auxiliary_files;                          EMPTY; end
     def format_clean_remove;                                   EMPTY; end
-    def format_compile(file_name, file_path);                  EMPTY; end
-    def format_compile_command(compiler_command, file_path);   EMPTY; end
-    def format_compile_metal(file_name, file_path);            EMPTY; end
-    def format_compile_storyboard(file_name, file_path);       EMPTY; end
-    def format_compile_asset_catalog(file_path);               EMPTY; end
-    def format_compile_xib(file_name, file_path);              EMPTY; end
-    def format_copy_header_file(source, target);               EMPTY; end
-    def format_copy_plist_file(source, target);                EMPTY; end
-    def format_copy_strings_file(file_name);                   EMPTY; end
-    def format_cpresource(file);                               EMPTY; end
-    def format_generate_dsym(dsym);                            EMPTY; end
-    def format_linking(file, build_variant, arch);             EMPTY; end
-    def format_linking_metal(file);                            EMPTY; end
-    def format_libtool(library);                               EMPTY; end
+
+    def format_analyze(file_name, file_path, build_target);    EMPTY; end
+    def format_compile(file_name, file_path, build_target);    EMPTY; end
+    def format_compile_command(compiler_command, file_path, build_target)
+      EMPTY
+    end
+    def format_compile_metal(file_name, file_path, build_target); EMPTY; end
+    def format_compile_storyboard(file_name, file_path, build_target)
+      EMPTY
+    end
+    def format_compile_asset_catalog(file_path, build_target); EMPTY; end
+    def format_compile_xib(file_name, file_path, build_target); EMPTY; end
+    def format_copy_header_file(source, target, build_target); EMPTY; end
+    def format_copy_plist_file(source, target, build_target);  EMPTY; end
+    def format_copy_strings_file(file_name, build_target);     EMPTY; end
+    def format_cpresource(file, build_target);                 EMPTY; end
+    def format_generate_dsym(dsym, build_target);              EMPTY; end
+    def format_linking(file, build_variant, arch, build_target); EMPTY; end
+    def format_linking_metal(file, build_target);              EMPTY; end
+    def format_libtool(library, build_target);                 EMPTY; end
     def format_passing_test(suite, test, time);                EMPTY; end
     def format_pending_test(suite, test);                      EMPTY; end
     def format_measuring_test(suite, test, time);              EMPTY; end
     def format_failing_test(suite, test, reason, file_path);   EMPTY; end
-    def format_process_pch(file);                              EMPTY; end
-    def format_process_pch_command(file_path);                 EMPTY; end
+    def format_process_pch(file, build_target);                EMPTY; end
+    def format_process_pch_command(file_path, build_target);   EMPTY; end
     def format_phase_success(phase_name);                      EMPTY; end
-    def format_phase_script_execution(script_name);            EMPTY; end
-    def format_process_info_plist(file_name, file_path);       EMPTY; end
-    def format_codesign(file);                                 EMPTY; end
-    def format_preprocess(file);                               EMPTY; end
-    def format_pbxcp(file);                                    EMPTY; end
-    def format_script_rule_execution(file_name, file_path);    EMPTY; end
+    def format_phase_script_execution(script_name, build_target)
+      EMPTY
+    end
+    def format_process_info_plist(file_name, file_path, build_target)
+      EMPTY
+    end
+    def format_codesign(file, build_target);                   EMPTY; end
+    def format_preprocess(file, build_target);                 EMPTY; end
+    def format_pbxcp(file, build_target);                      EMPTY; end
+    def format_script_rule_execution(file_name, file_path, build_target)
+      EMPTY
+    end
     def format_shell_command(command, arguments);              EMPTY; end
     def format_test_run_started(name);                         EMPTY; end
     def format_test_run_finished(name, time);                  EMPTY; end
     def format_test_suite_started(name);                       EMPTY; end
     def format_test_summary(message, failures_per_suite);      EMPTY; end
-    def format_touch(file_path, file_name);                    EMPTY; end
-    def format_tiffutil(file);                                 EMPTY; end
+    def format_touch(file_path, file_name, build_target);      EMPTY; end
+    def format_tiffutil(file, build_target);                   EMPTY; end
     def format_write_file(file);                               EMPTY; end
-    def format_write_auxiliary_files;                          EMPTY; end
     def format_other(text)                                     EMPTY; end
 
     # COMPILER / LINKER ERRORS AND WARNINGS

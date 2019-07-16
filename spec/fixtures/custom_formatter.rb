@@ -2,7 +2,7 @@
 
 class EmojiFormatter < XCPretty::Formatter
 
-  def format_compile(file_name, file_path)
+  def format_compile(file_name, file_path, build_target)
     "😎 Compilation party time for #{file_name}"
   end
 
