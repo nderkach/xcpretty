@@ -178,11 +178,11 @@ Then(/^I should (green|red) text beginning with "(.*?)"$/) do |color, text|
 end
 
 Then(/^I should see a successful tiff validation message$/) do
-  run_output.should start_with("▸ Validating")
+  run_output.should start_with("[foo] ▸ Validating")
 end
 
 Then(/^I should see a successful touch message$/) do
-  run_output.should start_with("▸ Touching")
+  run_output.should start_with("[foo] ▸ Touching")
 end
 
 When(/^I pipe to xcpretty with "(.*?)"$/) do |flags|
@@ -199,11 +199,11 @@ Then(/^I should see a custom compilation message$/) do
 end
 
 Then(/^I should see a successful compilation message$/) do
-  run_output.should start_with("▸ Compiling")
+  run_output.should start_with("[foo] ▸ Compiling")
 end
 
 Then(/^I should see a successful precompilation message$/) do
-  run_output.should start_with("▸ Precompiling")
+  run_output.should start_with("[foo] ▸ Precompiling")
 end
 
 Then(/^I should see an aggregate target message$/) do
@@ -211,11 +211,11 @@ Then(/^I should see an aggregate target message$/) do
 end
 
 Then(/^I should see a successful analyze message$/) do
-  run_output.should start_with("▸ Analyzing")
+  run_output.should start_with("[foo] ▸ Analyzing")
 end
 
 Then(/^I should see a successful code signing message$/) do
-  run_output.should start_with("▸ Signing")
+  run_output.should start_with("[foo] ▸ Signing")
 end
 
 Then(/^I should see a target will not be code signed warning$/) do
@@ -223,15 +223,15 @@ Then(/^I should see a target will not be code signed warning$/) do
 end
 
 Then(/^I should see a successful preprocessing message$/) do
-  run_output.should start_with("▸ Preprocessing")
+  run_output.should start_with("[foo] ▸ Preprocessing")
 end
 
 Then(/^I should see a successful copying message$/) do
-  run_output.should start_with("▸ Copying")
+  run_output.should start_with("[foo] ▸ Copying")
 end
 
 Then(/^I should see a yellow completion icon$/) do
-  run_output.should start_with(yellow("▸"))
+  run_output.should start_with("[foo] " + yellow("▸"))
 end
 
 Then(/^I should see a failed test icon$/) do
@@ -390,5 +390,5 @@ Then(/^I should see the no profile matching message$/) do
 end
 
 Then(/^I should see the compiling asset catalog message$/) do
-  run_output.should start_with("▸ Compiling asset catalog")
+  run_output.should start_with("[foo] ▸ Compiling asset catalog")
 end

@@ -14,17 +14,17 @@ module XCPretty
     end
 
     it "parses analyze" do
-      @formatter.should receive(:format_analyze).with("CCChip8DisplayView.m", "CocoaChip/CCChip8DisplayView.m")
+      @formatter.should receive(:format_analyze).with("CCChip8DisplayView.m", "CocoaChip/CCChip8DisplayView.m", "foo")
       @parser.parse(SAMPLE_ANALYZE)
     end
 
     it "parses analyze shallow" do
-      @formatter.should receive(:format_analyze).with("CCChip8DisplayView.m", "CocoaChip/CCChip8DisplayView.m")
+      @formatter.should receive(:format_analyze).with("CCChip8DisplayView.m", "CocoaChip/CCChip8DisplayView.m", "foo")
       @parser.parse(SAMPLE_ANALYZE_SHALLOW)
     end
 
     it "parses analyze for a C++ target" do
-      @formatter.should receive(:format_analyze).with("CCChip8DisplayView.cpp", "CocoaChip/CCChip8DisplayView.cpp")
+      @formatter.should receive(:format_analyze).with("CCChip8DisplayView.cpp", "CocoaChip/CCChip8DisplayView.cpp", "foo")
       @parser.parse(SAMPLE_ANALYZE_CPP)
     end
 
@@ -64,129 +64,129 @@ module XCPretty
     end
 
     it "parses code signing" do
-      @formatter.should receive(:format_codesign).with("build/Release/CocoaChip.app")
+      @formatter.should receive(:format_codesign).with("build/Release/CocoaChip.app", "foo")
       @parser.parse(SAMPLE_CODESIGN)
     end
 
     it "parses code signing a framework" do
-      @formatter.should receive(:format_codesign).with("build/Release/CocoaChipCore.framework")
+      @formatter.should receive(:format_codesign).with("build/Release/CocoaChipCore.framework", "foo")
       @parser.parse(SAMPLE_CODESIGN_FRAMEWORK)
     end
 
     it 'parses compiler_space_in_path' do
-      @formatter.should receive(:format_compile).with('SASellableItem.m', "SACore/App/Models/Core\\ Data/human/SASellableItem.m")
+      @formatter.should receive(:format_compile).with('SASellableItem.m', "SACore/App/Models/Core\\ Data/human/SASellableItem.m", "foo")
       @parser.parse(SAMPLE_COMPILE_SPACE_IN_PATH)
     end
 
     it "parses compiler commands" do
       compile_statement = SAMPLE_ANOTHER_COMPILE.lines.to_a.last
-      @formatter.should receive(:format_compile_command).with(compile_statement.strip, "/Users/musalj/code/OSS/Kiwi/Classes/Core/KWNull.m")
+      @formatter.should receive(:format_compile_command).with(compile_statement.strip, "/Users/musalj/code/OSS/Kiwi/Classes/Core/KWNull.m", nil)
       @parser.parse(compile_statement)
     end
 
     it "parses compiling categories" do
-      @formatter.should receive(:format_compile).with("NSMutableArray+ObjectiveSugar.m", "/Users/musalj/code/OSS/ObjectiveSugar/Classes/NSMutableArray+ObjectiveSugar.m")
+      @formatter.should receive(:format_compile).with("NSMutableArray+ObjectiveSugar.m", "/Users/musalj/code/OSS/ObjectiveSugar/Classes/NSMutableArray+ObjectiveSugar.m", "foo")
       @parser.parse(SAMPLE_COMPILE)
     end
 
     it "parses compiling classes" do
-      @formatter.should receive(:format_compile).with("KWNull.m", "Classes/Core/KWNull.m")
+      @formatter.should receive(:format_compile).with("KWNull.m", "Classes/Core/KWNull.m", "foo")
       @parser.parse(SAMPLE_ANOTHER_COMPILE)
     end
 
     it "parses compiling Objective-C++ classes" do
-      @formatter.should receive(:format_compile).with("KWNull.mm", "Classes/Core/KWNull.mm")
+      @formatter.should receive(:format_compile).with("KWNull.mm", "Classes/Core/KWNull.mm", "foo")
       @parser.parse(SAMPLE_ANOTHER_COMPILE.sub('.m', '.mm'))
     end
 
     it 'parses compiling Swift source files' do
-      @formatter.should receive(:format_compile).with("Resource.swift", "/Users/paul/foo/bar/siesta/Source/Resource.swift")
+      @formatter.should receive(:format_compile).with("Resource.swift", "/Users/paul/foo/bar/siesta/Source/Resource.swift", "foo")
       @parser.parse(SAMPLE_SWIFT_COMPILE)
     end
 
     it "parses compiling C and C++ files" do
       ['.c', '.cc', '.cpp', '.cxx'].each do |file_extension|
-        @formatter.should receive(:format_compile).with("KWNull" + file_extension, "Classes/Core/KWNull" + file_extension)
+        @formatter.should receive(:format_compile).with("KWNull" + file_extension, "Classes/Core/KWNull" + file_extension, "foo")
         @parser.parse(SAMPLE_ANOTHER_COMPILE.sub('.m', file_extension))
       end
     end
 
     it "parses compiling metal files" do
-      @formatter.should receive(:format_compile_metal).with("MYMetalFile.metal", "CocoaChip/metalSample/MYMetalFile.metal")
+      @formatter.should receive(:format_compile_metal).with("MYMetalFile.metal", "CocoaChip/metalSample/MYMetalFile.metal", "foo")
       @parser.parse(SAMPLE_COMPILE_METAL)
     end
 
     it "parses compiling XIBs" do
-      @formatter.should receive(:format_compile_xib).with("MainMenu.xib", "CocoaChip/en.lproj/MainMenu.xib")
+      @formatter.should receive(:format_compile_xib).with("MainMenu.xib", "CocoaChip/en.lproj/MainMenu.xib", "foo")
       @parser.parse(SAMPLE_COMPILE_XIB)
     end
 
     it "parses compiling storyboards" do
-      @formatter.should receive(:format_compile_storyboard).with("Main.storyboard", "sample/Main.storyboard")
+      @formatter.should receive(:format_compile_storyboard).with("Main.storyboard", "sample/Main.storyboard", "foo")
       @parser.parse(SAMPLE_COMPILE_STORYBOARD)
     end
 
     it "parses compiling asset catalogs" do
-      @formatter.should receive(:format_compile_asset_catalog).with("sample/Assets.xcassets")
+      @formatter.should receive(:format_compile_asset_catalog).with("sample/Assets.xcassets", "foo")
       @parser.parse(SAMPLE_COMPILE_ASSET_CATALOG)
     end
 
     it 'parses CopyPlistFile' do
       @formatter.should receive(:format_copy_plist_file).with(
-        '/path/to/Some.plist', '/some other/File.plist'
+        '/path/to/Some.plist', '/some other/File.plist', nil
 )
       @parser.parse('CopyPlistFile /path/to/Some.plist /some other/File.plist')
     end
 
     it "parses CopyStringsFile" do
-      @formatter.should receive(:format_copy_strings_file).with('InfoPlist.strings')
+      @formatter.should receive(:format_copy_strings_file).with('InfoPlist.strings', "foo")
       @parser.parse(SAMPLE_COPYSTRINGS)
     end
 
     it "parses CpHeader" do
       @formatter.should receive(:format_copy_header_file).with(
-        '/path/to/Header.h', '/some other/path/Header.h'
+        '/path/to/Header.h', '/some other/path/Header.h', nil
 )
       @parser.parse('CpHeader /path/to/Header.h /some other/path/Header.h')
     end
 
     it "parses CpResource" do
-      @formatter.should receive(:format_cpresource).with('ObjectiveSugar/Default-568h@2x.png')
+      @formatter.should receive(:format_cpresource).with('ObjectiveSugar/Default-568h@2x.png', "foo")
       @parser.parse(SAMPLE_CPRESOURCE)
     end
 
     it "parses GenerateDSYMFile" do
-      @formatter.should receive(:format_generate_dsym).with('ObjectiveSugarTests.octest.dSYM')
+      @formatter.should receive(:format_generate_dsym).with('ObjectiveSugarTests.octest.dSYM', "foo")
       @parser.parse(SAMPLE_DSYM)
     end
 
     it "parses info.plist processing" do
-      @formatter.should receive(:format_process_info_plist).with('The Spacer-Info.plist', 'The Spacer/The Spacer-Info.plist')
+      @formatter.should receive(:format_process_info_plist).with('The Spacer-Info.plist', 'The Spacer/The Spacer-Info.plist', "foo")
       @parser.parse(SAMPLE_PROCESS_INFOPLIST)
     end
 
     it "parses Ld" do
-      @formatter.should receive(:format_linking).with('ObjectiveSugar', 'normal', 'i386')
+      @formatter.should receive(:format_linking).with('ObjectiveSugar', 'normal', 'i386', nil)
       @parser.parse(SAMPLE_LD)
     end
 
     it "parses Ld with relative path" do
-      @formatter.should receive(:format_linking).with('ObjectiveSugar', 'normal', 'i386')
+      @formatter.should receive(:format_linking).with('ObjectiveSugar', 'normal', 'i386', "foo")
       @parser.parse(SAMPLE_LD_RELATIVE)
     end
 
     it "parses MetalLink" do
-      @formatter.should receive(:format_linking_metal).with('default.metallib')
+      @formatter.should receive(:format_linking_metal).with('default.metallib', "foo")
       @parser.parse(SAMPLE_METALLINK)
     end
 
     it "parses MetalLink with relative path" do
-      @formatter.should receive(:format_linking_metal).with('default.metallib')
+      @formatter.should receive(:format_linking_metal).with('default.metallib', "foo")
       @parser.parse(SAMPLE_METALLINK_RELATIVE)
     end
 
     it "parses Libtool" do
-      @formatter.should receive(:format_libtool).with('libPods-ObjectiveSugarTests-Kiwi.a')
+      @formatter.should receive(:format_libtool).with('libPods-ObjectiveSugarTests-Kiwi.a', "foo")
       @parser.parse(SAMPLE_LIBTOOL)
     end
 
@@ -261,33 +261,33 @@ module XCPretty
     end
 
     it "parses PhaseScriptExecution" do
-      @formatter.should receive(:format_phase_script_execution).with('Check Pods Manifest.lock')
+      @formatter.should receive(:format_phase_script_execution).with('Check Pods Manifest.lock', "foo")
       @parser.parse(SAMPLE_RUN_SCRIPT)
     end
 
     it "parses RuleScriptExecution" do
-      @formatter.should receive(:format_script_rule_execution).with('File Built With Custom Script.jjj', 'My Folder/a/File Built With Custom Script.jjj')
+      @formatter.should receive(:format_script_rule_execution).with('File Built With Custom Script.jjj', 'My Folder/a/File Built With Custom Script.jjj', "foo")
       @parser.parse(SAMPLE_CUSTOM_SCRIPT_BUILD_RULE)
     end
 
     it "parses process PCH" do
-      @formatter.should receive(:format_process_pch).with("Pods-CocoaLumberjack-prefix.pch")
+      @formatter.should receive(:format_process_pch).with("Pods-CocoaLumberjack-prefix.pch", "foo")
       @parser.parse(SAMPLE_PRECOMPILE)
     end
 
     it 'parses process PCH command' do
       compile_statement = SAMPLE_PRECOMPILE.lines.to_a.last
-      @formatter.should receive(:format_process_pch_command).with("/Users/musalj/code/OSS/ObjectiveRecord/Pods/Pods-CocoaLumberjack-prefix.pch")
+      @formatter.should receive(:format_process_pch_command).with("/Users/musalj/code/OSS/ObjectiveRecord/Pods/Pods-CocoaLumberjack-prefix.pch", nil)
       @parser.parse(compile_statement)
     end
 
     it "parses preprocessing" do
-      @formatter.should receive(:format_preprocess).with("CocoaChip/CocoaChip-Info.plist")
+      @formatter.should receive(:format_preprocess).with("CocoaChip/CocoaChip-Info.plist", "foo")
       @parser.parse(SAMPLE_PREPROCESS)
     end
 
     it "parses PBXCp" do
-      @formatter.should receive(:format_pbxcp).with("build/Release/CocoaChipCore.framework")
+      @formatter.should receive(:format_pbxcp).with("build/Release/CocoaChipCore.framework", "foo")
       @parser.parse(SAMPLE_PBXCP)
     end
 
@@ -307,8 +307,9 @@ module XCPretty
     it "parses Touch" do
       @formatter.should receive(:format_touch).with(
         '/Users/musalj/Library/Developer/Xcode/DerivedData/Alcatraz-aobuxcinaqyzjugrnxjjhfzgwaou/Build/Products/Debug/Alcatraz Tests.octest',
-        'Alcatraz Tests.octest'
-)
+        'Alcatraz Tests.octest',
+        "foo"
+      )
       @parser.parse(SAMPLE_TOUCH)
     end
 
@@ -325,7 +326,7 @@ module XCPretty
     end
 
     it "parses TiffUtil" do
-      @formatter.should receive(:format_tiffutil).with('eye_icon.tiff')
+      @formatter.should receive(:format_tiffutil).with('eye_icon.tiff', "foo")
       @parser.parse(SAMPLE_TIFFUTIL)
     end
 

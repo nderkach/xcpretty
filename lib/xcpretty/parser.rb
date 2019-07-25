@@ -3,6 +3,8 @@
 module XCPretty
 
   module Matchers
+    # $1 build_target
+    IN_TARGET_MATCHER = /\s\(in target:\s(.*)\)/.freeze
 
     # @regex Captured groups
     # $1 file_path
@@ -91,6 +93,7 @@ module XCPretty
     # $2 target file
     COPY_PLIST_MATCHER = /^CopyPlistFile\s(.*\.plist)\s(.*\.plist)/.freeze
 
+    # @regex Captured groups
     # $1 file
     COPY_STRINGS_MATCHER = /^CopyStringsFile.*\/(.*.strings)/.freeze
 
@@ -180,7 +183,8 @@ module XCPretty
     PBXCP_MATCHER = /^PBXCp\s((?:\\ |[^ ])*)/.freeze
 
     # @regex Captured groups
-    # $1 = file
+    # $1 = file_path
+    # $2 = file_name
     PROCESS_INFO_PLIST_MATCHER = /^ProcessInfoPlistFile\s.*\.plist\s(.*\/+(.*\.plist))/.freeze
 
     # @regex Captured groups
@@ -373,10 +377,14 @@ module XCPretty
       return format_undefined_duplicate_symbols if should_format_undefined_duplicate_symbols?
       return format_runtime_error if should_format_runtime_error?
 
+      if IN_TARGET_MATCHER.match(text)
+        build_target = $1
+        text = text.sub(IN_TARGET_MATCHER, '')
+      end
 
       case text
       when ANALYZE_MATCHER
-        formatter.format_analyze($2, $1)
+        formatter.format_analyze($2, $1, build_target)
       when BUILD_TARGET_MATCHER
         formatter.format_build_target($1, $2, $3)
       when AGGREGATE_TARGET_MATCHER
@@ -388,15 +396,15 @@ module XCPretty
       when CLEAN_TARGET_MATCHER
         formatter.format_clean_target($1, $2, $3)
       when COPY_STRINGS_MATCHER
-        formatter.format_copy_strings_file($1)
+        formatter.format_copy_strings_file($1, build_target)
       when CHECK_DEPENDENCIES_MATCHER
         formatter.format_check_dependencies
       when CLANG_ERROR_MATCHER
         formatter.format_error($1)
       when CODESIGN_FRAMEWORK_MATCHER
-        formatter.format_codesign($1)
+        formatter.format_codesign($1, build_target)
       when CODESIGN_MATCHER
-        formatter.format_codesign($1)
+        formatter.format_codesign($1, build_target)
       when CHECK_DEPENDENCIES_ERRORS_MATCHER
         formatter.format_error($1)
       when PROVISIONING_PROFILE_REQUIRED_MATCHER
@@ -404,23 +412,23 @@ module XCPretty
       when NO_CERTIFICATE_MATCHER
         formatter.format_error($1)
       when COMPILE_MATCHER
-        formatter.format_compile($2, $1)
+        formatter.format_compile($2, $1, build_target)
       when COMPILE_COMMAND_MATCHER
-        formatter.format_compile_command($1, $2)
+        formatter.format_compile_command($1, $2, build_target)
       when COMPILE_METAL_MATCHER
-        formatter.format_compile_metal($2, $1)
+        formatter.format_compile_metal($2, $1, build_target)
       when COMPILE_XIB_MATCHER
-        formatter.format_compile_xib($2, $1)
+        formatter.format_compile_xib($2, $1, build_target)
       when COMPILE_STORYBOARD_MATCHER
-        formatter.format_compile_storyboard($2, $1)
+        formatter.format_compile_storyboard($2, $1, build_target)
       when COMPILE_ASSET_CATALOG_MATCHER
-        formatter.format_compile_asset_catalog($1)
+        formatter.format_compile_asset_catalog($1, build_target)
       when COPY_HEADER_MATCHER
-        formatter.format_copy_header_file($1, $2)
+        formatter.format_copy_header_file($1, $2, build_target)
       when COPY_PLIST_MATCHER
-        formatter.format_copy_plist_file($1, $2)
+        formatter.format_copy_plist_file($1, $2, build_target)
       when CPRESOURCE_MATCHER
-        formatter.format_cpresource($1)
+        formatter.format_cpresource($1, build_target)
       when EXECUTED_MATCHER
         format_summary_if_needed(text)
       when RESTARTING_TESTS_MATCHER
@@ -434,17 +442,17 @@ module XCPretty
       when FILE_MISSING_ERROR_MATCHER
         formatter.format_file_missing_error($1, $2)
       when GENERATE_DSYM_MATCHER
-        formatter.format_generate_dsym($1)
+        formatter.format_generate_dsym($1, build_target)
       when LD_WARNING_MATCHER
         formatter.format_ld_warning($1 + $2)
       when LD_ERROR_MATCHER
         formatter.format_error($1)
       when LIBTOOL_MATCHER
-        formatter.format_libtool($1)
+        formatter.format_libtool($1, build_target)
       when LINKING_MATCHER
-        formatter.format_linking($1, $2, $3)
+        formatter.format_linking($1, $2, $3, build_target)
       when LINKING_METAL_MATCHER
-        formatter.format_linking_metal($1)
+        formatter.format_linking_metal($1, build_target)
       when MODULE_INCLUDES_ERROR_MATCHER
         formatter.format_error($1)
       when TEST_CASE_MEASURED_MATCHER
@@ -456,21 +464,21 @@ module XCPretty
       when PODS_ERROR_MATCHER
         formatter.format_error($1)
       when PROCESS_INFO_PLIST_MATCHER
-        formatter.format_process_info_plist(*unescaped($2, $1))
+        formatter.format_process_info_plist(*unescaped($2, $1), build_target)
       when PHASE_SCRIPT_EXECUTION_MATCHER
-        formatter.format_phase_script_execution(*unescaped($1))
+        formatter.format_phase_script_execution(*unescaped($1), build_target)
       when PHASE_SUCCESS_MATCHER
         formatter.format_phase_success($1)
       when PROCESS_PCH_MATCHER
-        formatter.format_process_pch($1)
+        formatter.format_process_pch($1, build_target)
       when PROCESS_PCH_COMMAND_MATCHER
-        formatter.format_process_pch_command($1)
+        formatter.format_process_pch_command($1, build_target)
       when PREPROCESS_MATCHER
-        formatter.format_preprocess($1)
+        formatter.format_preprocess($1, build_target)
       when PBXCP_MATCHER
-        formatter.format_pbxcp($1)
+        formatter.format_pbxcp($1, build_target)
       when RULE_SCRIPT_EXECUTION_MATCHER
-        formatter.format_script_rule_execution(*unescaped(File.basename($1), $1))
+        formatter.format_script_rule_execution(*unescaped(File.basename($1), $1), build_target)
       when TESTS_RUN_COMPLETION_MATCHER
         formatter.format_test_run_finished($1, $3)
       when TEST_SUITE_STARTED_MATCHER
@@ -480,9 +488,9 @@ module XCPretty
       when TEST_SUITE_START_MATCHER
         formatter.format_test_suite_started($1)
       when TIFFUTIL_MATCHER
-        formatter.format_tiffutil($1)
+        formatter.format_tiffutil($1, build_target)
       when TOUCH_MATCHER
-        formatter.format_touch($1, $2)
+        formatter.format_touch($1, $2, build_target)
       when WRITE_FILE_MATCHER
         formatter.format_write_file($1)
       when WRITE_AUXILIARY_FILES

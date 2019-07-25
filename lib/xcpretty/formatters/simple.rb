@@ -20,8 +20,8 @@ module XCPretty
 
     INDENT = "    "
 
-    def format_analyze(file_name, file_path)
-      format("Analyzing", file_name)
+    def format_analyze(file_name, file_path, build_target)
+      format("Analyzing", file_name, build_target: build_target)
     end
 
     def format_build_target(target, project, configuration)
@@ -40,60 +40,60 @@ module XCPretty
       format("Cleaning", "#{project}/#{target} [#{configuration}]")
     end
 
-    def format_compile(file_name, file_path)
-      format("Compiling", file_name)
+    def format_compile(file_name, file_path, build_target)
+      format("Compiling", file_name, build_target: build_target)
     end
 
-    def format_compile_metal(file_name, file_path)
-      format("Compiling", file_name)
+    def format_compile_metal(file_name, file_path, build_target)
+      format("Compiling", file_name, build_target: build_target)
     end
 
-    def format_compile_xib(file_name, file_path)
-      format("Compiling", file_name)
+    def format_compile_xib(file_name, file_path, build_target)
+      format("Compiling", file_name, build_target: build_target)
     end
 
-    def format_compile_storyboard(file_name, file_path)
-      format("Compiling", file_name)
+    def format_compile_storyboard(file_name, file_path, build_target)
+      format("Compiling", file_name, build_target: build_target)
     end
 
-    def format_compile_asset_catalog(file_path)
-      format("Compiling asset catalog", file_path)
+    def format_compile_asset_catalog(file_path, build_target)
+      format("Compiling asset catalog", file_path, build_target: build_target)
     end
 
-    def format_copy_header_file(source, target)
-      format("Copying", File.basename(source))
+    def format_copy_header_file(source, target, build_target)
+      format("Copying", File.basename(source), build_target: build_target)
     end
 
-    def format_copy_plist_file(source, target)
-      format("Copying", File.basename(source))
+    def format_copy_plist_file(source, target, build_target)
+      format("Copying", File.basename(source), build_target: build_target)
     end
 
-    def format_copy_strings_file(file)
-      format("Copying", file)
+    def format_copy_strings_file(file, build_target)
+      format("Copying", file, build_target: build_target)
     end
 
-    def format_cpresource(resource)
-      format("Copying", resource)
+    def format_cpresource(resource, build_target)
+      format("Copying", resource, build_target: build_target)
     end
 
-    def format_script_rule_execution(file_name, file_path)
-      format("Running script rule", file_name.to_s)
+    def format_script_rule_execution(file_name, file_path, build_target)
+      format("Running script rule", file_name.to_s, build_target: build_target)
     end
 
-    def format_generate_dsym(dsym)
-      format("Generating '#{dsym}'")
+    def format_generate_dsym(dsym, build_target)
+      format("Generating '#{dsym}'", build_target: build_target)
     end
 
-    def format_libtool(library)
-      format("Building library", library)
+    def format_libtool(library, build_target)
+      format("Building library", library, build_target: build_target)
     end
 
-    def format_linking(target, build_variants, arch)
-      format("Linking", target)
+    def format_linking(target, build_variants, arch, build_target)
+      format("Linking", target, build_target: build_target)
     end
 
-    def format_linking_metal(target)
-      format("Linking", target)
+    def format_linking_metal(target, build_target)
+      format("Linking", target, build_target: build_target)
     end
 
     def format_failing_test(suite, test_case, reason, file)
@@ -119,28 +119,28 @@ module XCPretty
       format(phase_name.capitalize, "Succeeded")
     end
 
-    def format_phase_script_execution(script_name)
-      format("Running script", "'#{script_name}'")
+    def format_phase_script_execution(script_name, build_target)
+      format("Running script", "'#{script_name}'", build_target: build_target)
     end
 
-    def format_process_info_plist(file_name, file_path)
-      format("Processing", file_name)
+    def format_process_info_plist(file_name, file_path, build_target)
+      format("Processing", file_name, build_target: build_target)
     end
 
-    def format_process_pch(file)
-      format("Precompiling", file)
+    def format_process_pch(file, build_target)
+      format("Precompiling", file, build_target: build_target)
     end
 
-    def format_codesign(file)
-      format("Signing", file)
+    def format_codesign(file, build_target)
+      format("Signing", file, build_target: build_target)
     end
 
-    def format_preprocess(file)
-      format("Preprocessing", file)
+    def format_preprocess(file, build_target)
+      format("Preprocessing", file, build_target: build_target)
     end
 
-    def format_pbxcp(file)
-      format("Copying", file)
+    def format_pbxcp(file, build_target)
+      format("Copying", file, build_target: build_target)
     end
 
     def format_test_run_started(name)
@@ -151,12 +151,12 @@ module XCPretty
       heading("", name, "")
     end
 
-    def format_touch(file_path, file_name)
-      format("Touching", file_name)
+    def format_touch(file_path, file_name, build_target)
+      format("Touching", file_name, build_target: build_target)
     end
 
-    def format_tiffutil(file_name)
-      format("Validating", file_name)
+    def format_tiffutil(file_name, build_target)
+      format("Validating", file_name, build_target: build_target)
     end
 
     def format_warning(message)
@@ -173,9 +173,11 @@ module XCPretty
       [prefix, white(text), description].join(" ").strip
     end
 
-    def format(command, argument_text="", success=true)
+    def format(command, argument_text="", success=true, build_target: nil)
       symbol = status_symbol(success ? :completion : :fail)
-      [symbol, white(command), argument_text].join(" ").strip
+      formatted_text = [symbol, white(command), argument_text].join(" ").strip
+
+      build_target ? "[" + build_target + "] " + formatted_text : formatted_text
     end
 
     def format_test(test_case, status)
