@@ -51,7 +51,7 @@ Metrics/CyclomaticComplexity:
   Enabled: false
 
 Metrics/LineLength:
-  Max: 80
+  Max: 100
   Exclude:
     - 'bin/xcpretty'
     - 'spec/**/*.rb'
