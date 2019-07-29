@@ -64,6 +64,55 @@ module XCPretty
       format("Copying", File.basename(source), build_target: build_target)
     end
 
+    def format_create_build_directory(directory_path, build_target)
+      format("Creating build directory", directory_path, build_target: build_target)
+    end
+
+    def format_mkdir(directory_name, build_target)
+      format("Mkdir", directory_name, build_target: build_target)
+    end
+
+    def format_process_product_packaging(entitlements, package_name, build_target)
+      format("Processing product packaging", "#{entitlements} for app #{package_name}",
+             build_target: build_target)
+    end
+
+    def format_ditto(source_file, target_file, build_target)
+      format("Ditto", "#{source_file} #{target_file}", build_target: build_target)
+    end
+
+    def format_compile_dtrace_script(file_name, build_target)
+      format("Compiling DTrace script", file_name, build_target: build_target)
+    end
+
+    def format_copy_png_file(source_file, target_file, build_target)
+      format("Copying PNG file", source_file, build_target: build_target)
+    end
+
+    def format_copy_tiff_file(source_file, target_file, build_target)
+      format("Copying TIFF file", source_file, build_target: build_target)
+    end
+
+    def format_link_storyboards(build_target)
+      format("Linking storyboards", build_target: build_target)
+    end
+
+    def format_note(note_content)
+      format("Note:", note_content)
+    end
+
+    def format_write_auxiliary_file(file_name, build_target)
+      format("Writing auxiliary file", file_name, build_target: build_target)
+    end
+
+    def format_processing_file(file_path, build_target)
+      format("Processing", file_path, build_target: build_target)
+    end
+
+    def format_signing_identity(identity)
+      format("Signing identity", "\"#{identity}\"")
+    end
+
     def format_copy_plist_file(source, target, build_target)
       format("Copying", File.basename(source), build_target: build_target)
     end

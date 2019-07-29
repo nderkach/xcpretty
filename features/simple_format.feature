@@ -25,6 +25,66 @@ Feature: Showing build output in simple format
         When I pipe to xcpretty with "--simple"
         Then I should see the compiling asset catalog message
 
+    Scenario: Creating build directory
+        Given I have a build directory to create
+        When I pipe to xcpretty with "--simple"
+        Then I should see the creating build directory message
+
+    Scenario: Mkdir
+        Given I have a directory to create
+        When I pipe to xcpretty with "--simple"
+        Then I should see the mkdir message
+
+    Scenario: Processing product packaging
+        Given I have a product packaging to process
+        When I pipe to xcpretty with "--simple"
+        Then I should see the process product packaging message
+
+    Scenario: Ditto
+        Given I have a file ditto
+        When I pipe to xcpretty with "--simple"
+        Then I should see the ditto message
+
+    Scenario: Compiling DTrace script
+        Given I have a DTrace script to compile
+        When I pipe to xcpretty with "--simple"
+        Then I should see the compile DTrace script message
+
+    Scenario: Copying PNG file
+        Given I have a PNG file to copy
+        When I pipe to xcpretty with "--simple"
+        Then I should see the copy PNG file message
+
+    Scenario: Copying TIFF file
+        Given I have a TIFF file to copy
+        When I pipe to xcpretty with "--simple"
+        Then I should see the copy TIFF file message
+
+    Scenario: Linking storyboards
+        Given I have storyboards to link
+        When I pipe to xcpretty with "--simple"
+        Then I should see the link storyboards message
+
+    Scenario: Note message
+        Given I have a note
+        When I pipe to xcpretty with "--simple"
+        Then I should see the note message
+
+    Scenario: Writing auxiliary file
+        Given I have an auxiliary file to write
+        When I pipe to xcpretty with "--simple"
+        Then I should see the write auxiliary file message
+
+    Scenario: Processing file
+        Given I have a file to process
+        When I pipe to xcpretty with "--simple"
+        Then I should see the process file message
+
+    Scenario: Signing identity
+        Given I have an identity to sign
+        When I pipe to xcpretty with "--simple"
+        Then I should see the sign identity message
+
     Scenario: Showing precompilation
         Given I have a precompiled header
         When I pipe to xcpretty with "--simple --no-color"

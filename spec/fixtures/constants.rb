@@ -586,7 +586,7 @@ CompileStoryboard sample/Main.storyboard (in target: foo)
 SAMPLE_COMPILE_ASSET_CATALOG = %Q(
 CompileAssetCatalog sample/sample.bundle sample/Assets.xcassets (in target: foo)
     cd /Users/dustin/Source/CocoaChip
-    /Applications/Xcode.app/Contents/Developer/usr/bin/actool --output-format human-readable-text --notices --warnings --export-dependency-info /Users/beny/Library/Developer/Xcode/DerivedData/Debug-iphonesimulator/TestHost.build/assetcatalog_dependencies --output-partial-info-plist /Users/beny/Library/Developer/Xcode/DerivedData/sample-etjztiverddwaddrudeteewjzfxw/Build/Intermediates.noindex/sample.build/Debug-iphonesimulator/sample.build/assetcatalog_generated_info.plist --app-icon AppIcon --compress-pngs --enable-on-demand-resources YES --filter-for-device-model iPhone11,8 --filter-for-device-os-version 12.2 --sticker-pack-identifier-prefix com.lightricks.sample.sticker-pack. --target-device iphone --target-device ipad --minimum-deployment-target 10.0 --platform iphonesimulator --product-type com.apple.product-type.application --compile /Users/beny/Library/Developer/Xcode/DerivedData/sample-etjztiverddwaddrudeteewjzfxw/Build/Products/Debug-iphonesimulator/sample.app /Users/beny/developer/video/Foundations/Sample/Sample/Assets.xcassets
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool --output-format human-readable-text --notices --warnings --export-dependency-info /Users/foo/Library/Developer/Xcode/DerivedData/Debug-iphonesimulator/TestHost.build/assetcatalog_dependencies --output-partial-info-plist /Users/foo/Library/Developer/Xcode/DerivedData/sample-etjztiverddwaddrudeteewjzfxw/Build/Intermediates.noindex/sample.build/Debug-iphonesimulator/sample.build/assetcatalog_generated_info.plist --app-icon AppIcon --compress-pngs --enable-on-demand-resources YES --filter-for-device-model iPhone11,8 --filter-for-device-os-version 12.2 --sticker-pack-identifier-prefix com.lightricks.sample.sticker-pack. --target-device iphone --target-device ipad --minimum-deployment-target 10.0 --platform iphonesimulator --product-type com.apple.product-type.application --compile /Users/foo/Library/Developer/Xcode/DerivedData/sample-etjztiverddwaddrudeteewjzfxw/Build/Products/Debug-iphonesimulator/sample.app /Users/foo/bar/baz/temp/Sample/Sample/Assets.xcassets
 )
 SAMPLE_CODESIGN = %Q(
 CodeSign build/Release/CocoaChip.app (in target: foo)
@@ -616,6 +616,83 @@ warning: skipping copy phase strip, binary is code signed: /Users/dustin/Source/
 
 SAMPLE_SCREENSHOT_FILE = 'RACCommandSpec_enabled_signal_should_send_YES_while_executing_is_YES.png'
 SAMPLE_UNRELATED_IMAGE_FILE = 'apple_raw.png'
+
+SAMPLE_CP_HEADER = %Q(
+CpHeader ReactiveObjC/UISegmentedControl+RACSignalSupport.h /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphonesimulator/ReactiveObjC.framework/Headers/UISegmentedControl+RACSignalSupport.h (in target: foo)
+    cd "/Users/jenkins/.jenkins/workspace/temp/Repo/third_party/ReactiveObjC"
+    export PATH="/Applications/Xcode-10.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode-10.2.app/Contents/Developer/usr/bin:/Users/jenkins/.jenkins/workspace/temp/Repo/vendor/bundle/ruby/2.5.0/bin:/Users/jenkins/.rbenv/versions/2.5.3/bin:/usr/local/Cellar/rbenv/1.1.1/libexec:/Users/jenkins/.pyenv/shims:/Users/jenkins/.rbenv/shims:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/jenkins/.jenkins/workspace/temp/Repo/third_party/ReactiveObjC/ReactiveObjC/UISegmentedControl+RACSignalSupport.h /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphonesimulator/ReactiveObjC.framework/Headers
+)
+
+SAMPLE_CREATE_BUILD_DIRECTORY = %Q(
+CreateBuildDirectory /Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/Pods/../build (in target: foo)
+    cd /Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/Pods
+    builtin-create-build-directory /Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/Pods/../build
+)
+
+SAMPLE_MKDIR = %Q(
+MkDir /Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/build/Release-iphoneos/1PasswordExtension/OnePasswordExtension.framework (in target: foo)
+    cd /Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/Pods
+    /bin/mkdir -p /Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/build/Release-iphoneos/1PasswordExtension/OnePasswordExtension.framework
+)
+
+SAMPLE_PROCESS_PRODUCT_PACKAGING = %Q(
+ProcessProductPackaging "Foo.entitlements" /Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.build/Debug-iphonesimulator/MobileApp.build/MobileApp.app.xcent (in target: foo)
+)
+
+SAMPLE_DITTO = %Q(
+Ditto /Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.build/Debug-iphoneos/Masonry\\ iOS.build/module.modulemap /Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.framework/Modules/module.modulemap (in target: foo)
+)
+
+SAMPLE_COMPILE_DTRACE_SCRIPT = %Q(
+CompileDTraceScript ReactiveObjC/RACCompoundDisposableProvider.d (in target: foo)
+    cd "/Users/jenkins/.jenkins/workspace/temp/Repo/third_party/ReactiveObjC"
+    export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+    /usr/sbin/dtrace -h -s /Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/ReactiveObjC.build/Debug-iphonesimulator/ReactiveObjC-iOS.build/DerivedSources/RACCompoundDisposableProvider.h
+)
+
+SAMPLE_COPY_PNG_FILE = %Q(
+CopyPNGFile /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/MyTarget.bundle/IMAGE.PNG FooBundle/IMAGE.PNG (in target: foo)
+    cd "/Users/jenkins/.jenkins/workspace/temp/Repo/test_package/"
+    export DEVELOPER_DIR=/Applications/Xcode-10.2.app/Contents/Developer
+    export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+    export SDKROOT=/Applications/Xcode-10.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator12.2.sdk
+    export TOOLCHAINS=
+    /Applications/Xcode-10.2.app/Contents/Developer/usr/bin/copypng -compress -strip-PNG-text /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/test_packageBundle/Features/IMAGE.PNG /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/MyTarget.bundle/IMAGE.PNG
+)
+
+SAMPLE_COPY_TIFF_FILE = %Q(
+CopyTiffFile /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphonesimulator/MobileApp.app/PlugIns/MobileAppTests.xctest/ImageCompressorInput.tiff MobileAppTests/Resources/ImageCompressorInput.tiff (in target: foo)
+    cd "/Users/jenkins/.jenkins/workspace/temp/Repo/test_package"
+    export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+    builtin-copyTiff --outdir /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphonesimulator/MobileApp.app/PlugIns/MobileAppTests.xctest -- MobileAppTests/Resources/ImageCompressorInput.tiff
+)
+
+SAMPLE_LINK_STORYBOARDS = %Q(
+LinkStoryboards (in target: foo)
+    cd "/Users/jenkins/.jenkins/workspace/temp/Repo/test_package/"
+    export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+    export XCODE_DEVELOPER_USR_PATH=/Applications/Xcode-10.2.app/Contents/Developer/usr/bin/..
+    /Applications/Xcode-10.2.app/Contents/Developer/usr/bin/ibtool --errors --warnings --notices --module MobileApp --target-device iphone --target-device ipad --minimum-deployment-target 11.0 --output-format human-readable-text --link /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphonesimulator/MobileApp.app /Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.build/Debug-iphonesimulator/MobileApp.build/Base.lproj/LaunchScreen.storyboardc
+)
+
+SAMPLE_NOTE = %Q(
+note: detected encoding of input file as Unicode (UTF-8)
+)
+
+SAMPLE_WRITE_AUXILIARY_FILE = %Q(
+WriteAuxiliaryFile /Users/jenkins/Library/Developer/Xcode/DerivedData/sample-etjztiverddwaddrudeteewjzfxw/Build/Intermediates.noindex/Specta.build/Debug-iphonesimulator/libSpecta-iOS.build/Specta.hmap (in target: foo)
+    cd /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/third_party/Specta
+    write-file /Users/jenkins/Library/Developer/Xcode/DerivedData/sample-etjztiverddwaddrudeteewjzfxw/Build/Intermediates.noindex/Specta.build/Debug-iphonesimulator/libSpecta-iOS.build/Specta.hmap
+)
+
+SAMPLE_FILE_PROCESSING = %Q(
+Processing /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/test_packageBundle/de.lproj/Localizable.strings (in target: foo)
+)
+
+SAMPLE_SIGNING_IDENTITY = %Q(
+Signing Identity:     "-"
+)
 
 ################################################################################
 # ERRORS
@@ -732,3 +809,7 @@ SAMPLE_FORMAT_WARNING = %Q(
 
 SAMPLE_WILL_NOT_BE_CODE_SIGNED = "FrameworkName will not be code signed because its settings don't specify a development team."
 SAMPLE_FORMAT_OTHER_UNRECOGNIZED_STRING = "This is a string that won't be matched by any other regex."
+
+SAMPLE_GENERIC_WARNING = %Q(
+warning: Mapping architecture arm64 to x86_64. Ensure that this target's Architectures and Valid Architectures build settings are configured correctly for the iOS Simulator platform. (in target 'Foo-StaticLib')
+)

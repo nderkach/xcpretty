@@ -67,6 +67,91 @@ module XCPretty
         "[foo] > Compiling asset catalog sample/Assets.xcassets"
       end
 
+      it "formats creating build directory output" do
+        @formatter.format_create_build_directory(
+          "/Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/Pods/../build",
+          "foo"
+        ).should ==
+        "[foo] > Creating build directory /Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/Pods/../build"
+      end
+
+      it "formats mkdir output" do
+        @formatter.format_mkdir(
+          "OnePasswordExtension.framework",
+          "foo"
+        ).should ==
+        "[foo] > Mkdir OnePasswordExtension.framework"
+      end
+
+      it "formats process product packaging output" do
+        @formatter.format_process_product_packaging(
+          "Foo.entitlements",
+          "MobileApp.app",
+          "foo"
+        ).should ==
+        "[foo] > Processing product packaging Foo.entitlements for app MobileApp.app"
+      end
+
+      it "formats ditto output" do
+        @formatter.format_ditto(
+          "/Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.build/Debug-iphoneos/Masonry\ iOS.build/module.modulemap",
+          "/Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.framework/Modules/module.modulemap",
+          "foo"
+        ).should ==
+        "[foo] > Ditto /Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.build/Debug-iphoneos/Masonry\ iOS.build/module.modulemap /Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.framework/Modules/module.modulemap"
+      end
+
+      it "formats compile DTrace script output" do
+        @formatter.format_compile_dtrace_script("RACCompoundDisposableProvider.d", "foo").should ==
+        "[foo] > Compiling DTrace script RACCompoundDisposableProvider.d"
+      end
+
+      it "formats copy PNG file output" do
+        @formatter.format_copy_png_file(
+          "/Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/MyTarget.bundle/IMAGE.PNG",
+          "VideoEngineBundle/IMAGE.PNG",
+          "foo"
+        ).should ==
+        "[foo] > Copying PNG file /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/MyTarget.bundle/IMAGE.PNG"
+      end
+
+      it "formats copy TIFF file output" do
+        @formatter.format_copy_tiff_file(
+          "/Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphonesimulator/MobileApp.app/PlugIns/MobileAppTests.xctest/ImageCompressorInput.tiff",
+          "MobileAppTests/Resources/ImageCompressorInput.tiff",
+          "foo"
+        ).should ==
+        "[foo] > Copying TIFF file /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphonesimulator/MobileApp.app/PlugIns/MobileAppTests.xctest/ImageCompressorInput.tiff"
+      end
+
+      it "formats link storyboards" do
+        @formatter.format_link_storyboards("foo").should ==
+        "[foo] > Linking storyboards"
+      end
+
+      it "formats note" do
+        @formatter.format_note("detected encoding of input file as Unicode (UTF-8)").should ==
+        "> Note: detected encoding of input file as Unicode (UTF-8)"
+      end
+
+      it "formats write auxiliary file" do
+        @formatter.format_write_auxiliary_file("Specta.hmap", "foo").should ==
+        "[foo] > Writing auxiliary file Specta.hmap"
+      end
+
+      it "formats processing" do
+        @formatter.format_processing_file(
+          "/Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/test_packageBundle/de.lproj/Localizable.strings",
+          "foo"
+        ).should ==
+        "[foo] > Processing /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/test_packageBundle/de.lproj/Localizable.strings"
+      end
+
+      it "formats signing identity" do
+        @formatter.format_signing_identity("Foo").should ==
+        "> Signing identity \"Foo\""
+      end
+
       it 'formats copying header files' do
         @formatter.format_copy_header_file('Source.h',
                                            'dir/Destination.h',
