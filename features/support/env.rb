@@ -10,10 +10,6 @@ require 'lib/xcpretty/version'
 require 'lib/xcpretty/syntax'
 require 'rexml/document'
 require 'lib/xcpretty/formatters/formatter'
-require 'lib/xcpretty/reporters/reporter'
-require 'lib/xcpretty/reporters/junit'
-require 'lib/xcpretty/reporters/html'
-require 'lib/xcpretty/reporters/json_compilation_database'
 
 begin
   require 'json'
@@ -33,8 +29,6 @@ PASSING_TEST_NAME_MATCHER = %r{\w+\s\(\d+\.\d+\sseconds\)}.freeze
 PENDING_TEST_NAME_MATCHER = %r{\w+\s\[PENDING\]}.freeze
 FAILING_TEST_NAME_MATCHER = %r{\w+, expected:}.freeze
 MEASURING_TEST_NAME_MATCHER = %r{\w+\smeasured\s\(\d+\.\d+\sseconds\)}.freeze
-
-JSON_DB_FIXTURE_COMMAND_COUNT = 557
 
 def run_xcpretty(flags)
   input_file = Tempfile.new('xcpretty_input')
@@ -57,52 +51,6 @@ def run_output
   @run_output ||= ''
 end
 
-def html_report
-  @html_report ||= REXML::Document.new(File.open(XCPretty::HTML::FILEPATH, 'r').read.sub("<!DOCTYPE html>", ""))
-end
-
-def html_report_body
-  html_report.root.get_elements('//body').first
-end
-
-def html_test_suites
-  parent = html_report_body.get_elements("//*[@id='test-suites']/").first
-  parent.elements.to_a.select do |e|
-    e.attributes['class']&.include?('test-suite')
-  end
-end
-
-def json_db
-  @json_db ||= JSON.parse(File.open(custom_report_path, 'r').read)
-end
-
-def junit_report
-  REXML::Document.new(File.open(XCPretty::JUnit::FILEPATH, 'r').read)
-end
-
-def junit_report_root
-  junit_report.root.elements.to_a.first
-end
-
-def custom_report_path
-  @custom_report_path ||= begin
-    @custom_report_file1 = Tempfile.new('custom_report_path')
-    @custom_report_file1.path
-  end
-end
-
-def other_custom_report_path
-  @other_custom_report_path ||= begin
-    @custom_report_file2 = Tempfile.new('custom_report_path')
-    @custom_report_file2.path
-  end
-end
-
-def copy_file_to_screenshot_dir(screenshot_file)
-  @screenshot_file_path = "#{XCPretty::HTML::SCREENSHOT_DIR}/#{screenshot_file}"
-  FileUtils.cp("features/assets/#{screenshot_file}", @screenshot_file_path)
-end
-
 Before do
   self.colorize = true
 end
@@ -110,13 +58,4 @@ end
 After do
   @run_input  = ""
   @run_output = ""
-  @custom_report_file1&.unlink
-  @custom_report_file2&.unlink
-  @html_report = nil
-  @json_db = nil
-  FileUtils.rm_rf(XCPretty::JUnit::FILEPATH)
-  FileUtils.rm_rf(XCPretty::HTML::FILEPATH)
-  FileUtils.rm_rf(XCPretty::JSONCompilationDatabase::FILEPATH)
-  FileUtils.rm_rf(XCPretty::Reporter::FILEPATH)
-  File.delete(@screenshot_file_path) if @screenshot_file_path
 end
