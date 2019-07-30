@@ -14,27 +14,3 @@ require 'xcpretty/reporters/reporter'
 require 'xcpretty/reporters/junit'
 require 'xcpretty/reporters/html'
 require 'xcpretty/reporters/json_compilation_database'
-
-module XCPretty
-
-  def self.class_from_path(path)
-    source = File.read(path)
-    klass = eval(source, nil, path)
-    raise unless klass.is_a?(Class)
-
-    klass
-  end
-
-  def self.load_custom_class(path)
-    $LOAD_PATH.unshift File.dirname(path)
-    class_from_path(path)
-  rescue SyntaxError => e
-    exit_with_error("Expected custom source file to return a class. #{e}")
-  end
-
-  def self.exit_with_error(message)
-    warn "[!] #{message}"
-    exit 1
-  end
-
-end
