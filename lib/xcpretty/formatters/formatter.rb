@@ -55,18 +55,18 @@ module XCPretty
     def format_touch(file_path, file_name, build_target);      EMPTY; end
     def format_tiffutil(file, build_target);                   EMPTY; end
     def format_write_file(file);                               EMPTY; end
-    def format_create_build_directory(directory_path, target, build_target); EMPTY; end
-    def format_mkdir(directory_name, target, build_target);    EMPTY; end
+    def format_create_build_directory(directory_path, build_target); EMPTY; end
+    def format_mkdir(directory_name, build_target);            EMPTY; end
     def format_process_product_packaging(entitlements, package_name, build_target); EMPTY; end
     def format_ditto(source_file, target_file, build_target);  EMPTY; end
     def format_compile_dtrace_script(file_name, build_target); EMPTY; end
     def format_copy_png_file(source_file, target_file, build_target); EMPTY; end
     def format_copy_tiff_file(source_file, target_file, build_target); EMPTY; end
-    def format_link_storyboards(target, build_target);         EMPTY; end
-    def format_note(content, build_target);                    EMPTY; end
-    def format_write_auxiliary_file(file_name, target_name, build_target); EMPTY; end
+    def format_link_storyboards(build_target);                 EMPTY; end
+    def format_note(content);                                  EMPTY; end
+    def format_write_auxiliary_file(file_name, build_target);  EMPTY; end
     def format_processing_file(file_path, build_target);       EMPTY; end
-    def format_signing_identity(identity, build_target);       EMPTY; end
+    def format_signing_identity(identity);                     EMPTY; end
     def format_other(text)                                     EMPTY; end
 
     # COMPILER / LINKER ERRORS AND WARNINGS
