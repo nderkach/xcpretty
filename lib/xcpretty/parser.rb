@@ -779,10 +779,6 @@ module XCPretty
       @formatting_runtime_error = false
       formatter.format_runtime_error(runtime_error[:sanitizer],
                                      runtime_error[:reason], "")
-      formatter.format_failing_test(guess_test_suite,
-                                    guess_test_case,
-                                    "#{runtime_error[:sanitizer]} #{runtime_error[:reason]}",
-                                    runtime_error[:info])
     end
 
     def format_undefined_duplicate_symbols
