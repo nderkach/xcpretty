@@ -736,7 +736,7 @@ module XCPretty
     end
 
     def current_runtime_issue
-      @current_runtime_issue ||= {info: ""}
+      @current_runtime_issue ||= {info: +""}
     end
 
     def guess_test_suite
