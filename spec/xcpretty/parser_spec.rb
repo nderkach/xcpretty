@@ -755,5 +755,13 @@ module XCPretty
       end
     end
 
+    context "performance" do
+      it "parses a very long line within 1 second" do
+        require 'timeout'
+        Timeout.timeout(1) do
+          @parser.parse(SAMPLE_VERY_LONG_TEST_FAILURE)
+        end
+      end
+    end
   end
 end
