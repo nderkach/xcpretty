@@ -760,7 +760,8 @@ module XCPretty
       @current_runtime_issue = nil
       @formatting_runtime_error = false
       formatter.format_runtime_error(runtime_error[:sanitizer],
-                                     runtime_error[:reason], "")
+                                     runtime_error[:reason],
+                                     runtime_error[:info])
     end
 
     def format_undefined_duplicate_symbols

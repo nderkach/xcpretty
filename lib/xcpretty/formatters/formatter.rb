@@ -156,8 +156,7 @@ module XCPretty
     end
 
     def format_runtime_error(sanitizer, reason, info)
-      "\n#{red(runtime_error_symbol + ' ')}Runtime Error: #{red(reason)}\n\n" \
-        "#{info}"
+      "\n#{red(runtime_error_symbol + ' ')}Runtime Error: #{yellow(reason)}\n\n"
     end
 
     def format_ld_warning(reason)

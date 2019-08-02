@@ -221,7 +221,7 @@ module XCPretty
       @formatter.should receive(:format_runtime_error).with(
         "AddressSanitizer",
         "heap-buffer-overflow (/Users/user/Library/Developer/Xcode/DerivedData/Whatever-dsmsnliuotrwghgdxpglbcgzkuwj/Build/Products/Debug-iphonesimulator/TestHost.app/PlugIns/SomeTests.xctest/Frameworks/libclang_rt.asan_iossim_dynamic.dylib:x86_64+0x54bde) in __asan_memcpy",
-        ""
+        anything
       )
       SAMPLE_ADDRESS_SANITIZER.each_line do |line|
         @parser.parse(line)
@@ -232,7 +232,7 @@ module XCPretty
       @formatter.should receive(:format_runtime_error).with(
         "ThreadSanitizer",
         "data race (/Users/jenkins/Library/Developer/Xcode/DerivedData/Whatever-dpklhpaqruhpwdbkihszqtqogzfb/Build/Products/Debug-iphonesimulator/TestHost.app/PlugIns/FoodEngineTests.xctest/FoodEngineTests:x86_64+0x27a49e) in __37-[WATFoodManagerSpec spec]_block_invoke_7.82",
-        ""
+        anything
       )
       SAMPLE_THREAD_SANITIZER.each_line do |line|
         @parser.parse(line)
