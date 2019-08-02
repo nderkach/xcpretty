@@ -13,23 +13,23 @@ module XCPretty
     end
 
     it "prints dots in the same line" do
-      @formatter.optional_newline.should == ""
+      expect(@formatter.optional_newline).to eq("")
     end
 
     context "without colors" do
 
       it "prints dots for passing tests" do
-        @formatter.format_passing_test("sweez testz", "sample spec", "0.002").should == "."
+        expect(@formatter.format_passing_test("sweez testz", "sample spec", "0.002")).to eq(".")
       end
 
       it "prints P for pending tests" do
-        @formatter.format_pending_test("sweez testz", "sample spec").should == "P"
+        expect(@formatter.format_pending_test("sweez testz", "sample spec")).to eq("P")
       end
 
       it "prints F for failing tests" do
-        @formatter.format_failing_test(
+        expect(@formatter.format_failing_test(
           "///file", "NSNumber Specs", "adding numbers", "should add 2 numbers"
-        ).should == "F"
+        )).to eq("F")
       end
     end
 
@@ -38,17 +38,17 @@ module XCPretty
       before { @formatter.colorize = true }
 
       it "prints green for passing tests" do
-        @formatter.format_passing_test("sweez testz", "sample spec", "0.002").should be_colored :green
+        expect(@formatter.format_passing_test("sweez testz", "sample spec", "0.002")).to be_colored :green
       end
 
       it "prints yellow for pending tests" do
-        @formatter.format_pending_test("sweez testz", "sample spec").should be_colored :yellow
+        expect(@formatter.format_pending_test("sweez testz", "sample spec")).to be_colored :yellow
       end
 
       it "prints red for failing tests" do
-        @formatter.format_failing_test(
+        expect(@formatter.format_failing_test(
           "///file", "NSNumber Specs", "adding numbers", "should add 2 numbers"
-        ).should be_colored :red
+        )).to be_colored :red
       end
     end
   end

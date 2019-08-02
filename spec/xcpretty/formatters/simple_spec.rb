@@ -13,274 +13,265 @@ module XCPretty
       end
 
       it "formats analyzing" do
-        @formatter.format_analyze("CCChip8DisplayView.m", 'path/to/file', "foo").should ==
-        "[foo] > Analyzing CCChip8DisplayView.m"
+        expect(@formatter.format_analyze("CCChip8DisplayView.m", 'path/to/file', "foo"))
+            .to eq("[foo] > Analyzing CCChip8DisplayView.m")
       end
 
       it "formats build target/project/configuration with target" do
-        @formatter.format_build_target("The Spacer", "Pods", "Debug").should ==
-        "> Building Pods/The Spacer [Debug]"
+        expect(@formatter.format_build_target("The Spacer", "Pods", "Debug"))
+            .to eq("> Building Pods/The Spacer [Debug]")
       end
 
       it "formats build target/project/configuration with target" do
-        @formatter.format_aggregate_target("Be Aggro", "AggregateExample", "Debug").should ==
-        "> Aggregate AggregateExample/Be Aggro [Debug]"
+        expect(@formatter.format_aggregate_target("Be Aggro", "AggregateExample", "Debug"))
+            .to eq("> Aggregate AggregateExample/Be Aggro [Debug]")
       end
 
       it "formats analyze target/project/configuration with target" do
-        @formatter.format_analyze_target("The Spacer", "Pods", "Debug").should ==
-        "> Analyzing Pods/The Spacer [Debug]"
+        expect(@formatter.format_analyze_target("The Spacer", "Pods", "Debug"))
+            .to eq("> Analyzing Pods/The Spacer [Debug]")
       end
 
       it "formats clean target/project/configuration" do
-        @formatter.format_clean_target("Pods-ObjectiveSugar", "Pods", "Debug").should ==
-        "> Cleaning Pods/Pods-ObjectiveSugar [Debug]"
+        expect(@formatter.format_clean_target("Pods-ObjectiveSugar", "Pods", "Debug"))
+            .to eq("> Cleaning Pods/Pods-ObjectiveSugar [Debug]")
       end
 
       it 'formats compiler warnings' do
         warning = 'warning: stuff is broken'
-        @formatter.format_warning(warning, 'foo').should == '[foo]     ' + warning
+        expect(@formatter.format_warning(warning, 'foo')).to eq('[foo]     ' + warning)
       end
 
       it "formats compiling output" do
-        @formatter.format_compile("NSMutableArray+ObjectiveSugar.m", 'path/to/file', "foo").should ==
-        "[foo] > Compiling NSMutableArray+ObjectiveSugar.m"
+        expect(@formatter.format_compile("NSMutableArray+ObjectiveSugar.m", 'path/to/file', "foo"))
+            .to eq("[foo] > Compiling NSMutableArray+ObjectiveSugar.m")
       end
 
       it "formats compiling metal output" do
-        @formatter.format_compile("MYMetalFile.metal", 'path/to/file', "foo").should ==
-        "[foo] > Compiling MYMetalFile.metal"
+        expect(@formatter.format_compile("MYMetalFile.metal", 'path/to/file', "foo"))
+            .to eq("[foo] > Compiling MYMetalFile.metal")
       end
 
       it "formats compiling xib output" do
-        @formatter.format_compile_xib("MainMenu.xib", 'path/to/file', "foo").should ==
-        "[foo] > Compiling MainMenu.xib"
+        expect(@formatter.format_compile_xib("MainMenu.xib", 'path/to/file', "foo"))
+            .to eq("[foo] > Compiling MainMenu.xib")
       end
 
       it "formats compiling storyboard output" do
-        @formatter.format_compile_xib("Main.storyboard", 'path/to/file', "foo").should ==
-        "[foo] > Compiling Main.storyboard"
+        expect(@formatter.format_compile_xib("Main.storyboard", 'path/to/file', "foo"))
+            .to eq("[foo] > Compiling Main.storyboard")
       end
 
       it "formats compiling asset catalog output" do
-        @formatter.format_compile_asset_catalog("sample/Assets.xcassets", "foo").should ==
-        "[foo] > Compiling asset catalog sample/Assets.xcassets"
+        expect(@formatter.format_compile_asset_catalog("sample/Assets.xcassets", "foo"))
+             .to eq("[foo] > Compiling asset catalog sample/Assets.xcassets")
       end
 
       it "formats creating build directory output" do
-        @formatter.format_create_build_directory(
+        expect(@formatter.format_create_build_directory(
           "/Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/Pods/../build",
           "foo"
-        ).should ==
-        "[foo] > Creating build directory /Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/Pods/../build"
+        )).to eq("[foo] > Creating build directory /Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/Pods/../build")
       end
 
       it "formats mkdir output" do
-        @formatter.format_mkdir(
+        expect(@formatter.format_mkdir(
           "OnePasswordExtension.framework",
           "foo"
-        ).should ==
-        "[foo] > Mkdir OnePasswordExtension.framework"
+        )).to eq("[foo] > Mkdir OnePasswordExtension.framework")
       end
 
       it "formats process product packaging output" do
-        @formatter.format_process_product_packaging(
+        expect(@formatter.format_process_product_packaging(
           "Foo.entitlements",
           "MobileApp.app",
           "foo"
-        ).should ==
-        "[foo] > Processing product packaging Foo.entitlements for app MobileApp.app"
+        )).to eq("[foo] > Processing product packaging Foo.entitlements for app MobileApp.app")
       end
 
       it "formats ditto output" do
-        @formatter.format_ditto(
+        expect(@formatter.format_ditto(
           "/Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.build/Debug-iphoneos/Masonry\ iOS.build/module.modulemap",
           "/Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.framework/Modules/module.modulemap",
           "foo"
-        ).should ==
-        "[foo] > Ditto /Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.build/Debug-iphoneos/Masonry\ iOS.build/module.modulemap /Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.framework/Modules/module.modulemap"
+        )).to eq("[foo] > Ditto /Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.build/Debug-iphoneos/Masonry\ iOS.build/module.modulemap /Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.framework/Modules/module.modulemap")
       end
 
       it "formats compile DTrace script output" do
-        @formatter.format_compile_dtrace_script("RACCompoundDisposableProvider.d", "foo").should ==
-        "[foo] > Compiling DTrace script RACCompoundDisposableProvider.d"
+        expect(@formatter.format_compile_dtrace_script("RACCompoundDisposableProvider.d", "foo"))
+          .to eq("[foo] > Compiling DTrace script RACCompoundDisposableProvider.d")
       end
 
       it "formats copy PNG file output" do
-        @formatter.format_copy_png_file(
+        expect(@formatter.format_copy_png_file(
           "/Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/MyTarget.bundle/IMAGE.PNG",
           "VideoEngineBundle/IMAGE.PNG",
           "foo"
-        ).should ==
-        "[foo] > Copying PNG file /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/MyTarget.bundle/IMAGE.PNG"
+        )).to eq("[foo] > Copying PNG file /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/MyTarget.bundle/IMAGE.PNG")
       end
 
       it "formats copy TIFF file output" do
-        @formatter.format_copy_tiff_file(
+        expect(@formatter.format_copy_tiff_file(
           "/Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphonesimulator/MobileApp.app/PlugIns/MobileAppTests.xctest/ImageCompressorInput.tiff",
           "MobileAppTests/Resources/ImageCompressorInput.tiff",
           "foo"
-        ).should ==
-        "[foo] > Copying TIFF file /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphonesimulator/MobileApp.app/PlugIns/MobileAppTests.xctest/ImageCompressorInput.tiff"
+        )).to eq("[foo] > Copying TIFF file /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphonesimulator/MobileApp.app/PlugIns/MobileAppTests.xctest/ImageCompressorInput.tiff")
       end
 
       it "formats link storyboards" do
-        @formatter.format_link_storyboards("foo").should ==
-        "[foo] > Linking storyboards"
+        expect(@formatter.format_link_storyboards("foo"))
+            .to eq("[foo] > Linking storyboards")
       end
 
       it "formats note" do
-        @formatter.format_note("detected encoding of input file as Unicode (UTF-8)").should ==
-        "> Note: detected encoding of input file as Unicode (UTF-8)"
+        expect(@formatter.format_note("detected encoding of input file as Unicode (UTF-8)"))
+            .to eq("> Note: detected encoding of input file as Unicode (UTF-8)")
       end
 
       it "formats write auxiliary file" do
-        @formatter.format_write_auxiliary_file("Specta.hmap", "foo").should ==
-        "[foo] > Writing auxiliary file Specta.hmap"
+        expect(@formatter.format_write_auxiliary_file("Specta.hmap", "foo"))
+            .to eq("[foo] > Writing auxiliary file Specta.hmap")
       end
 
       it "formats processing" do
-        @formatter.format_processing_file(
+        expect(@formatter.format_processing_file(
           "/Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/test_packageBundle/de.lproj/Localizable.strings",
           "foo"
-        ).should ==
-        "[foo] > Processing /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/test_packageBundle/de.lproj/Localizable.strings"
+        )).to eq("[foo] > Processing /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphoneos/test_packageBundle/de.lproj/Localizable.strings")
       end
 
       it "formats signing identity" do
-        @formatter.format_signing_identity("Foo").should ==
-        "> Signing identity \"Foo\""
+        expect(@formatter.format_signing_identity("Foo"))
+            .to eq("> Signing identity \"Foo\"")
       end
 
       it 'formats copying header files' do
-        @formatter.format_copy_header_file('Source.h',
+        expect(@formatter.format_copy_header_file('Source.h',
                                            'dir/Destination.h',
-                                           'foo').should == '[foo] > Copying Source.h'
+                                           'foo')).to eq('[foo] > Copying Source.h')
       end
 
       it 'formats copying plist files' do
-        @formatter.format_copy_plist_file("Source.plist",
+        expect(@formatter.format_copy_plist_file("Source.plist",
                                           'dir/Destination.plist',
-                                          'foo').should == '[foo] > Copying Source.plist'
+                                          'foo')).to eq('[foo] > Copying Source.plist')
       end
 
       it "formats copy resource" do
-        @formatter.format_cpresource("ObjectiveSugar/Default-568h@2x.png", "foo").should ==
-        "[foo] > Copying ObjectiveSugar/Default-568h@2x.png"
+        expect(@formatter.format_cpresource("ObjectiveSugar/Default-568h@2x.png", "foo"))
+            .to eq("[foo] > Copying ObjectiveSugar/Default-568h@2x.png")
       end
 
       it "formats Copy strings file" do
-        @formatter.format_copy_strings_file("InfoPlist.strings", "foo").should ==
-        "[foo] > Copying InfoPlist.strings"
+        expect(@formatter.format_copy_strings_file("InfoPlist.strings", "foo"))
+            .to eq("[foo] > Copying InfoPlist.strings")
       end
 
       it "formats GenerateDSYMFile" do
-        @formatter.format_generate_dsym("ObjectiveSugarTests.octest.dSYM", "foo").should ==
-        "[foo] > Generating 'ObjectiveSugarTests.octest.dSYM'"
+        expect(@formatter.format_generate_dsym("ObjectiveSugarTests.octest.dSYM", "foo"))
+            .to eq("[foo] > Generating 'ObjectiveSugarTests.octest.dSYM'")
       end
 
       it "formats info.plist processing" do
-        @formatter.format_process_info_plist("The Spacer-Info.plist", "The Spacer/The Spacer-Info.plist", "foo").should ==
-        "[foo] > Processing The Spacer-Info.plist"
+        expect(@formatter.format_process_info_plist("The Spacer-Info.plist", "The Spacer/The Spacer-Info.plist", "foo"))
+            .to eq("[foo] > Processing The Spacer-Info.plist")
       end
 
       it "formats Linking" do
-        @formatter.format_linking("ObjectiveSugar", 'normal', 'i386', "foo").should ==
-        "[foo] > Linking ObjectiveSugar"
+        expect(@formatter.format_linking("ObjectiveSugar", 'normal', 'i386', "foo"))
+            .to eq("[foo] > Linking ObjectiveSugar")
       end
 
       it "formats metal Linking" do
-        @formatter.format_linking_metal("default.metallib", "foo").should ==
-        "[foo] > Linking default.metallib"
+        expect(@formatter.format_linking_metal("default.metallib", "foo"))
+            .to eq("[foo] > Linking default.metallib")
       end
 
       it "formats Libtool" do
-        @formatter.format_libtool("libPods-ObjectiveSugarTests-Kiwi.a", "foo").should ==
-        "[foo] > Building library libPods-ObjectiveSugarTests-Kiwi.a"
+        expect(@formatter.format_libtool("libPods-ObjectiveSugarTests-Kiwi.a", "foo"))
+            .to eq("[foo] > Building library libPods-ObjectiveSugarTests-Kiwi.a")
       end
 
       it "formats failing tests" do
-        @formatter.format_failing_test("RACCommandSpec", "enabled_signal_should_send_YES_while_executing_is_YES_and_allowsConcurrentExecution_is_YES", "expected: 1, got: 0", 'path/to/file').should ==
-        "    x enabled_signal_should_send_YES_while_executing_is_YES_and_allowsConcurrentExecution_is_YES, expected: 1, got: 0"
+        expect(@formatter.format_failing_test("RACCommandSpec", "enabled_signal_should_send_YES_while_executing_is_YES_and_allowsConcurrentExecution_is_YES", "expected: 1, got: 0", 'path/to/file'))
+            .to eq("    x enabled_signal_should_send_YES_while_executing_is_YES_and_allowsConcurrentExecution_is_YES, expected: 1, got: 0")
       end
 
       it "formats passing tests" do
-        @formatter.format_passing_test("RACCommandSpec", "_tupleByAddingObject__should_add_a_non_nil_object", "0.001").should ==
-        "    . _tupleByAddingObject__should_add_a_non_nil_object (0.001 seconds)"
+        expect(@formatter.format_passing_test("RACCommandSpec", "_tupleByAddingObject__should_add_a_non_nil_object", "0.001"))
+            .to eq("    . _tupleByAddingObject__should_add_a_non_nil_object (0.001 seconds)")
       end
 
       it "formats pending tests" do
-        @formatter.format_pending_test("RACCommandSpec", "_tupleByAddingObject__should_add_a_non_nil_object").should ==
-        "    P _tupleByAddingObject__should_add_a_non_nil_object [PENDING]"
+        expect(@formatter.format_pending_test("RACCommandSpec", "_tupleByAddingObject__should_add_a_non_nil_object"))
+            .to eq("    P _tupleByAddingObject__should_add_a_non_nil_object [PENDING]")
       end
 
       it "formats measuring tests" do
-        @formatter.format_measuring_test("RACCommandSpec", "_tupleByAddingObject__should_add_a_non_nil_object", "0.001").should ==
-        "    T _tupleByAddingObject__should_add_a_non_nil_object measured (0.001 seconds)"
+        expect(@formatter.format_measuring_test("RACCommandSpec", "_tupleByAddingObject__should_add_a_non_nil_object", "0.001"))
+            .to eq("    T _tupleByAddingObject__should_add_a_non_nil_object measured (0.001 seconds)")
       end
 
       it "formats build success output" do
-        @formatter.format_phase_success("BUILD").should == "> Build Succeeded"
+        expect(@formatter.format_phase_success("BUILD")).to eq("> Build Succeeded")
       end
 
       it "formats clean success output" do
-        @formatter.format_phase_success("CLEAN").should == "> Clean Succeeded"
+        expect(@formatter.format_phase_success("CLEAN")).to eq("> Clean Succeeded")
       end
 
       it "formats Phase Script Execution" do
-        @formatter.format_phase_script_execution("Check Pods Manifest.lock", "foo").should ==
-        "[foo] > Running script 'Check Pods Manifest.lock'"
+        expect(@formatter.format_phase_script_execution("Check Pods Manifest.lock", "foo"))
+            .to eq("[foo] > Running script 'Check Pods Manifest.lock'")
       end
 
       it "formats script rule execution" do
-        @formatter.format_script_rule_execution("Check Pods Manifest.lock", "folder/", "foo").should ==
-        "[foo] > Running script rule Check Pods Manifest.lock"
+        expect(@formatter.format_script_rule_execution("Check Pods Manifest.lock", "folder/", "foo"))
+            .to eq("[foo] > Running script rule Check Pods Manifest.lock")
       end
 
       it "formats precompiling output" do
-        @formatter.format_process_pch("Pods-CocoaLumberjack-prefix.pch", "foo").should ==
-        "[foo] > Precompiling Pods-CocoaLumberjack-prefix.pch"
+        expect(@formatter.format_process_pch("Pods-CocoaLumberjack-prefix.pch", "foo"))
+            .to eq("[foo] > Precompiling Pods-CocoaLumberjack-prefix.pch")
       end
 
       it "formats code signing" do
-        @formatter.format_codesign("build/Release/CocoaChip.app", "foo").should ==
-        "[foo] > Signing build/Release/CocoaChip.app"
+        expect(@formatter.format_codesign("build/Release/CocoaChip.app", "foo"))
+            .to eq("[foo] > Signing build/Release/CocoaChip.app")
       end
 
       it "formats preprocessing a file" do
-        @formatter.format_preprocess("CocoaChip/CocoaChip-Info.plist", "foo").should ==
-        "[foo] > Preprocessing CocoaChip/CocoaChip-Info.plist"
+        expect(@formatter.format_preprocess("CocoaChip/CocoaChip-Info.plist", "foo"))
+            .to eq("[foo] > Preprocessing CocoaChip/CocoaChip-Info.plist")
       end
 
       it "formats PBXCp" do
-        @formatter.format_pbxcp("build/Release/CocoaChipCore.framework", "foo").should ==
-        "[foo] > Copying build/Release/CocoaChipCore.framework"
+        expect(@formatter.format_pbxcp("build/Release/CocoaChipCore.framework", "foo"))
+            .to eq("[foo] > Copying build/Release/CocoaChipCore.framework")
       end
 
       it "formats test run start" do
-        @formatter.format_test_run_started("ReactiveCocoaTests.octest(Tests)").should ==
-        "Test Suite ReactiveCocoaTests.octest(Tests) started"
+        expect(@formatter.format_test_run_started("ReactiveCocoaTests.octest(Tests)"))
+            .to eq("Test Suite ReactiveCocoaTests.octest(Tests) started")
       end
 
       it "formats tests suite started" do
-        @formatter.format_test_suite_started("RACKVOWrapperSpec").should ==
-        "RACKVOWrapperSpec"
+        expect(@formatter.format_test_suite_started("RACKVOWrapperSpec"))
+            .to eq("RACKVOWrapperSpec")
       end
 
       it "formats Touch" do
-        @formatter.format_touch("/path/to/SomeFile.txt", "SomeFile.txt", "foo").should ==
-        "[foo] > Touching SomeFile.txt"
+        expect(@formatter.format_touch("/path/to/SomeFile.txt", "SomeFile.txt", "foo"))
+            .to eq("[foo] > Touching SomeFile.txt")
       end
 
       it "formats TiffUtil" do
-        @formatter.format_tiffutil("unbelievable.tiff", "foo").should ==
-        "[foo] > Validating unbelievable.tiff"
+        expect(@formatter.format_tiffutil("unbelievable.tiff", "foo"))
+            .to eq("[foo] > Validating unbelievable.tiff")
       end
 
       it 'formats Check Dependencies' do
-        @formatter.format_check_dependencies.should ==
-          '> Check Dependencies'
+        expect(@formatter.format_check_dependencies).to eq('> Check Dependencies')
       end
-
     end
 end

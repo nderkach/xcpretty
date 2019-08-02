@@ -10,31 +10,31 @@ module XCPretty
       output = Syntax.highlight(snippet)
 
       stripped_output = output.gsub(/(?:(?:\u001b\[)|\u009b)(?:(?:[0-9]{1,3})?(?:;[0-9]{0,3})*?[A-M|f-m])|\u001b[A-M]/, '')
-      stripped_output.should == code
+      expect(stripped_output).to eq(code)
     end
 
     it 'uses Objective-C lexer for Objective-C' do
-      Syntax.find_lexer('test.m', '').should == Rouge::Lexers::ObjectiveC
-      Syntax.find_lexer('test.h', '').should == Rouge::Lexers::ObjectiveC
+      expect(Syntax.find_lexer('test.m', '')).to eq(Rouge::Lexers::ObjectiveC)
+      expect(Syntax.find_lexer('test.h', '')).to eq(Rouge::Lexers::ObjectiveC)
     end
 
     it 'uses Swift lexer for Swift' do
-      Syntax.find_lexer('test.swift', '').should == Rouge::Lexers::Swift
+      expect(Syntax.find_lexer('test.swift', '')).to eq(Rouge::Lexers::Swift)
     end
 
     it 'uses Ruby lexer for Ruby' do
-      Syntax.find_lexer('test.rb', '').should == Rouge::Lexers::Ruby
-      Syntax.find_lexer('test.ruby', '').should == Rouge::Lexers::Ruby
+      expect(Syntax.find_lexer('test.rb', '')).to eq(Rouge::Lexers::Ruby)
+      expect(Syntax.find_lexer('test.ruby', '')).to eq(Rouge::Lexers::Ruby)
     end
 
     it 'uses C++ lexer for C++' do
-      Syntax.find_lexer('test.cpp', '').should == Rouge::Lexers::Cpp
-      Syntax.find_lexer('test.cc', '').should == Rouge::Lexers::Cpp
-      Syntax.find_lexer('test.c++', '').should == Rouge::Lexers::Cpp
-      Syntax.find_lexer('test.cxx', '').should == Rouge::Lexers::Cpp
-      Syntax.find_lexer('test.hpp', '').should == Rouge::Lexers::Cpp
-      Syntax.find_lexer('test.h++', '').should == Rouge::Lexers::Cpp
-      Syntax.find_lexer('test.hxx', '').should == Rouge::Lexers::Cpp
+      expect(Syntax.find_lexer('test.cpp', '')).to eq(Rouge::Lexers::Cpp)
+      expect(Syntax.find_lexer('test.cc', '')).to eq(Rouge::Lexers::Cpp)
+      expect(Syntax.find_lexer('test.c++', '')).to eq(Rouge::Lexers::Cpp)
+      expect(Syntax.find_lexer('test.cxx', '')).to eq(Rouge::Lexers::Cpp)
+      expect(Syntax.find_lexer('test.hpp', '')).to eq(Rouge::Lexers::Cpp)
+      expect(Syntax.find_lexer('test.h++', '')).to eq(Rouge::Lexers::Cpp)
+      expect(Syntax.find_lexer('test.hxx', '')).to eq(Rouge::Lexers::Cpp)
     end
   end
 end
