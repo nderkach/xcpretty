@@ -242,7 +242,7 @@ module XCPretty
     it "parses undefined behavior sanitizer runtime errors" do
       @formatter.should receive(:format_runtime_error).with(
         "UndefinedBehaviorSanitizer",
-        "null pointer returned from function declared to never return null",
+        "WATFoodManager.mm:97:3 null pointer returned from function declared to never return null",
         ""
       )
       @parser.parse(SAMPLE_UNDEFINED_BEHAVIOR_SANITIZER)

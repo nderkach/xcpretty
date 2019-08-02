@@ -680,7 +680,7 @@ module XCPretty
       elsif text =~ ADDRESS_SANITIZER_SUMMARY_MATCHER
         current_runtime_issue[:reason] = $1
       elsif text =~ UNDEFINED_BEHAVIOR_SANITIZER_SUMMARY_MATCHER
-        current_runtime_issue[:reason] = $2
+        current_runtime_issue[:reason] = [$1, $2].join(" ")
       end
 
       case text
@@ -689,7 +689,6 @@ module XCPretty
       when ADDRESS_SANITIZER_FOOTER_MATCHER
         current_runtime_issue[:complete] = true
       when UNDEFINED_BEHAVIOR_SANITIZER_FOOTER_MATCHER
-        current_runtime_issue[:info] << $1
         current_runtime_issue[:complete] = true
       else
         current_runtime_issue[:info] << text
