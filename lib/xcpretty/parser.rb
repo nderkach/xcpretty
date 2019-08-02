@@ -608,12 +608,6 @@ module XCPretty
         # Because this is a restart of test suite that was already started, ignore the upcoming started message.
         @ignore_test_suite_started_message = true
         store_failure(file: "n/a", test_suite: @test_suite, test_case: @test_case, reason: "Test crashed")
-      when THREAD_SANITIZER_SUMMARY_MATCHER
-        store_failure(file: "n/a", test_suite: guess_test_suite, test_case: guess_test_case, reason: "Thread Sanitizer: #{$1}")
-      when ADDRESS_SANITIZER_SUMMARY_MATCHER
-        store_failure(file: "n/a", test_suite: guess_test_suite, test_case: guess_test_case, reason: "Address Sanitizer: #{$1}")
-      when UNDEFINED_BEHAVIOR_SANITIZER_SUMMARY_MATCHER
-        store_failure(file: $1, test_suite: guess_test_suite, test_case: guess_test_case, reason: "Undefined Behavior Sanitizer: #{$2}")
       end
     end
 
@@ -737,18 +731,6 @@ module XCPretty
 
     def current_runtime_issue
       @current_runtime_issue ||= {info: +""}
-    end
-
-    def guess_test_suite
-      return "Unknown" unless @test_suite
-
-      "#{@test_suite} (Guess)"
-    end
-
-    def guess_test_case
-      return "Unknown" unless @test_case
-
-      "#{@test_case} (Guess)"
     end
 
     def format_compile_error
