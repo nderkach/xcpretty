@@ -217,6 +217,37 @@ module XCPretty
       @parser.parse(SAMPLE_OLD_SPECTA_FAILURE)
     end
 
+    it "parses address sanitizer runtime errors" do
+      @formatter.should receive(:format_runtime_error).with(
+        "AddressSanitizer",
+        "heap-buffer-overflow (/Users/user/Library/Developer/Xcode/DerivedData/Whatever-dsmsnliuotrwghgdxpglbcgzkuwj/Build/Products/Debug-iphonesimulator/TestHost.app/PlugIns/SomeTests.xctest/Frameworks/libclang_rt.asan_iossim_dynamic.dylib:x86_64+0x54bde) in __asan_memcpy",
+        ""
+      )
+      SAMPLE_ADDRESS_SANITIZER.each_line do |line|
+        @parser.parse(line)
+      end
+    end
+
+    it "parses thread sanitizer runtime errors" do
+      @formatter.should receive(:format_runtime_error).with(
+        "ThreadSanitizer",
+        "data race (/Users/jenkins/Library/Developer/Xcode/DerivedData/Whatever-dpklhpaqruhpwdbkihszqtqogzfb/Build/Products/Debug-iphonesimulator/TestHost.app/PlugIns/FoodEngineTests.xctest/FoodEngineTests:x86_64+0x27a49e) in __37-[WATFoodManagerSpec spec]_block_invoke_7.82",
+        ""
+      )
+      SAMPLE_THREAD_SANITIZER.each_line do |line|
+        @parser.parse(line)
+      end
+    end
+
+    it "parses undefined behavior sanitizer runtime errors" do
+      @formatter.should receive(:format_runtime_error).with(
+        "UndefinedBehaviorSanitizer",
+        "null pointer returned from function declared to never return null",
+        ""
+      )
+      @parser.parse(SAMPLE_UNDEFINED_BEHAVIOR_SANITIZER)
+    end
+
     it "parses ld bitcode errors" do
       @formatter.should receive(:format_error).with(SAMPLE_BITCODE_LD.strip)
       @parser.parse(SAMPLE_BITCODE_LD)

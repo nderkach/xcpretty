@@ -760,6 +760,149 @@ ld: 1 duplicate symbol for architecture i386
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 )
 
+SAMPLE_ADDRESS_SANITIZER = %Q(
+Test Case '-[SKWelcomeViewControllerSpecSpec SKWelcomeViewController_When_a_user_opens_the_app_from_a_clean_installation_displays_the_welcome_screen]' started.
+=================================================================
+==45133==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60d00002de80 at pc 0x00010af4fbdf bp 0x7ffee4d93950 sp 0x7ffee4d93100
+READ of size 72 at 0x60d00002de80 thread T0
+atos[45147]: atos cannot examine process 45133 (TestHost) for unknown reasons, even though it appears to exist; try running with `sudo`.
+==45133==WARNING: Can't read from symbolizer at fd 10
+atos[45148]: atos cannot examine process 45133 (TestHost) for unknown reasons, even though it appears to exist; try running with `sudo`.
+==45133==WARNING: Can't read from symbolizer at fd 10
+atos[45149]: atos cannot examine process 45133 (TestHost) for unknown reasons, even though it appears to exist; try running with `sudo`.
+==45133==WARNING: Can't read from symbolizer at fd 10
+atos[45150]: atos cannot examine process 45133 (TestHost) for unknown reasons, even though it appears to exist; try running with `sudo`.
+==45133==WARNING: Can't read from symbolizer at fd 10
+==45133==WARNING: Failed to use and restart external symbolizer!
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow (/Users/user/Library/Developer/Xcode/DerivedData/Whatever-dsmsnliuotrwghgdxpglbcgzkuwj/Build/Products/Debug-iphonesimulator/TestHost.app/PlugIns/SomeTests.xctest/Frameworks/libclang_rt.asan_iossim_dynamic.dylib:x86_64+0x54bde) in __asan_memcpy
+Shadow bytes around the buggy address:
+    0x1c1a00005b80: fa fa fa fa fa fa fa fa fa fa 00 00 00 00 00 00
+    0x1c1a00005b90: 00 00 00 00 00 00 00 00 00 00 00 00 fa fa fa fa
+    0x1c1a00005ba0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+    0x1c1a00005bb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa 00 00
+    0x1c1a00005bc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x1c1a00005bd0:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+    0x1c1a00005be0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+    0x1c1a00005bf0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+    0x1c1a00005c00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+    0x1c1a00005c10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+    0x1c1a00005c20: fa fa fa fa fa fa 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+    Addressable:           00
+    Partially addressable: 01 02 03 04 05 06 07
+    Heap left redzone:       fa
+    Freed heap region:       fd
+    Stack left redzone:      f1
+    Stack mid redzone:       f2
+    Stack right redzone:     f3
+    Stack after return:      f5
+    Stack use after scope:   f8
+    Global redzone:          f9
+    Global init order:       f6
+    Poisoned by user:        f7
+    Container overflow:      fc
+    Array cookie:            ac
+    Intra object redzone:    bb
+    ASan internal:           fe
+    Left alloca redzone:     ca
+    Right alloca redzone:    cb
+    Shadow gap:              cc
+2019-07-29 15:58:40.407909+0300 TestHost[45133:2459094] =================================================================
+2019-07-29 15:58:40.408267+0300 TestHost[45133:2459094] ==45133==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60d00002de80 at pc 0x00010af4fbdf bp 0x7ffee4d93950 sp 0x7ffee4d93100
+2019-07-29 15:58:40.408507+0300 TestHost[45133:2459094] READ of size 72 at 0x60d00002de80 thread T0
+2019-07-29 15:58:40.408720+0300 TestHost[45133:2459094] ==45133==WARNING: Can't read from symbolizer at fd 10
+2019-07-29 15:58:40.408975+0300 TestHost[45133:2459094] ==45133==WARNING: Can't read from symbolizer at fd 10
+2019-07-29 15:58:40.409184+0300 TestHost[45133:2459094] ==45133==WARNING: Can't read from symbolizer at fd 10
+2019-07-29 15:58:40.409430+0300 TestHost[45133:2459094] ==45133==WARNING: Can't read from symbolizer at fd 10
+2019-07-29 15:58:40.409739+0300 TestHost[45133:2459094] ==45133==WARNING: Failed to use and restart external symbolizer!
+2019-07-29 15:58:40.433890+0300 TestHost[45133:2459094] SUMMARY: AddressSanitizer: heap-buffer-overflow (/Users/user/Library/Developer/Xcode/DerivedData/Whatever-dsmsnliuotrwghgdxpglbcgzkuwj/Build/Products/Debug-iphonesimulator/TestHost.app/PlugIns/SomeTests.xctest/Frameworks/libclang_rt.asan_iossim_dynamic.dylib:x86_64+0x54bde) in __asan_memcpy
+2019-07-29 15:58:40.434088+0300 TestHost[45133:2459094] Shadow bytes around the buggy address:
+2019-07-29 15:58:40.434319+0300 TestHost[45133:2459094]   0x1c1a00005b80: fa fa fa fa fa fa fa fa fa fa 00 00 00 00 00 00
+2019-07-29 15:58:40.434536+0300 TestHost[45133:2459094]   0x1c1a00005b90: 00 00 00 00 00 00 00 00 00 00 00 00 fa fa fa fa
+2019-07-29 15:58:40.434714+0300 TestHost[45133:2459094]   0x1c1a00005ba0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+2019-07-29 15:58:40.434886+0300 TestHost[45133:2459094]   0x1c1a00005bb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa 00 00
+2019-07-29 15:58:40.435101+0300 TestHost[45133:2459094]   0x1c1a00005bc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+2019-07-29 15:58:40.435286+0300 TestHost[45133:2459094] =>0x1c1a00005bd0:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+2019-07-29 15:58:40.435440+0300 TestHost[45133:2459094]   0x1c1a00005be0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+2019-07-29 15:58:40.435645+0300 TestHost[45133:2459094]   0x1c1a00005bf0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+2019-07-29 15:58:40.435839+0300 TestHost[45133:2459094]   0x1c1a00005c00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+2019-07-29 15:58:40.436028+0300 TestHost[45133:2459094]   0x1c1a00005c10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+2019-07-29 15:58:40.436191+0300 TestHost[45133:2459094]   0x1c1a00005c20: fa fa fa fa fa fa 00 00 00 00 00 00 00 00 00 00
+2019-07-29 15:58:40.436374+0300 TestHost[45133:2459094] Shadow byte legend (one shadow byte represents 8 application bytes):
+2019-07-29 15:58:40.436535+0300 TestHost[45133:2459094]   Addressable:           00
+2019-07-29 15:58:40.436762+0300 TestHost[45133:2459094]   Partially addressable: 01 02 03 04 05 06 07
+2019-07-29 15:58:40.436965+0300 TestHost[45133:2459094]   Heap left redzone:       fa
+2019-07-29 15:58:40.437153+0300 TestHost[45133:2459094]   Freed heap region:       fd
+2019-07-29 15:58:40.437366+0300 TestHost[45133:2459094]   Stack left redzone:      f1
+2019-07-29 15:58:40.437550+0300 TestHost[45133:2459094]   Stack mid redzone:       f2
+2019-07-29 15:58:40.437735+0300 TestHost[45133:2459094]   Stack right redzone:     f3
+2019-07-29 15:58:40.437930+0300 TestHost[45133:2459094]   Stack after return:      f5
+2019-07-29 15:58:40.438110+0300 TestHost[45133:2459094]   Stack use after scope:   f8
+2019-07-29 15:58:40.438253+0300 TestHost[45133:2459094]   Global redzone:          f9
+2019-07-29 15:58:40.438411+0300 TestHost[45133:2459094]   Global init order:       f6
+2019-07-29 15:58:40.438574+0300 TestHost[45133:2459094]   Poisoned by user:        f7
+2019-07-29 15:58:40.438739+0300 TestHost[45133:2459094]   Container overflow:      fc
+2019-07-29 15:58:40.438947+0300 TestHost[45133:2459094]   Array cookie:            ac
+2019-07-29 15:58:40.439149+0300 TestHost[45133:2459094]   Intra object redzone:    bb
+2019-07-29 15:58:40.439352+0300 TestHost[45133:2459094]   ASan internal:           fe
+2019-07-29 15:58:40.439543+0300 TestHost[45133:2459094]   Left alloca redzone:     ca
+2019-07-29 15:58:40.439709+0300 TestHost[45133:2459094]   Right alloca redzone:    cb
+2019-07-29 15:58:40.439953+0300 TestHost[45133:2459094]   Shadow gap:              cc
+2019-07-29 15:58:40.440124+0300 TestHost[45133:2459094]
+==45133==ABORTING
+)
+
+SAMPLE_THREAD_SANITIZER = %Q(
+==================
+WARNING: ThreadSanitizer: data race (pid=97649)
+    Write of size 1 at 0x7b08000fd2b8 by thread T14:
+    #0 __37-[WATFoodManagerSpec spec]_block_invoke_7.82 <null> (FoodEngineTests:x86_64+0x27a49e)
+    #1 __43-[WATFoodManager findFoodWithRequest:]_block_invoke <null> (FoodEngineTests:x86_64+0x12ff63d)
+    #2 __97-[WATFoodManager findFood:type:taste:timeout:completionHandler:]_block_invoke <null> (FoodEngineTests:x86_64+0x13000c1)
+    #3 __97-[WATFoodManager findFood:type:taste:timeout:completionHandler:]_block_invoke_2 <null> (FoodEngineTests:x86_64+0x130030b)
+    #4 __tsan::invoke_and_release_block(void*) <null> (libclang_rt.tsan_iossim_dynamic.dylib:x86_64+0x676ab)
+    #5 _dispatch_client_callout <null> (libdispatch.dylib:x86_64+0x3d01)
+
+    Previous read of size 1 at 0x7b08000fd2b8 by main thread:
+    #0 __37-[WATFoodManagerSpec spec]_block_invoke_2.84 <null> (FoodEngineTests:x86_64+0x27a712)
+    #1 -[EXPExpect actual] <null> (FoodEngineTests:x86_64+0x65b796)
+    #2 -[EXPExpect applyMatcher:] <null> (FoodEngineTests:x86_64+0x65b855)
+    #3 __38-[EXPExpect(beTruthyMatcher) beTruthy]_block_invoke_5 <null> (FoodEngineTests:x86_64+0x66c79b)
+    #4 __37-[WATFoodManagerSpec spec]_block_invoke_5.79 <null> (FoodEngineTests:x86_64+0x27a1ab)
+    #5 runExampleBlock <null> (FoodEngineTests:x86_64+0xfaa5d9)
+    #6 __44-[SPTExampleGroup compileExamplesWithStack:]_block_invoke.136 <null> (FoodEngineTests:x86_64+0xfad6b3)
+    #7 -[SPTSpec spt_runExample:] <null> (FoodEngineTests:x86_64+0xfa2cba)
+    #8 __35+[SPTSpec spt_convertToTestMethod:]_block_invoke <null> (FoodEngineTests:x86_64+0xfa2241)
+    #9 __invoking___ <null> (CoreFoundation:x86_64+0x1294cb)
+    #10 -[XCTest runTest] <null> (XCTest:x86_64+0x6ad6b)
+    #11 start <null> (libdyld.dylib:x86_64+0x1540)
+
+    Location is heap block of size 32 at 0x7b08000fd2a0 allocated by main thread:
+    #0 malloc <null> (libclang_rt.tsan_iossim_dynamic.dylib:x86_64+0x4a4fa)
+    #1 _Block_object_assign <null> (libsystem_blocks.dylib:x86_64+0xba2)
+    #2 _Block_copy <null> (libsystem_blocks.dylib:x86_64+0x923)
+    #3 _Block_copy <null> (libsystem_blocks.dylib:x86_64+0x923)
+    #4 -[WATFoodManager findFood:type:taste:timeout:completionHandler:] <null> (FoodEngineTests:x86_64+0x12fda05)
+    #5 __37-[WATFoodManagerSpec spec]_block_invoke_5.79 <null> (FoodEngineTests:x86_64+0x279c9c)
+    #6 runExampleBlock <null> (FoodEngineTests:x86_64+0xfaa5d9)
+    #7 __44-[SPTExampleGroup compileExamplesWithStack:]_block_invoke.136 <null> (FoodEngineTests:x86_64+0xfad6b3)
+    #8 -[SPTSpec spt_runExample:] <null> (FoodEngineTests:x86_64+0xfa2cba)
+    #9 __35+[SPTSpec spt_convertToTestMethod:]_block_invoke <null> (FoodEngineTests:x86_64+0xfa2241)
+    #10 __invoking___ <null> (CoreFoundation:x86_64+0x1294cb)
+    #11 -[XCTest runTest] <null> (XCTest:x86_64+0x6ad6b)
+    #12 start <null> (libdyld.dylib:x86_64+0x1540)
+
+    Thread T14 (tid=150627117, running) is a GCD worker thread
+
+SUMMARY: ThreadSanitizer: data race (/Users/jenkins/Library/Developer/Xcode/DerivedData/Whatever-dpklhpaqruhpwdbkihszqtqogzfb/Build/Products/Debug-iphonesimulator/TestHost.app/PlugIns/FoodEngineTests.xctest/FoodEngineTests:x86_64+0x27a49e) in __37-[WATFoodManagerSpec spec]_block_invoke_7.82
+==================
+)
+
+SAMPLE_UNDEFINED_BEHAVIOR_SANITIZER = %Q(
+/Users/jenkins/code/FoodEngine/FoodEngine/WATFoodManager.mm:97:3: runtime error: null pointer returned from function declared to never return null
+)
+
 SAMPLE_BITCODE_LD = %Q(
 ld: '/Users/.../GoogleAnalytics-iOS-SDK/libGoogleAnalyticsServices.a(TAGHit.o)' does not contain bitcode. You must rebuild it with bitcode enabled (Xcode setting ENABLE_BITCODE), obtain an updated library from the vendor, or disable bitcode for this target. for architecture armv7
 )
