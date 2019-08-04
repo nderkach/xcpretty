@@ -4,7 +4,7 @@ module XCPretty
 
   module Matchers
     # $1 build_target
-    IN_TARGET_MATCHER = /\s\(in target:?\s(?:'?(.*?)'?)\)$/.freeze
+    IN_TARGET_MATCHER = /\s\(in target:?\s(?:'?(.*?)'?)(?:\sfrom project '.*')?\)$/.freeze
 
     # @regex Captured groups
     # $1 file_path
