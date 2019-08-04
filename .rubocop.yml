@@ -21,10 +21,6 @@ Layout/DefEndAlignment:
 Layout/EndAlignment:
   Enabled: true
 
-Security/Eval:
-  Exclude:
-    - 'lib/xcpretty.rb'
-
 Lint/FormatParameterMismatch:
   Exclude:
     - 'lib/xcpretty/formatters/simple.rb'
@@ -53,7 +49,6 @@ Metrics/CyclomaticComplexity:
 Metrics/LineLength:
   Max: 100
   Exclude:
-    - 'bin/xcpretty'
     - 'spec/**/*.rb'
     - 'features/**/*.rb'
     - 'lib/xcpretty/parser.rb'

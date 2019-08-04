@@ -237,15 +237,6 @@ When(/^I pipe to xcpretty with "(.*?)"$/) do |flags|
   run_xcpretty(flags)
 end
 
-When(/^I pipe to xcpretty with a custom formatter$/) do
-  formatter_path = File.expand_path('../../spec/fixtures/custom_formatter.rb', __dir__)
-  run_xcpretty("-f #{formatter_path}")
-end
-
-Then(/^I should see a custom compilation message$/) do
-  run_output.should start_with("😎 Compilation party time")
-end
-
 Then(/^I should see a successful compilation message$/) do
   run_output.should start_with("[foo] ▸ Compiling")
 end

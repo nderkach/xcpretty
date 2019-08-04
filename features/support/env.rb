@@ -84,10 +84,6 @@ def junit_report_root
   junit_report.root.elements.to_a.first
 end
 
-def custom_report
-  @custom_report ||= File.open(XCPretty::Reporter::FILEPATH, 'r').read
-end
-
 def custom_report_path
   @custom_report_path ||= begin
     @custom_report_file1 = Tempfile.new('custom_report_path')

@@ -11,6 +11,13 @@ end
 require 'xcpretty'
 require 'optparse'
 
+module XCPretty
+  def self.exit_with_error(message)
+    warn "[!] #{message}"
+    exit 1
+  end
+end
+
 report_options = []
 report_classes = []
 report_formats = {
@@ -39,22 +46,18 @@ OptionParser.new do |opts|
   opts.on('--tap', 'Use TAP output') do
     printer_opts[:formatter] = XCPretty::TestAnything
   end
-  opts.on('-f', '--formatter PATH', 'Use formatter returned from evaluating the specified Ruby file') do |path|
-    printer_opts[:formatter] = XCPretty.load_custom_class(path)
-  end
   opts.on('-c', '--[no-]color', 'Use colorized output. Default is auto') do |value|
     printer_opts[:colorize] = value
   end
   opts.on('--[no-]utf', 'Use unicode characters in output. Default is auto.') do |value|
     printer_opts[:unicode] = value
   end
-  opts.on("-r", "--report FORMAT or PATH", "Run FORMAT or PATH reporter",
+  opts.on("-r", "--report FORMAT", "Run FORMAT reporter",
           "  Choices: #{report_formats.keys.join(', ')}") do |format|
-    report_classes << if report_formats.key?(format)
-                        report_formats[format]
-                      else
-                        XCPretty.load_custom_class(format)
-                      end
+    unless report_formats.key?(format)
+      XCPretty.exit_with_error("Unknown report format #{format}")
+    end
+    report_classes << report_formats[format]
     report_options << {}
   end
   opts.on('-o', '--output PATH', 'Write report output to PATH') do |path|
