@@ -77,7 +77,7 @@ module XCPretty
     def format_file_missing_error(error, file_path);           EMPTY; end
     def format_ld_warning(message);                            EMPTY; end
     def format_undefined_duplicate_symbols(message, body);     EMPTY; end
-    def format_warning(message);                             message; end
+    def format_warning(message, build_target);                 message; end
     def format_runtime_error(sanitizer, reason, info);         EMPTY; end
 
     # TODO: see how we can unify format_error and format_compile_error,

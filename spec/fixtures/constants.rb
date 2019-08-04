@@ -956,5 +956,5 @@ SAMPLE_WILL_NOT_BE_CODE_SIGNED = "FrameworkName will not be code signed because 
 SAMPLE_FORMAT_OTHER_UNRECOGNIZED_STRING = "This is a string that won't be matched by any other regex."
 
 SAMPLE_GENERIC_WARNING = %Q(
-warning: Mapping architecture arm64 to x86_64. Ensure that this target's Architectures and Valid Architectures build settings are configured correctly for the iOS Simulator platform. (in target 'Foo-StaticLib')
+warning: Mapping architecture arm64 to x86_64. Ensure that this target's Architectures and Valid Architectures build settings are configured correctly for the iOS Simulator platform. (in target 'foo')
 )
