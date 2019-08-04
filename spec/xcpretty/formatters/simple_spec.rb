@@ -39,7 +39,7 @@ module XCPretty
 
       it 'formats compiler warnings' do
         warning = 'warning: stuff is broken'
-        @formatter.format_warning(warning).should == '    ' + warning
+        @formatter.format_warning(warning, 'foo').should == '[foo]     ' + warning
       end
 
       it "formats compiling output" do

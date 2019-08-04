@@ -695,7 +695,10 @@ module XCPretty
 
     context "warnings" do
       it 'parses generic warnings' do
-        @formatter.should receive(:format_warning).with("Mapping architecture arm64 to x86_64. Ensure that this target's Architectures and Valid Architectures build settings are configured correctly for the iOS Simulator platform. (in target 'Foo-StaticLib')")
+        @formatter.should receive(:format_warning).with(
+          "Mapping architecture arm64 to x86_64. Ensure that this target's Architectures and Valid Architectures build settings are configured correctly for the iOS Simulator platform.",
+          "foo"
+        )
         @parser.parse(SAMPLE_GENERIC_WARNING)
       end
 

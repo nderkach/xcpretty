@@ -208,8 +208,9 @@ module XCPretty
       format("Validating", file_name, build_target: build_target)
     end
 
-    def format_warning(message)
-      INDENT + yellow(message)
+    def format_warning(message, build_target)
+      warning = INDENT + yellow(message)
+      build_target ? "[" + build_target + "] " + warning : warning
     end
 
     def format_check_dependencies
