@@ -608,12 +608,6 @@ module XCPretty
         # Because this is a restart of test suite that was already started, ignore the upcoming started message.
         @ignore_test_suite_started_message = true
         store_failure(file: "n/a", test_suite: @test_suite, test_case: @test_case, reason: "Test crashed")
-      when THREAD_SANITIZER_SUMMARY_MATCHER
-        store_failure(file: "n/a", test_suite: guess_test_suite, test_case: guess_test_case, reason: "Thread Sanitizer: #{$1}")
-      when ADDRESS_SANITIZER_SUMMARY_MATCHER
-        store_failure(file: "n/a", test_suite: guess_test_suite, test_case: guess_test_case, reason: "Address Sanitizer: #{$1}")
-      when UNDEFINED_BEHAVIOR_SANITIZER_SUMMARY_MATCHER
-        store_failure(file: $1, test_suite: guess_test_suite, test_case: guess_test_case, reason: "Undefined Behavior Sanitizer: #{$2}")
       end
     end
 
@@ -686,7 +680,7 @@ module XCPretty
       elsif text =~ ADDRESS_SANITIZER_SUMMARY_MATCHER
         current_runtime_issue[:reason] = $1
       elsif text =~ UNDEFINED_BEHAVIOR_SANITIZER_SUMMARY_MATCHER
-        current_runtime_issue[:reason] = $2
+        current_runtime_issue[:reason] = [$1, $2].join(" ")
       end
 
       case text
@@ -695,7 +689,6 @@ module XCPretty
       when ADDRESS_SANITIZER_FOOTER_MATCHER
         current_runtime_issue[:complete] = true
       when UNDEFINED_BEHAVIOR_SANITIZER_FOOTER_MATCHER
-        current_runtime_issue[:info] << $1
         current_runtime_issue[:complete] = true
       else
         current_runtime_issue[:info] << text
@@ -739,18 +732,6 @@ module XCPretty
       @current_runtime_issue ||= {info: +""}
     end
 
-    def guess_test_suite
-      return "Unknown" unless @test_suite
-
-      "#{@test_suite} (Guess)"
-    end
-
-    def guess_test_case
-      return "Unknown" unless @test_case
-
-      "#{@test_case} (Guess)"
-    end
-
     def format_compile_error
       error = current_issue.dup
       @current_issue = {}
@@ -778,7 +759,8 @@ module XCPretty
       @current_runtime_issue = nil
       @formatting_runtime_error = false
       formatter.format_runtime_error(runtime_error[:sanitizer],
-                                     runtime_error[:reason], "")
+                                     runtime_error[:reason],
+                                     runtime_error[:info])
     end
 
     def format_undefined_duplicate_symbols
