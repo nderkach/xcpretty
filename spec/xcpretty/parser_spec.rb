@@ -63,6 +63,45 @@ module XCPretty
       @parser.parse("Check dependencies")
     end
 
+    it "parses stripping" do
+      @formatter.should receive(:format_strip).with(
+        "/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_STRIP)
+    end
+
+    it "parses chown" do
+      @formatter.should receive(:format_chown).with(
+        "jenkins:staff",
+        "/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_CHOWN)
+    end
+
+    it "parses chmod" do
+      @formatter.should receive(:format_chmod).with(
+        "u+w,go-w,a+rX",
+        "/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_CHMOD)
+    end
+
+    it "parses validating" do
+      @formatter.should receive(:format_validate).with(
+        "/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_VALIDATE)
+    end
+
+    it "parses provisioning profile" do
+      @formatter.should receive(:format_provisioning_profile).with("Blah Development Profile")
+      @parser.parse(SAMPLE_PROVISIONING_PROFILE)
+    end
+
     it "parses code signing" do
       @formatter.should receive(:format_codesign).with("build/Release/CocoaChip.app", "foo")
       @parser.parse(SAMPLE_CODESIGN)

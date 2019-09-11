@@ -188,6 +188,11 @@ module XCPretty
         "> Signing identity \"Foo\""
       end
 
+      it "formats provisioning profile" do
+        @formatter.format_provisioning_profile("Foo").should ==
+          "> Provisioning profile \"Foo\""
+      end
+
       it 'formats copying header files' do
         @formatter.format_copy_header_file('Source.h',
                                            'dir/Destination.h',
@@ -281,6 +286,26 @@ module XCPretty
       it "formats precompiling C++ output" do
         @formatter.format_process_pch("C++", "Pods-CocoaLumberjack-prefix.pch", "foo").should ==
           "[foo] > Precompiling C++ Pods-CocoaLumberjack-prefix.pch"
+      end
+
+      it "formats stripping" do
+        @formatter.format_strip("build/Release/CocoaChip.app", "foo").should ==
+        "[foo] > Stripping build/Release/CocoaChip.app"
+      end
+
+      it "formats chown" do
+        @formatter.format_chown("jenkins:staff", "build/Release/CocoaChip.app", "foo").should ==
+        "[foo] > chown jenkins:staff build/Release/CocoaChip.app"
+      end
+
+      it "formats chmod" do
+        @formatter.format_chmod("u+w,go-w,a+rX", "build/Release/CocoaChip.app", "foo").should ==
+        "[foo] > chmod u+w,go-w,a+rX build/Release/CocoaChip.app"
+      end
+
+      it "formats validating" do
+        @formatter.format_validate("build/Release/CocoaChip.app", "foo").should ==
+        "[foo] > Validating build/Release/CocoaChip.app"
       end
 
       it "formats code signing" do

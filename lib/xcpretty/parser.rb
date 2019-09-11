@@ -47,6 +47,24 @@ module XCPretty
     CLEAN_TARGET_MATCHER = /^=== CLEAN TARGET\s(.*)\sOF PROJECT\s(.*)\sWITH CONFIGURATION\s(.*)\s===/.freeze
 
     # @regex Captured groups
+    # $1 = app file path
+    STRIP_MATCHER = /^Strip\s(.*\.app)/.freeze
+
+    # @regex Captured groups
+    # $1 = owner
+    # $2 = file
+    CHOWN_MATCHER = /^SetOwnerAndGroup\s(.*)\s(.*\.app)/.freeze
+
+    # @regex Captured groups
+    # $1 = mode
+    # $2 = file
+    CHMOD_MATCHER = /^SetMode\s(.*)\s(.*\.app)/.freeze
+
+    # @regex Captured groups
+    # $1 = app file path
+    VALIDATE_MATCHER = /^Validate\s(.*\.app)/.freeze
+
+    # @regex Captured groups
     # $1 = file
     CODESIGN_MATCHER = /^CodeSign\s((?:\\ |[^ ])*)$/.freeze
 
@@ -295,6 +313,10 @@ module XCPretty
     # $1 identity
     SIGNING_IDENTITY_MATCHER = /^Signing Identity:\s*"(.*)"$/.freeze
 
+    # @regex Capture groups
+    # $1 provisioning profile
+    PROVISIONING_PROFILE_MATCHER = /^Provisioning Profile:\s*"(.*)"$/.freeze
+
     module Warnings
       # $1 = file_path
       # $2 = file_name
@@ -477,8 +499,18 @@ module XCPretty
         formatter.format_error($1)
       when CODESIGN_FRAMEWORK_MATCHER
         formatter.format_codesign($1, @build_target)
+      when STRIP_MATCHER
+        formatter.format_strip($1, @build_target)
+      when CHOWN_MATCHER
+        formatter.format_chown($1, $2, @build_target)
+      when CHMOD_MATCHER
+        formatter.format_chmod($1, $2, @build_target)
+      when VALIDATE_MATCHER
+        formatter.format_validate($1, @build_target)
       when CODESIGN_MATCHER
         formatter.format_codesign($1, @build_target)
+      when PROVISIONING_PROFILE_MATCHER
+        formatter.format_provisioning_profile($1)
       when CHECK_DEPENDENCIES_ERRORS_MATCHER
         formatter.format_error($1)
       when PROVISIONING_PROFILE_REQUIRED_MATCHER

@@ -143,6 +143,10 @@ module XCPretty
       format("Signing identity", "\"#{identity}\"")
     end
 
+    def format_provisioning_profile(profile)
+      format("Provisioning profile", "\"#{profile}\"")
+    end
+
     def format_copy_plist_file(source, target, build_target)
       format("Copying", File.basename(source), build_target: build_target)
     end
@@ -208,6 +212,22 @@ module XCPretty
 
     def format_process_pch(language, file, build_target)
       format("Precompiling #{language}", file, build_target: build_target)
+    end
+
+    def format_strip(file, build_target)
+      format("Stripping", file, build_target: build_target)
+    end
+
+    def format_chown(owner, file, build_target)
+      format("chown #{owner}", file, build_target: build_target)
+    end
+
+    def format_chmod(mode, file, build_target)
+      format("chmod #{mode}", file, build_target: build_target)
+    end
+
+    def format_validate(file, build_target)
+      format("Validating", file, build_target: build_target)
     end
 
     def format_codesign(file, build_target)

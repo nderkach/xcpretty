@@ -623,6 +623,26 @@ CompileAssetCatalog sample/sample.bundle sample/Assets.xcassets (in target: foo)
     cd /Users/dustin/Source/CocoaChip
     /Applications/Xcode.app/Contents/Developer/usr/bin/actool --output-format human-readable-text --notices --warnings --export-dependency-info /Users/foo/Library/Developer/Xcode/DerivedData/Debug-iphonesimulator/TestHost.build/assetcatalog_dependencies --output-partial-info-plist /Users/foo/Library/Developer/Xcode/DerivedData/sample-etjztiverddwaddrudeteewjzfxw/Build/Intermediates.noindex/sample.build/Debug-iphonesimulator/sample.build/assetcatalog_generated_info.plist --app-icon AppIcon --compress-pngs --enable-on-demand-resources YES --filter-for-device-model iPhone11,8 --filter-for-device-os-version 12.2 --sticker-pack-identifier-prefix com.lightricks.sample.sticker-pack. --target-device iphone --target-device ipad --minimum-deployment-target 10.0 --platform iphonesimulator --product-type com.apple.product-type.application --compile /Users/foo/Library/Developer/Xcode/DerivedData/sample-etjztiverddwaddrudeteewjzfxw/Build/Products/Debug-iphonesimulator/sample.app /Users/foo/bar/baz/temp/Sample/Sample/Assets.xcassets
 )
+SAMPLE_STRIP = %Q(
+Strip /Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app/Blah (in target: SomeTarget)
+    cd /Users/jenkins/.jenkins/workspace/Blah/Blah
+    /Applications/Xcode-10.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip /Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app/Blah
+)
+SAMPLE_CHOWN = %Q(
+SetOwnerAndGroup jenkins:staff /Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app (in target: SomeTarget)
+    cd /Users/jenkins/.jenkins/workspace/Blah/Blah
+    /usr/sbin/chown -RH jenkins:staff /Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app
+)
+SAMPLE_CHMOD = %Q(
+SetMode u+w,go-w,a+rX /Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app (in target: SomeTarget)
+    cd /Users/jenkins/.jenkins/workspace/Blah/Blah
+    /bin/chmod -RH u+w,go-w,a+rX /Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app
+)
+SAMPLE_VALIDATE = %Q(
+Validate /Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app (in target: SomeTarget)
+    cd /Users/jenkins/.jenkins/workspace/Blah/Blah
+    builtin-validationUtility /Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app
+)
 SAMPLE_CODESIGN = %Q(
 CodeSign build/Release/CocoaChip.app (in target: foo)
     cd /Users/dustin/Source/CocoaChip
@@ -636,6 +656,10 @@ CodeSign build/Release/CocoaChipCore.framework/Versions/A (in target: foo)
     setenv CODESIGN_ALLOCATE /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/codesign_allocate
     Using code signing identity "Mac Developer: John Smith (0123456789)"
     /usr/bin/codesign --force --sign 0123456789ABCDEF0123456789ABCDEF01234567 /Users/dustin/Source/CocoaChip/build/Release/CocoaChipCore.framework/Versions/A
+)
+SAMPLE_PROVISIONING_PROFILE = %Q(
+Provisioning Profile: "Blah Development Profile"
+                      (abcdefgh-ijkl-mnop-0123-4567890ABCDE)
 )
 SAMPLE_PREPROCESS = %Q(
 Preprocess build/CocoaChip.build/Release/CocoaChip.build/Preprocessed-Info.plist CocoaChip/CocoaChip-Info.plist (in target: foo)
