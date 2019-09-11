@@ -47,6 +47,36 @@ module XCPretty
         "[foo] > Compiling NSMutableArray+ObjectiveSugar.m"
       end
 
+      it "formats compiling swift sources" do
+        @formatter.format_compile_swift_sources("SomeTarget").should ==
+        "[SomeTarget] > Compiling Swift sources"
+      end
+
+      it "formats compiling swift to bytecode" do
+        @formatter.format_compile_swift("SomeTarget").should ==
+        "[SomeTarget] > Compiling Swift to bytecode"
+      end
+
+      it "formats precompiling swift bridging header" do
+        @formatter.format_precompile_swift_bridging_header("SomeTarget").should ==
+        "[SomeTarget] > Precompiling Swift bridging header"
+      end
+
+      it "formats swift code generation command" do
+        @formatter.format_swift_code_generation_command("SomeFile.bc", "SomeTarget").should ==
+        "[SomeTarget] > Generating object file from SomeFile.bc"
+      end
+
+      it "formats merging swift module" do
+        @formatter.format_merge_swift_module_command("path/to/SomeModule.swiftmodule", "SomeTarget").should ==
+        "[SomeTarget] > Merging Swift module SomeModule.swiftmodule"
+      end
+
+      it "formats copying swift libs to bundle" do
+        @formatter.format_copy_swift_libs("SomeApp.app", "SomeTarget").should ==
+        "[SomeTarget] > Copying Swift libs for SomeApp.app"
+      end
+
       it "formats compiling metal output" do
         @formatter.format_compile("MYMetalFile.metal", 'path/to/file', "foo").should ==
         "[foo] > Compiling MYMetalFile.metal"

@@ -111,6 +111,46 @@ module XCPretty
       end
     end
 
+    it "parses compiling swift sources" do
+      @formatter.should receive(:format_compile_swift_sources).with("SomeTarget")
+      @parser.parse(SAMPLE_COMPILE_SWIFT_SOURCES)
+    end
+
+    it "parses compiling swift to bytecode" do
+      @formatter.should receive(:format_compile_swift).with("SomeTarget")
+      @parser.parse(SAMPLE_COMPILE_SWIFT)
+    end
+
+    it "parses precompiling swift bridging header" do
+      @formatter.should receive(:format_precompile_swift_bridging_header).with("Test2")
+      @parser.parse(SAMPLE_PRECOMPILE_SWIFT_BRIDGING_HEADER)
+    end
+
+    it "parses swift code generation command" do
+      @formatter.should receive(:format_swift_code_generation_command).with(
+        "/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/IntermediateBuildFilesPath/SomeRepo.build/Release-iphoneos/SomeRepo.build/Objects-normal/arm64/SomeFile.bc",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_SWIFT_CODE_GENERATION)
+      @parser.parse(SAMPLE_SWIFT_CODE_GENERATION_COMMAND)
+    end
+
+    it "parses merging swift module command" do
+      @formatter.should receive(:format_merge_swift_module_command).with(
+        "/Users/akarasik/Developer/Test2/build/Test2.build/Release-iphoneos/Test2.build/Objects-normal/arm64/Test2.swiftmodule",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_MERGE_SWIFT_MODULE)
+    end
+
+    it "parses copying swift libs to bundle" do
+      @formatter.should receive(:format_copy_swift_libs).with(
+        "/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/SomeApp.app",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_COPY_SWIFT_LIBS)
+    end
+
     it "parses compiling metal files" do
       @formatter.should receive(:format_compile_metal).with("MYMetalFile.metal", "CocoaChip/metalSample/MYMetalFile.metal", "foo")
       @parser.parse(SAMPLE_COMPILE_METAL)

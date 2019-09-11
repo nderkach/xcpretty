@@ -65,6 +65,27 @@ module XCPretty
     COMPILE_COMMAND_MATCHER = /^\s*(.*clang\s.*\s\-c\s(.*\.(?:m|mm|c|cc|cpp|cxx))\s.*\.o)$/.freeze
 
     # @regex Captured groups
+    COMPILE_SWIFT_SOURCES_MATCHER = /^CompileSwiftSources\s.*$/.freeze
+
+    # @regex Captured groups
+    COMPILE_SWIFT_MATCHER = /^CompileSwift\s.*$/.freeze
+
+    # @regex Captured groups
+    PRECOMPILE_SWIFT_BRIDGING_HEADER_MATCHER = /^PrecompileSwiftBridgingHeader\s/.freeze
+
+    # @regex Captured groups
+    # $1 = bytecode file path
+    SWIFT_CODE_GENERATION_COMMAND_MATCHER = /\/usr\/bin\/swift.*?\s-c\s.*?\s(.+?\.bc)/.freeze
+
+    # @regex Captured groups
+    # $1 = swift module path
+    MERGE_SWIFT_MODULE_COMMAND_MATCHER = /\/usr\/bin\/swift.*-o\s(.+\.swiftmodule)/.freeze
+
+    # @regex Captured groups
+    # $1 = app file path
+    COPY_SWIFT_LIBS_MATCHER = /^CopySwiftLibs\s(.*\.app)\s$/.freeze
+
+    # @regex Captured groups
     # $1 file_path
     # $2 file_name (e.g. KWNull.metal)
     COMPILE_METAL_MATCHER = /^CompileMetalFile\s((?:\\ |[^ ])+\/((?:\\ |[^ ])+\.(?:metal)))\s.*/.freeze
@@ -431,13 +452,13 @@ module XCPretty
       return format_runtime_error if should_format_runtime_error?
 
       if IN_TARGET_MATCHER.match(text)
-        build_target = $1
+        @build_target = $1
         text = text.sub(IN_TARGET_MATCHER, '')
       end
 
       case text
       when ANALYZE_MATCHER
-        formatter.format_analyze($2, $1, build_target)
+        formatter.format_analyze($2, $1, @build_target)
       when BUILD_TARGET_MATCHER
         formatter.format_build_target($1, $2, $3)
       when AGGREGATE_TARGET_MATCHER
@@ -449,15 +470,15 @@ module XCPretty
       when CLEAN_TARGET_MATCHER
         formatter.format_clean_target($1, $2, $3)
       when COPY_STRINGS_MATCHER
-        formatter.format_copy_strings_file($1, build_target)
+        formatter.format_copy_strings_file($1, @build_target)
       when CHECK_DEPENDENCIES_MATCHER
         formatter.format_check_dependencies
       when CLANG_ERROR_MATCHER
         formatter.format_error($1)
       when CODESIGN_FRAMEWORK_MATCHER
-        formatter.format_codesign($1, build_target)
+        formatter.format_codesign($1, @build_target)
       when CODESIGN_MATCHER
-        formatter.format_codesign($1, build_target)
+        formatter.format_codesign($1, @build_target)
       when CHECK_DEPENDENCIES_ERRORS_MATCHER
         formatter.format_error($1)
       when PROVISIONING_PROFILE_REQUIRED_MATCHER
@@ -465,23 +486,35 @@ module XCPretty
       when NO_CERTIFICATE_MATCHER
         formatter.format_error($1)
       when COMPILE_MATCHER
-        formatter.format_compile($2, $1, build_target)
+        formatter.format_compile($2, $1, @build_target)
       when COMPILE_COMMAND_MATCHER
-        formatter.format_compile_command($1, $2, build_target)
+        formatter.format_compile_command($1, $2, @build_target)
+      when COMPILE_SWIFT_SOURCES_MATCHER
+        formatter.format_compile_swift_sources(@build_target)
+      when COMPILE_SWIFT_MATCHER
+        formatter.format_compile_swift(@build_target)
+      when PRECOMPILE_SWIFT_BRIDGING_HEADER_MATCHER
+        formatter.format_precompile_swift_bridging_header(@build_target)
+      when SWIFT_CODE_GENERATION_COMMAND_MATCHER
+        formatter.format_swift_code_generation_command($1, @build_target)
+      when MERGE_SWIFT_MODULE_COMMAND_MATCHER
+        formatter.format_merge_swift_module_command($1, @build_target)
+      when COPY_SWIFT_LIBS_MATCHER
+        formatter.format_copy_swift_libs($1, @build_target)
       when COMPILE_METAL_MATCHER
-        formatter.format_compile_metal($2, $1, build_target)
+        formatter.format_compile_metal($2, $1, @build_target)
       when COMPILE_XIB_MATCHER
-        formatter.format_compile_xib($2, $1, build_target)
+        formatter.format_compile_xib($2, $1, @build_target)
       when COMPILE_STORYBOARD_MATCHER
-        formatter.format_compile_storyboard($2, $1, build_target)
+        formatter.format_compile_storyboard($2, $1, @build_target)
       when COMPILE_ASSET_CATALOG_MATCHER
-        formatter.format_compile_asset_catalog($1, build_target)
+        formatter.format_compile_asset_catalog($1, @build_target)
       when COPY_HEADER_MATCHER
-        formatter.format_copy_header_file($1, $2, build_target)
+        formatter.format_copy_header_file($1, $2, @build_target)
       when COPY_PLIST_MATCHER
-        formatter.format_copy_plist_file($1, $2, build_target)
+        formatter.format_copy_plist_file($1, $2, @build_target)
       when CPRESOURCE_MATCHER
-        formatter.format_cpresource($1, build_target)
+        formatter.format_cpresource($1, @build_target)
       when EXECUTED_MATCHER
         format_summary_if_needed(text)
       when RESTARTING_TESTS_MATCHER
@@ -495,17 +528,17 @@ module XCPretty
       when FILE_MISSING_ERROR_MATCHER
         formatter.format_file_missing_error($1, $2)
       when GENERATE_DSYM_MATCHER
-        formatter.format_generate_dsym($1, build_target)
+        formatter.format_generate_dsym($1, @build_target)
       when LD_WARNING_MATCHER
         formatter.format_ld_warning($1 + $2)
       when LD_ERROR_MATCHER
         formatter.format_error($1)
       when LIBTOOL_MATCHER
-        formatter.format_libtool($1, build_target)
+        formatter.format_libtool($1, @build_target)
       when LINKING_MATCHER
-        formatter.format_linking($1, $2, $3, build_target)
+        formatter.format_linking($1, $2, $3, @build_target)
       when LINKING_METAL_MATCHER
-        formatter.format_linking_metal($1, build_target)
+        formatter.format_linking_metal($1, @build_target)
       when MODULE_INCLUDES_ERROR_MATCHER
         formatter.format_error($1)
       when TEST_CASE_MEASURED_MATCHER
@@ -517,19 +550,19 @@ module XCPretty
       when PODS_ERROR_MATCHER
         formatter.format_error($1)
       when PROCESS_INFO_PLIST_MATCHER
-        formatter.format_process_info_plist(*unescaped($2, $1), build_target)
+        formatter.format_process_info_plist(*unescaped($2, $1), @build_target)
       when PHASE_SCRIPT_EXECUTION_MATCHER
-        formatter.format_phase_script_execution(*unescaped($1), build_target)
+        formatter.format_phase_script_execution(*unescaped($1), @build_target)
       when PHASE_SUCCESS_MATCHER
         formatter.format_phase_success($1)
       when PROCESS_PCH_MATCHER
-        formatter.format_process_pch("C#{$1}", $2, build_target)
+        formatter.format_process_pch("C#{$1}", $2, @build_target)
       when PREPROCESS_MATCHER
-        formatter.format_preprocess($1, build_target)
+        formatter.format_preprocess($1, @build_target)
       when PBXCP_MATCHER
-        formatter.format_pbxcp($1, build_target)
+        formatter.format_pbxcp($1, @build_target)
       when RULE_SCRIPT_EXECUTION_MATCHER
-        formatter.format_script_rule_execution(*unescaped(File.basename($1), $1), build_target)
+        formatter.format_script_rule_execution(*unescaped(File.basename($1), $1), @build_target)
       when TESTS_RUN_COMPLETION_MATCHER
         formatter.format_test_run_finished($1, $3)
       when TEST_SUITE_STARTED_MATCHER
@@ -539,43 +572,43 @@ module XCPretty
       when TEST_SUITE_START_MATCHER
         formatter.format_test_suite_started($1)
       when TIFFUTIL_MATCHER
-        formatter.format_tiffutil($1, build_target)
+        formatter.format_tiffutil($1, @build_target)
       when TOUCH_MATCHER
-        formatter.format_touch($1, $2, build_target)
+        formatter.format_touch($1, $2, @build_target)
       when WRITE_FILE_MATCHER
         formatter.format_write_file($1)
       when WRITE_AUXILIARY_FILES
         formatter.format_write_auxiliary_files
       when SYM_LINK_MATCHER
-        formatter.format_sym_link($1, $2, build_target)
+        formatter.format_sym_link($1, $2, @build_target)
       when CREATE_BUILD_DIRECTORY_MATCHER
-        formatter.format_create_build_directory($1, build_target)
+        formatter.format_create_build_directory($1, @build_target)
       when MKDIR_MATCHER
-        formatter.format_mkdir($1, build_target)
+        formatter.format_mkdir($1, @build_target)
       when PROCESS_PRODUCT_PACKAGING_MATCHER
-        formatter.format_process_product_packaging($1, $2, build_target)
+        formatter.format_process_product_packaging($1, $2, @build_target)
       when DITTO_MATCHER
-        formatter.format_ditto($1, $2, build_target)
+        formatter.format_ditto($1, $2, @build_target)
       when COMPILE_DTRACE_SCRIPT_MATCHER
-        formatter.format_compile_dtrace_script($1, build_target)
+        formatter.format_compile_dtrace_script($1, @build_target)
       when COPY_PNG_FILE_MATCHER
-        formatter.format_copy_png_file($1, $2, build_target)
+        formatter.format_copy_png_file($1, $2, @build_target)
       when COPY_TIFF_FILE_MATCHER
-        formatter.format_copy_tiff_file($1, $2, build_target)
+        formatter.format_copy_tiff_file($1, $2, @build_target)
       when LINK_STORYBOARDS_MATCHER
-        formatter.format_link_storyboards(build_target)
+        formatter.format_link_storyboards(@build_target)
       when NOTE_MATCHER
         formatter.format_note($1)
       when WRITE_AUXILIARY_FILE_MATCHER
-        formatter.format_write_auxiliary_file($1, build_target)
+        formatter.format_write_auxiliary_file($1, @build_target)
       when PROCESSING_FILE_MATCHER
-        formatter.format_processing_file($1, build_target)
+        formatter.format_processing_file($1, @build_target)
       when SIGNING_IDENTITY_MATCHER
         formatter.format_signing_identity($1)
       when SHELL_COMMAND_MATCHER
         formatter.format_shell_command($1, $2)
       when GENERIC_WARNING_MATCHER
-        formatter.format_warning($1, build_target)
+        formatter.format_warning($1, @build_target)
       when WILL_NOT_BE_CODE_SIGNED_MATCHER
         formatter.format_will_not_be_code_signed($1)
       when CCACHE_ERROR_MATCHER
