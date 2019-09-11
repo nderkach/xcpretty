@@ -67,6 +67,12 @@ module XCPretty
         "[foo] > Compiling asset catalog sample/Assets.xcassets"
       end
 
+      it "formats sym link output" do
+        @formatter.format_sym_link('someDir/Source.h',
+                                   'dir/Destination.h',
+                                   'foo').should == '[foo] > SymLink Source.h'
+      end
+
       it "formats creating build directory output" do
         @formatter.format_create_build_directory(
           "/Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/Pods/../build",

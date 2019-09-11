@@ -64,6 +64,10 @@ module XCPretty
       format("Copying", File.basename(source), build_target: build_target)
     end
 
+    def format_sym_link(source, target, build_target)
+      format("SymLink", File.basename(source), build_target: build_target)
+    end
+
     def format_create_build_directory(directory_path, build_target)
       format("Creating build directory", directory_path, build_target: build_target)
     end

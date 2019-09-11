@@ -626,6 +626,12 @@ CpHeader ReactiveObjC/UISegmentedControl+RACSignalSupport.h /Users/jenkins/.jenk
     builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/jenkins/.jenkins/workspace/temp/Repo/third_party/ReactiveObjC/ReactiveObjC/UISegmentedControl+RACSignalSupport.h /Users/jenkins/.jenkins/workspace/temp/Repo/test_package/Debug-iphonesimulator/ReactiveObjC.framework/Headers
 )
 
+SAMPLE_SYM_LINK = %Q(
+SymLink /Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/BuildProductsPath/Release-iphoneos/SomeFramework.framework /Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/SomeFramework.framework (in target: SomeTarget)
+    cd /Users/jenkins/.jenkins/workspace/Blah/third_party/SomeFramework
+    /bin/ln -sfh /Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/SomeFramework.framework /Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/BuildProductsPath/Release-iphoneos/SomeFramework.framework
+)
+
 SAMPLE_CREATE_BUILD_DIRECTORY = %Q(
 CreateBuildDirectory /Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/Pods/../build (in target: foo)
     cd /Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/Pods

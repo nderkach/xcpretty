@@ -222,6 +222,11 @@ module XCPretty
     WRITE_AUXILIARY_FILES = /^Write auxiliary files/.freeze
 
     # @regex Captured groups
+    # $1 source file
+    # $2 target file
+    SYM_LINK_MATCHER = /^SymLink\s(.*\.\w+)\s(.*\.\w+)$/.freeze
+
+    # @regex Captured groups
     # $1 = directory name
     CREATE_BUILD_DIRECTORY_MATCHER = /^CreateBuildDirectory\s(?:.*\/)?(.+)$/.freeze
 
@@ -546,6 +551,8 @@ module XCPretty
         formatter.format_write_file($1)
       when WRITE_AUXILIARY_FILES
         formatter.format_write_auxiliary_files
+      when SYM_LINK_MATCHER
+        formatter.format_sym_link($1, $2, build_target)
       when CREATE_BUILD_DIRECTORY_MATCHER
         formatter.format_create_build_directory($1, build_target)
       when MKDIR_MATCHER

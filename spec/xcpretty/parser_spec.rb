@@ -357,6 +357,15 @@ module XCPretty
       @parser.parse(SAMPLE_WRITE_AUXILIARY_FILES)
     end
 
+    it "parses sym link" do
+      @formatter.should receive(:format_sym_link).with(
+        '/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/BuildProductsPath/Release-iphoneos/SomeFramework.framework',
+        '/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/SomeFramework.framework',
+        'SomeTarget'
+      )
+      @parser.parse(SAMPLE_SYM_LINK)
+    end
+
     it "parses create build directory" do
       @formatter.should receive(:format_create_build_directory).with("build", "foo")
       @parser.parse(SAMPLE_CREATE_BUILD_DIRECTORY)
