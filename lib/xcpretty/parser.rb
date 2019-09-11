@@ -307,7 +307,7 @@ module XCPretty
 
       # @regex Captured groups
       # $1 = whole warning
-      GENERIC_WARNING_MATCHER = /^warning:\s(.*)$/.freeze
+      GENERIC_WARNING_MATCHER = /^.*[Ww]arning:\s(.*)$/.freeze
 
       # @regex Captured groups
       # $1 = whole warning

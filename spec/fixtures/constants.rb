@@ -997,3 +997,11 @@ SAMPLE_FORMAT_OTHER_UNRECOGNIZED_STRING = "This is a string that won't be matche
 SAMPLE_GENERIC_WARNING = %Q(
 warning: Mapping architecture arm64 to x86_64. Ensure that this target's Architectures and Valid Architectures build settings are configured correctly for the iOS Simulator platform. (in target 'foo')
 )
+
+SAMPLE_GENERIC_WARNING2 = %Q(
+Warning: Mapping architecture arm64 to x86_64. Ensure that this target's Architectures and Valid Architectures build settings are configured correctly for the iOS Simulator platform. (in target 'foo')
+)
+
+SAMPLE_GENERIC_WARNING3 = %Q(
+libpng warning: Warning: Input PNG does not have an 8 bit input depth.  Please convert your PNG to 8-bit for optimal performance on iPhone OS.
+)

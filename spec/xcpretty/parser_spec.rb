@@ -750,6 +750,22 @@ module XCPretty
         @parser.parse(SAMPLE_GENERIC_WARNING)
       end
 
+      it "parses generic warnings #2" do
+        @formatter.should receive(:format_warning).with(
+          "Mapping architecture arm64 to x86_64. Ensure that this target's Architectures and Valid Architectures build settings are configured correctly for the iOS Simulator platform.",
+          "foo"
+        )
+        @parser.parse(SAMPLE_GENERIC_WARNING2)
+      end
+
+      it "parses generic warnings #3" do
+        @formatter.should receive(:format_warning).with(
+          "Input PNG does not have an 8 bit input depth.  Please convert your PNG to 8-bit for optimal performance on iPhone OS.",
+          nil
+        )
+        @parser.parse(SAMPLE_GENERIC_WARNING3)
+      end
+
       it "parses compiling warnings" do
         @formatter.should receive(:format_compile_warning).with(
           "AppDelegate.m",
