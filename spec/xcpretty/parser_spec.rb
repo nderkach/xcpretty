@@ -303,14 +303,13 @@ module XCPretty
     end
 
     it "parses process PCH" do
-      @formatter.should receive(:format_process_pch).with("Pods-CocoaLumberjack-prefix.pch", "foo")
+      @formatter.should receive(:format_process_pch).with("C", "Pods-CocoaLumberjack-prefix.pch", "foo")
       @parser.parse(SAMPLE_PRECOMPILE)
     end
 
-    it 'parses process PCH command' do
-      compile_statement = SAMPLE_PRECOMPILE.lines.to_a.last
-      @formatter.should receive(:format_process_pch_command).with("/Users/musalj/code/OSS/ObjectiveRecord/Pods/Pods-CocoaLumberjack-prefix.pch", nil)
-      @parser.parse(compile_statement)
+    it "parses process PCH++" do
+      @formatter.should receive(:format_process_pch).with("C++", "Pods-CocoaLumberjack-prefix.pch", "foo")
+      @parser.parse(SAMPLE_PRECOMPILE_CPP)
     end
 
     it "parses preprocessing" do

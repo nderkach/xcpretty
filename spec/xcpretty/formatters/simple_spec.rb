@@ -243,9 +243,14 @@ module XCPretty
         "[foo] > Running script rule Check Pods Manifest.lock"
       end
 
-      it "formats precompiling output" do
-        @formatter.format_process_pch("Pods-CocoaLumberjack-prefix.pch", "foo").should ==
-        "[foo] > Precompiling Pods-CocoaLumberjack-prefix.pch"
+      it "formats precompiling C output" do
+        @formatter.format_process_pch("C", "Pods-CocoaLumberjack-prefix.pch", "foo").should ==
+        "[foo] > Precompiling C Pods-CocoaLumberjack-prefix.pch"
+      end
+
+      it "formats precompiling C++ output" do
+        @formatter.format_process_pch("C++", "Pods-CocoaLumberjack-prefix.pch", "foo").should ==
+          "[foo] > Precompiling C++ Pods-CocoaLumberjack-prefix.pch"
       end
 
       it "formats code signing" do

@@ -180,8 +180,8 @@ module XCPretty
       format("Processing", file_name, build_target: build_target)
     end
 
-    def format_process_pch(file, build_target)
-      format("Precompiling", file, build_target: build_target)
+    def format_process_pch(language, file, build_target)
+      format("Precompiling #{language}", file, build_target: build_target)
     end
 
     def format_codesign(file, build_target)

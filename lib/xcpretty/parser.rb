@@ -167,12 +167,9 @@ module XCPretty
     PHASE_SCRIPT_EXECUTION_MATCHER = /^PhaseScriptExecution\s((\\\ |\S)*)\s/.freeze
 
     # @regex Captured groups
-    # $1 = file
-    PROCESS_PCH_MATCHER = /^ProcessPCH\s.*\s(.*.pch)/.freeze
-
-    # @regex Captured groups
-    # $1 file_path
-    PROCESS_PCH_COMMAND_MATCHER = /^\s*.*\/usr\/bin\/clang\s.*\s\-c\s(.*)\s\-o\s.*/.freeze
+    # $1 = nil or ++ (C or C++)
+    # $2 = file path
+    PROCESS_PCH_MATCHER = /^ProcessPCH(\+\+)?\s.*\s(.*\.pch)/.freeze
 
     # @regex Captured groups
     # $1 = file
@@ -526,9 +523,7 @@ module XCPretty
       when PHASE_SUCCESS_MATCHER
         formatter.format_phase_success($1)
       when PROCESS_PCH_MATCHER
-        formatter.format_process_pch($1, build_target)
-      when PROCESS_PCH_COMMAND_MATCHER
-        formatter.format_process_pch_command($1, build_target)
+        formatter.format_process_pch("C#{$1}", $2, build_target)
       when PREPROCESS_MATCHER
         formatter.format_preprocess($1, build_target)
       when PBXCP_MATCHER
