@@ -701,8 +701,14 @@ MkDir /Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/build/Relea
     /bin/mkdir -p /Users/bas.broek/Documents/GitHub/ios/third_party_dependencies/build/Release-iphoneos/1PasswordExtension/OnePasswordExtension.framework
 )
 
-SAMPLE_PROCESS_PRODUCT_PACKAGING = %Q(
+SAMPLE_PROCESS_PRODUCT_PACKAGING_ENTITLEMENTS = %Q(
 ProcessProductPackaging "Foo.entitlements" /Users/devel/Library/Developer/Xcode/DerivedData/MobileApp-aaohjqrvwtifihalptrdzutcoadu/Build/Intermediates/MobileApp.build/Debug-iphonesimulator/MobileApp.build/MobileApp.app.xcent (in target: foo)
+)
+
+SAMPLE_PROCESS_PRODUCT_PACKAGING_PROVISIONING_PROFILE = %Q(
+ProcessProductPackaging /Users/akarasik/Library/MobileDevice/Provisioning\\ Profiles/2d2be1dc-48bf-4d34-b862-0bbd6e85cc79.mobileprovision /tmp/Test2.dst/Applications/Test2.app/embedded.mobileprovision (in target 'SomeTarget' from project 'Test2')
+    cd /Users/akarasik/Developer/Test2
+    builtin-productPackagingUtility /Users/akarasik/Library/MobileDevice/Provisioning\\ Profiles/2d2be1dc-48bf-4d34-b862-0bbd6e85cc79.mobileprovision -o /tmp/Test2.dst/Applications/Test2.app/embedded.mobileprovision
 )
 
 SAMPLE_DITTO = %Q(

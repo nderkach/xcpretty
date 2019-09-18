@@ -29,7 +29,7 @@ Given(/^I have a directory to create$/) do
 end
 
 Given(/^I have a product packaging to process$/) do
-  add_run_input SAMPLE_PROCESS_PRODUCT_PACKAGING
+  add_run_input SAMPLE_PROCESS_PRODUCT_PACKAGING_ENTITLEMENTS
 end
 
 Given(/^I have a file ditto$/) do

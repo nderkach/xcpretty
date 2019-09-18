@@ -454,13 +454,22 @@ module XCPretty
       @parser.parse(SAMPLE_MKDIR)
     end
 
-    it "parses process product packaging" do
+    it "parses process product packaging with entitlements" do
       @formatter.should receive(:format_process_product_packaging).with(
         "Foo.entitlements",
         "MobileApp.app.xcent",
         "foo"
       )
-      @parser.parse(SAMPLE_PROCESS_PRODUCT_PACKAGING)
+      @parser.parse(SAMPLE_PROCESS_PRODUCT_PACKAGING_ENTITLEMENTS)
+    end
+
+    it "parses process product packaging with provisioning profile" do
+      @formatter.should receive(:format_process_product_packaging).with(
+        "/Users/akarasik/Library/MobileDevice/Provisioning\\ Profiles/2d2be1dc-48bf-4d34-b862-0bbd6e85cc79.mobileprovision",
+        "embedded.mobileprovision",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_PROCESS_PRODUCT_PACKAGING_PROVISIONING_PROFILE)
     end
 
     it "parses ditto" do

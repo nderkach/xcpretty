@@ -271,9 +271,9 @@ module XCPretty
     MKDIR_MATCHER = /^MkDir\s(?:.*\/)?(.+)$/.freeze
 
     # @regex Captured groups
-    # $1 = entitlements
+    # $1 = entitlements / provisioning profile path
     # $2 = package name
-    PROCESS_PRODUCT_PACKAGING_MATCHER = /^ProcessProductPackaging\s"((?:\\"|[^"])*)"\s.+\/(.+)$/.freeze
+    PROCESS_PRODUCT_PACKAGING_MATCHER = /^ProcessProductPackaging\s"?((?:\\\s|[^"\s])*)"?\s.+\/(.+)$/.freeze
 
     # @regex Captured groups
     # $1 source file
