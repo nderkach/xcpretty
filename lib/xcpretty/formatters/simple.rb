@@ -44,6 +44,32 @@ module XCPretty
       format("Compiling", file_name, build_target: build_target)
     end
 
+    def format_compile_swift_sources(build_target)
+      format("Compiling Swift sources", build_target: build_target)
+    end
+
+    def format_compile_swift(build_target)
+      format("Compiling Swift to bytecode", build_target: build_target)
+    end
+
+    def format_precompile_swift_bridging_header(build_target)
+      format("Precompiling Swift bridging header", build_target: build_target)
+    end
+
+    def format_swift_code_generation_command(file_path, build_target)
+      format("Generating object file from", File.basename(file_path),
+             build_target: build_target)
+    end
+
+    def format_merge_swift_module_command(module_path, build_target)
+      format("Merging Swift module", File.basename(module_path), build_target: build_target)
+    end
+
+    def format_copy_swift_libs(app_path, build_target)
+      format("Copying Swift libs for", File.basename(app_path),
+             build_target: build_target)
+    end
+
     def format_compile_metal(file_name, file_path, build_target)
       format("Compiling", file_name, build_target: build_target)
     end
@@ -62,6 +88,10 @@ module XCPretty
 
     def format_copy_header_file(source, target, build_target)
       format("Copying", File.basename(source), build_target: build_target)
+    end
+
+    def format_sym_link(source, target, build_target)
+      format("SymLink", File.basename(source), build_target: build_target)
     end
 
     def format_create_build_directory(directory_path, build_target)
@@ -111,6 +141,10 @@ module XCPretty
 
     def format_signing_identity(identity)
       format("Signing identity", "\"#{identity}\"")
+    end
+
+    def format_provisioning_profile(profile)
+      format("Provisioning profile", "\"#{profile}\"")
     end
 
     def format_copy_plist_file(source, target, build_target)
@@ -176,8 +210,24 @@ module XCPretty
       format("Processing", file_name, build_target: build_target)
     end
 
-    def format_process_pch(file, build_target)
-      format("Precompiling", file, build_target: build_target)
+    def format_process_pch(language, file, build_target)
+      format("Precompiling #{language}", file, build_target: build_target)
+    end
+
+    def format_strip(file, build_target)
+      format("Stripping", file, build_target: build_target)
+    end
+
+    def format_chown(owner, file, build_target)
+      format("chown #{owner}", file, build_target: build_target)
+    end
+
+    def format_chmod(mode, file, build_target)
+      format("chmod #{mode}", file, build_target: build_target)
+    end
+
+    def format_validate(file, build_target)
+      format("Validating", file, build_target: build_target)
     end
 
     def format_codesign(file, build_target)

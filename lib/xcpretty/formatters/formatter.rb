@@ -38,7 +38,7 @@ module XCPretty
     def format_pending_test(suite, test);                      EMPTY; end
     def format_measuring_test(suite, test, time);              EMPTY; end
     def format_failing_test(suite, test, reason, file_path);   EMPTY; end
-    def format_process_pch(file, build_target);                EMPTY; end
+    def format_process_pch(language, file, build_target);      EMPTY; end
     def format_process_pch_command(file_path, build_target);   EMPTY; end
     def format_phase_success(phase_name);                      EMPTY; end
     def format_phase_script_execution(script_name, build_target); EMPTY; end

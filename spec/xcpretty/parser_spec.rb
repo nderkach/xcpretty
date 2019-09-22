@@ -63,6 +63,45 @@ module XCPretty
       @parser.parse("Check dependencies")
     end
 
+    it "parses stripping" do
+      @formatter.should receive(:format_strip).with(
+        "/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_STRIP)
+    end
+
+    it "parses chown" do
+      @formatter.should receive(:format_chown).with(
+        "jenkins:staff",
+        "/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_CHOWN)
+    end
+
+    it "parses chmod" do
+      @formatter.should receive(:format_chmod).with(
+        "u+w,go-w,a+rX",
+        "/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_CHMOD)
+    end
+
+    it "parses validating" do
+      @formatter.should receive(:format_validate).with(
+        "/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/Blah.app",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_VALIDATE)
+    end
+
+    it "parses provisioning profile" do
+      @formatter.should receive(:format_provisioning_profile).with("Blah Development Profile")
+      @parser.parse(SAMPLE_PROVISIONING_PROFILE)
+    end
+
     it "parses code signing" do
       @formatter.should receive(:format_codesign).with("build/Release/CocoaChip.app", "foo")
       @parser.parse(SAMPLE_CODESIGN)
@@ -109,6 +148,46 @@ module XCPretty
         @formatter.should receive(:format_compile).with("KWNull" + file_extension, "Classes/Core/KWNull" + file_extension, "foo")
         @parser.parse(SAMPLE_ANOTHER_COMPILE.sub('.m', file_extension))
       end
+    end
+
+    it "parses compiling swift sources" do
+      @formatter.should receive(:format_compile_swift_sources).with("SomeTarget")
+      @parser.parse(SAMPLE_COMPILE_SWIFT_SOURCES)
+    end
+
+    it "parses compiling swift to bytecode" do
+      @formatter.should receive(:format_compile_swift).with("SomeTarget")
+      @parser.parse(SAMPLE_COMPILE_SWIFT)
+    end
+
+    it "parses precompiling swift bridging header" do
+      @formatter.should receive(:format_precompile_swift_bridging_header).with("Test2")
+      @parser.parse(SAMPLE_PRECOMPILE_SWIFT_BRIDGING_HEADER)
+    end
+
+    it "parses swift code generation command" do
+      @formatter.should receive(:format_swift_code_generation_command).with(
+        "/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/IntermediateBuildFilesPath/SomeRepo.build/Release-iphoneos/SomeRepo.build/Objects-normal/arm64/SomeFile.bc",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_SWIFT_CODE_GENERATION)
+      @parser.parse(SAMPLE_SWIFT_CODE_GENERATION_COMMAND)
+    end
+
+    it "parses merging swift module command" do
+      @formatter.should receive(:format_merge_swift_module_command).with(
+        "/Users/akarasik/Developer/Test2/build/Test2.build/Release-iphoneos/Test2.build/Objects-normal/arm64/Test2.swiftmodule",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_MERGE_SWIFT_MODULE)
+    end
+
+    it "parses copying swift libs to bundle" do
+      @formatter.should receive(:format_copy_swift_libs).with(
+        "/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/InstallationBuildProductsLocation/Applications/SomeApp.app",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_COPY_SWIFT_LIBS)
     end
 
     it "parses compiling metal files" do
@@ -303,14 +382,13 @@ module XCPretty
     end
 
     it "parses process PCH" do
-      @formatter.should receive(:format_process_pch).with("Pods-CocoaLumberjack-prefix.pch", "foo")
+      @formatter.should receive(:format_process_pch).with("C", "Pods-CocoaLumberjack-prefix.pch", "foo")
       @parser.parse(SAMPLE_PRECOMPILE)
     end
 
-    it 'parses process PCH command' do
-      compile_statement = SAMPLE_PRECOMPILE.lines.to_a.last
-      @formatter.should receive(:format_process_pch_command).with("/Users/musalj/code/OSS/ObjectiveRecord/Pods/Pods-CocoaLumberjack-prefix.pch", nil)
-      @parser.parse(compile_statement)
+    it "parses process PCH++" do
+      @formatter.should receive(:format_process_pch).with("C++", "Pods-CocoaLumberjack-prefix.pch", "foo")
+      @parser.parse(SAMPLE_PRECOMPILE_CPP)
     end
 
     it "parses preprocessing" do
@@ -357,6 +435,15 @@ module XCPretty
       @parser.parse(SAMPLE_WRITE_AUXILIARY_FILES)
     end
 
+    it "parses sym link" do
+      @formatter.should receive(:format_sym_link).with(
+        '/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/BuildProductsPath/Release-iphoneos/SomeFramework.framework',
+        '/Users/jenkins/Library/Developer/Xcode/DerivedData/Blah-fsncgmwwwwqfhufpjvhbxnyuqkxp/Build/Intermediates.noindex/ArchiveIntermediates/Blah/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/SomeFramework.framework',
+        'SomeTarget'
+      )
+      @parser.parse(SAMPLE_SYM_LINK)
+    end
+
     it "parses create build directory" do
       @formatter.should receive(:format_create_build_directory).with("build", "foo")
       @parser.parse(SAMPLE_CREATE_BUILD_DIRECTORY)
@@ -367,13 +454,22 @@ module XCPretty
       @parser.parse(SAMPLE_MKDIR)
     end
 
-    it "parses process product packaging" do
+    it "parses process product packaging with entitlements" do
       @formatter.should receive(:format_process_product_packaging).with(
         "Foo.entitlements",
         "MobileApp.app.xcent",
         "foo"
       )
-      @parser.parse(SAMPLE_PROCESS_PRODUCT_PACKAGING)
+      @parser.parse(SAMPLE_PROCESS_PRODUCT_PACKAGING_ENTITLEMENTS)
+    end
+
+    it "parses process product packaging with provisioning profile" do
+      @formatter.should receive(:format_process_product_packaging).with(
+        "/Users/akarasik/Library/MobileDevice/Provisioning\\ Profiles/2d2be1dc-48bf-4d34-b862-0bbd6e85cc79.mobileprovision",
+        "embedded.mobileprovision",
+        "SomeTarget"
+      )
+      @parser.parse(SAMPLE_PROCESS_PRODUCT_PACKAGING_PROVISIONING_PROFILE)
     end
 
     it "parses ditto" do
@@ -700,6 +796,22 @@ module XCPretty
           "foo"
         )
         @parser.parse(SAMPLE_GENERIC_WARNING)
+      end
+
+      it "parses generic warnings #2" do
+        @formatter.should receive(:format_warning).with(
+          "Mapping architecture arm64 to x86_64. Ensure that this target's Architectures and Valid Architectures build settings are configured correctly for the iOS Simulator platform.",
+          "foo"
+        )
+        @parser.parse(SAMPLE_GENERIC_WARNING2)
+      end
+
+      it "parses generic warnings #3" do
+        @formatter.should receive(:format_warning).with(
+          "Input PNG does not have an 8 bit input depth.  Please convert your PNG to 8-bit for optimal performance on iPhone OS.",
+          nil
+        )
+        @parser.parse(SAMPLE_GENERIC_WARNING3)
       end
 
       it "parses compiling warnings" do

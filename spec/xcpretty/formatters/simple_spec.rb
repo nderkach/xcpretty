@@ -47,6 +47,36 @@ module XCPretty
         "[foo] > Compiling NSMutableArray+ObjectiveSugar.m"
       end
 
+      it "formats compiling swift sources" do
+        @formatter.format_compile_swift_sources("SomeTarget").should ==
+        "[SomeTarget] > Compiling Swift sources"
+      end
+
+      it "formats compiling swift to bytecode" do
+        @formatter.format_compile_swift("SomeTarget").should ==
+        "[SomeTarget] > Compiling Swift to bytecode"
+      end
+
+      it "formats precompiling swift bridging header" do
+        @formatter.format_precompile_swift_bridging_header("SomeTarget").should ==
+        "[SomeTarget] > Precompiling Swift bridging header"
+      end
+
+      it "formats swift code generation command" do
+        @formatter.format_swift_code_generation_command("SomeFile.bc", "SomeTarget").should ==
+        "[SomeTarget] > Generating object file from SomeFile.bc"
+      end
+
+      it "formats merging swift module" do
+        @formatter.format_merge_swift_module_command("path/to/SomeModule.swiftmodule", "SomeTarget").should ==
+        "[SomeTarget] > Merging Swift module SomeModule.swiftmodule"
+      end
+
+      it "formats copying swift libs to bundle" do
+        @formatter.format_copy_swift_libs("SomeApp.app", "SomeTarget").should ==
+        "[SomeTarget] > Copying Swift libs for SomeApp.app"
+      end
+
       it "formats compiling metal output" do
         @formatter.format_compile("MYMetalFile.metal", 'path/to/file', "foo").should ==
         "[foo] > Compiling MYMetalFile.metal"
@@ -65,6 +95,12 @@ module XCPretty
       it "formats compiling asset catalog output" do
         @formatter.format_compile_asset_catalog("sample/Assets.xcassets", "foo").should ==
         "[foo] > Compiling asset catalog sample/Assets.xcassets"
+      end
+
+      it "formats sym link output" do
+        @formatter.format_sym_link('someDir/Source.h',
+                                   'dir/Destination.h',
+                                   'foo').should == '[foo] > SymLink Source.h'
       end
 
       it "formats creating build directory output" do
@@ -152,6 +188,11 @@ module XCPretty
         "> Signing identity \"Foo\""
       end
 
+      it "formats provisioning profile" do
+        @formatter.format_provisioning_profile("Foo").should ==
+          "> Provisioning profile \"Foo\""
+      end
+
       it 'formats copying header files' do
         @formatter.format_copy_header_file('Source.h',
                                            'dir/Destination.h',
@@ -237,9 +278,34 @@ module XCPretty
         "[foo] > Running script rule Check Pods Manifest.lock"
       end
 
-      it "formats precompiling output" do
-        @formatter.format_process_pch("Pods-CocoaLumberjack-prefix.pch", "foo").should ==
-        "[foo] > Precompiling Pods-CocoaLumberjack-prefix.pch"
+      it "formats precompiling C output" do
+        @formatter.format_process_pch("C", "Pods-CocoaLumberjack-prefix.pch", "foo").should ==
+        "[foo] > Precompiling C Pods-CocoaLumberjack-prefix.pch"
+      end
+
+      it "formats precompiling C++ output" do
+        @formatter.format_process_pch("C++", "Pods-CocoaLumberjack-prefix.pch", "foo").should ==
+          "[foo] > Precompiling C++ Pods-CocoaLumberjack-prefix.pch"
+      end
+
+      it "formats stripping" do
+        @formatter.format_strip("build/Release/CocoaChip.app", "foo").should ==
+        "[foo] > Stripping build/Release/CocoaChip.app"
+      end
+
+      it "formats chown" do
+        @formatter.format_chown("jenkins:staff", "build/Release/CocoaChip.app", "foo").should ==
+        "[foo] > chown jenkins:staff build/Release/CocoaChip.app"
+      end
+
+      it "formats chmod" do
+        @formatter.format_chmod("u+w,go-w,a+rX", "build/Release/CocoaChip.app", "foo").should ==
+        "[foo] > chmod u+w,go-w,a+rX build/Release/CocoaChip.app"
+      end
+
+      it "formats validating" do
+        @formatter.format_validate("build/Release/CocoaChip.app", "foo").should ==
+        "[foo] > Validating build/Release/CocoaChip.app"
       end
 
       it "formats code signing" do
