@@ -521,8 +521,8 @@ module XCPretty
         formatter.format_compile($2, $1, @build_target)
       when COMPILE_COMMAND_MATCHER
         formatter.format_compile_command($1, $2, @build_target)
-      when COMPILE_SWIFT_SOURCES_MATCHER
-        formatter.format_compile_swift_sources(@build_target)
+      # when COMPILE_SWIFT_SOURCES_MATCHER
+      #   formatter.format_compile_swift_sources()
       when COMPILE_SWIFT_MATCHER
         formatter.format_compile_swift(@build_target)
       when PRECOMPILE_SWIFT_BRIDGING_HEADER_MATCHER

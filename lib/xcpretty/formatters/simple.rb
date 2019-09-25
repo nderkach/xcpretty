@@ -44,9 +44,9 @@ module XCPretty
       format("Compiling", file_name, build_target: build_target)
     end
 
-    def format_compile_swift_sources(build_target)
-      format("Compiling Swift sources", build_target: build_target)
-    end
+    # def format_compile_swift_sources(build_target)
+    #   format("Compiling Swift sources", build_target: build_target)
+    # end
 
     def format_compile_swift(build_target)
       format("Compiling Swift to bytecode", build_target: build_target)
